@@ -1,0 +1,27 @@
+{
+  "name": "amd-bundle",
+  "version": "0.3.1",
+  "description": "A command-line tool for bundling up AMD modules, which is much easier to use than r.js + almond of Require.js",
+  "main": "index.js",
+  "bin": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TechQuery/AMD_bundle.js.git"
+  },
+  "keywords": [
+    "javascript",
+    "amd-loader",
+    "bundle",
+    "require-js",
+    "command-line"
+  ],
+  "author": "shiy007@qq.com",
+  "license": "AGPL-3.0",
+  "bugs": {
+    "url": "https://github.com/TechQuery/AMD_bundle.js/issues"
+  },
+  "homepage": "https://github.com/TechQuery/AMD_bundle.js#readme"
+}
