@@ -21,10 +21,7 @@ class Package extends Array {
             this.push( this[ name ] );
         }
 
-        this.sort(function (A, B) {
-
-            return  B.level - A.level;
-        });
+        this.updateDependency();
     }
 
     register(name) {
@@ -52,6 +49,32 @@ class Package extends Array {
         );
     }
 
+    updateDependency() {
+
+        this.sort(function (A, B) {
+
+            return  B.level - A.level;
+        });
+
+        this.forEach(function (_this_, index) {
+
+            for (var i = index + 1, parent;  this[i];  i++) {
+
+                parent = this[i].parent;  index = parent.indexOf( _this_.name );
+
+                if (
+                    parent.referCount  &&
+                    (index > -1)  &&
+                    (index < parent.referCount)
+                ) {
+                    _this_.export();    break;
+                }
+            }
+        }, this);
+
+        this[this.length - 1].export();
+    }
+
     toString() {
         var _this_ = [ ];
 
@@ -60,7 +83,7 @@ class Package extends Array {
         return _this_.join('\n\n\n');
     }
 
-    getDependence(wrapper) {
+    getDependency(wrapper) {
 
         var out_dep = [ ];
 
@@ -74,7 +97,7 @@ class Package extends Array {
     }
 
     check() {
-        var out_dep = this.getDependence();
+        var out_dep = this.getDependency();
 
         this.forEach(function (module, index) {
 

@@ -13,19 +13,19 @@ const  bundle = new Package('index'),  out_name = process.argv[2];
 
 var name = Path.basename( out_name ).split('.')[0],
     out_dep = {
-        AMD:        bundle.getDependence(function () {
+        AMD:        bundle.getDependency(function () {
 
             return `'${this.name}'`;
         }),
-        CJS:        bundle.getDependence(function () {
+        CJS:        bundle.getDependency(function () {
 
             return `require('${this.name}')`;
         }),
-        global:     bundle.getDependence(function () {
+        global:     bundle.getDependency(function () {
 
             return `this['${this.name}']`;
         }),
-        factory:    bundle.getDependence(function () {
+        factory:    bundle.getDependency(function () {
 
             return  Module.name2var( this.name );
         })

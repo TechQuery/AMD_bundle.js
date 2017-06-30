@@ -1,7 +1,7 @@
 # AMD bundle
 
 **A command-line tool for bundling up [AMD](https://github.com/amdjs/amdjs-api/blob/master/AMD.md) modules**,
-which is much easier to use than `r.js + almond` of [Require.js](https://github.com/requirejs).
+which is much easier to use than [`r.js`](https://github.com/requirejs/r.js) with [Almond](https://github.com/requirejs/almond) or [AMDclean](https://github.com/gfranko/amdclean).
 
 
 
@@ -24,7 +24,7 @@ amd-bundle path/to/project/bundle_name.js
 
  1. start bunding from the entry point `path/to/project/source/code/index.js`
 
- 2. write into `path/to/project/bundle_name.js` with only one `define('bundle_name', [ ])` and `global.bundle_name` definition
+ 2. write into `path/to/project/bundle_name.js` with only one `define('bundle_name', [ ])` and `global.bundle_name` definition, just like [UMD](https://github.com/umdjs/umd) style
 
  3. treat missing dependency files as external dependencies
 
@@ -36,9 +36,9 @@ First, install [Uglify-JS](https://www.npmjs.com/package/uglify-js) as a develop
 ```Shell
 npm install uglify-js --save-dev
 ```
-Then, refer to [the `scripts` section of `package.json` in iQuery](https://github.com/TechQuery/iQuery.js/blob/master/package.json) and edit yours.
+Then, refer to [the `scripts` section of `package.json` in iQuery.js](https://github.com/TechQuery/iQuery.js/blob/master/package.json) and edit yours.
 
-From now on, you can build your standalone release files (full source code, minimized code and source map) by executing a single command (`npm run build`).
+From now on, you can build your **standalone release files** (Full source code, Minimized code & Source map) by executing a single command (`npm run build`).
 
 
 

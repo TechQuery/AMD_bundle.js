@@ -47,11 +47,12 @@ class Module {
                 if (this.parseParent( arguments[2] ));
                     parentVar = arguments[3].trim().split(/\s*,\s*/);
 
-                return  `var ${Module.name2var( this.name )} = (function (${
-                    parentVar  &&  parentVar.join(', ')
-                })`;
+                return  `(function (${parentVar  &&  parentVar.join(', ')})`;
+
             }).bind( this )
         );
+
+        this.parent.referCount = parentVar.length;
 
         parentVar = this.parent.slice(0, parentVar.length);
 
@@ -60,6 +61,11 @@ class Module {
         );
 
         return this;
+    }
+
+    export() {
+
+        this.source =  `var ${Module.name2var( this.name )} = ${this.source}`;
     }
 
     toString() {  return this.source;  }
