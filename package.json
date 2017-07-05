@@ -1,9 +1,12 @@
 {
   "name": "amd-bundle",
-  "version": "0.3.2",
+  "version": "0.4.0",
   "description": "A command-line tool for bundling up AMD modules, which is much easier to use than r.js with Almond or AMDclean",
   "main": "index.js",
   "bin": "index.js",
+  "engines": {
+    "node": "^5.0.0"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

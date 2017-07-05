@@ -17,7 +17,7 @@ npm install amd-bundle --save-dev
 
 cd path/to/project/source/code
 
-amd-bundle path/to/project/bundle_name.js
+amd-bundle path/to/project/bundle_name.js -e ext_dep_2,ext_dep_3
 ```
 
 `amd-bundle` will
@@ -26,7 +26,7 @@ amd-bundle path/to/project/bundle_name.js
 
  2. write into `path/to/project/bundle_name.js` with only one `define('bundle_name', [ ])` and `global.bundle_name` definition, just like [UMD](https://github.com/umdjs/umd) style
 
- 3. treat missing dependency files as external dependencies
+ 3. automatically treat missing dependency files (`ext_dep_1.js` for example) as external dependencies (option `-e` is needed if some of these dependencies are required by modules in sub directories)
 
 
 ### Advanced
@@ -47,3 +47,5 @@ From now on, you can build your **standalone release files** (Full source code, 
  1. [iQuery.js](https://github.com/TechQuery/iQuery.js) (where the prototype of `amd-bundle` came from)
 
  2. [EasyWebApp.js](https://github.com/TechQuery/EasyWebApp.js)
+
+ 3. [EasyWebUI](https://github.com/TechQuery/EasyWebUI)

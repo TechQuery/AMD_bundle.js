@@ -18,22 +18,25 @@ class Module {
         return  arguments[0].replace(/\W/g, '_');
     }
 
-    parseParent(string) {
+    parseParent(string, external) {
 
         if (! string)  return;
 
         var root = this.name.replace(/[^\/\\]*$/, '');
 
         return  this.parent = string.trim().split(/\s*,\s*/).map(
-            function () {
-                return Path.normalize(
-                    Path.join(root,  arguments[0].slice(1, -1))
-                );
+            function (parent) {
+
+                parent = parent.slice(1, -1);
+
+                return  (external.indexOf( parent )  >  -1)  ?
+                    parent  :  Path.normalize( Path.join(root, parent) );
             }
         );
     }
 
-    convert() {
+    convert(external) {
+
         var parentVar = '';
 
         this.source = FS.readFileSync(
@@ -44,7 +47,7 @@ class Module {
             /define\((\s*\[([\s\S]*?)\]\s*,)?\s*function\s*\(([\s\S]*?)\)/,
             (function () {
 
-                if (this.parseParent( arguments[2] ));
+                if (this.parseParent(arguments[2],  external || [ ]));
                     parentVar = arguments[3].trim().split(/\s*,\s*/);
 
                 return  `(function (${parentVar  &&  parentVar.join(', ')})`;
@@ -63,9 +66,14 @@ class Module {
         return this;
     }
 
-    export() {
+    export(toReturn) {
 
-        this.source =  `var ${Module.name2var( this.name )} = ${this.source}`;
+        if (! this.source)  return;
+
+        toReturn = toReturn  ?
+            'return '  :  `var ${Module.name2var( this.name )} =`;
+
+        this.source = this.source.replace(/^\(function/m,  `${toReturn} $&`);
     }
 
     toString() {  return this.source;  }

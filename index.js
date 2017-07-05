@@ -8,7 +8,10 @@ const  Path = require('path'),  FS = require('fs');
 
 const  Package = require('./libs/Package'),  Module = require('./libs/Module');
 
-const  bundle = new Package('index'),  out_name = process.argv[2];
+const  bundle = (
+           new Package('index',  (process.argv[4] || '').split(','))
+       ).parse(),
+       out_name = process.argv[2];
 
 
 var name = Path.basename( out_name ).split('.')[0],
@@ -50,7 +53,5 @@ FS.writeFileSync(out_name, `
 
 
 ${bundle.check()}
-
-return index;
 });
 `.trim());

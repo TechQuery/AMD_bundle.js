@@ -6,27 +6,18 @@ const Module = require('./Module');
 
 class Package extends Array {
 
-    constructor(name) {
+    constructor(name, external) {
 
         super();
 
         Object.defineProperty(this,  '__name__',  {value: name});
 
-        this.register( name );
-
-        for (var name  of  Object.keys( this )) {
-
-            this.updateLevel( name );
-
-            this.push( this[ name ] );
-        }
-
-        this.updateDependency();
+        Object.defineProperty(this,  '__external__',  {value: external});
     }
 
     register(name) {
 
-        (this[ name ] = new Module( name )).convert();
+        (this[ name ] = new Module( name )).convert( this.__external__ );
 
         for (var ID  of  this[ name ].parent) {
 
@@ -54,9 +45,8 @@ class Package extends Array {
         this.sort(function (A, B) {
 
             return  B.level - A.level;
-        });
 
-        this.forEach(function (_this_, index) {
+        }).forEach(function (_this_, index) {
 
             for (var i = index + 1, parent;  this[i];  i++) {
 
@@ -72,15 +62,31 @@ class Package extends Array {
             }
         }, this);
 
-        this[this.length - 1].export();
+        this[this.length - 1].export( true );
+    }
+
+    parse() {
+        this.register( this.__name__ );
+
+        for (var name  of  Object.keys( this )) {
+
+            this.updateLevel( name );
+
+            this.push( this[ name ] );
+        }
+
+        this.updateDependency();
+
+        return this;
     }
 
     toString() {
-        var _this_ = [ ];
 
-        for (var module of this)  module.source  &&  _this_.push( module );
+        return  this.filter(function () {
 
-        return _this_.join('\n\n\n');
+            return arguments[0].source;
+
+        }).join('\n\n\n');
     }
 
     getDependency(wrapper) {
