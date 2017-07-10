@@ -29,6 +29,27 @@ amd-bundle path/to/project/bundle_name.js -e ext_dep_2,ext_dep_3
  3. automatically treat missing dependency files (`ext_dep_1.js` for example) as external dependencies (option `-e` is needed if some of these dependencies are required by modules in sub directories)
 
 
+### More options
+
+Option `-f` accepts a path of CommonJS Module as shown below:
+
+```JavaScript
+module.exports = function () {
+
+    //  "this" is a instance of Module
+
+    //  Change some code
+
+    if (/pattern_A/.test( this.name ))
+        return  this.source.replace('xxx', 'yyy');
+
+    //  Remove a module
+
+    if (this.parent.indexOf('zzz') > -1)
+        return '';
+};
+```
+
 ### Advanced
 
 First, install [Uglify-JS](https://www.npmjs.com/package/uglify-js) as a development dependency:

@@ -3,34 +3,49 @@
 console.log('');
 
 
-const  Path = require('path'),  FS = require('fs');
+const  Path = require('path'),  FS = require('fs'),
+       Command = require('commander');
 
 
-const  Package = require('./libs/Package'),  Module = require('./libs/Module');
+const  Package = require('./libs/Package'),  Module = require('./libs/Module'),
+       Config = require('./package.json');
 
-const  bundle = (
-           new Package('index',  (process.argv[4] || '').split(','))
-       ).parse(),
-       out_name = process.argv[2];
+
+Command.version( Config.version ).usage('<file> [options]')
+    .option(
+        '-e, --external <items>',
+        'Declare module names of external dependencies'
+    )
+    .option('-f, --filter <path>',  'Load a filter module')
+    .parse( process.argv );
+
+
+const  bundle = (new Package(
+           'index',  Command.external && Command.external.split(',')
+       )).parse(),
+       out_name = process.argv[2],
+       filter = Command.filter && require(
+           Path.join(process.cwd(), Command.filter)
+       );
 
 
 var name = Path.basename( out_name ).split('.')[0],
     out_dep = {
         AMD:        bundle.getDependency(function () {
 
-            return `'${this.name}'`;
+            return `'${arguments[0]}'`;
         }),
         CJS:        bundle.getDependency(function () {
 
-            return `require('${this.name}')`;
+            return `require('${arguments[0]}')`;
         }),
         global:     bundle.getDependency(function () {
 
-            return `this['${this.name}']`;
+            return `this['${arguments[0]}']`;
         }),
         factory:    bundle.getDependency(function () {
 
-            return  Module.name2var( this.name );
+            return  Module.name2var( arguments[0] );
         })
     };
 
@@ -52,6 +67,6 @@ FS.writeFileSync(out_name, `
 })(function (${out_dep.factory}) {
 
 
-${bundle.check()}
+${bundle.check().toString( filter )}
 });
 `.trim());

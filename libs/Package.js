@@ -8,11 +8,10 @@ class Package extends Array {
 
     constructor(name, external) {
 
-        super();
-
-        Object.defineProperty(this,  '__name__',  {value: name});
-
-        Object.defineProperty(this,  '__external__',  {value: external});
+        Object.defineProperties(super(), {
+            __name__:        {value:  name},
+            __external__:    {value:  external || [ ]}
+        });
     }
 
     register(name) {
@@ -73,6 +72,12 @@ class Package extends Array {
             this.updateLevel( name );
 
             this.push( this[ name ] );
+
+            if (
+                (! this[ name ].source)  &&
+                (this.__external__.indexOf( name )  <  0)
+            )
+                this.__external__.push( name );
         }
 
         this.updateDependency();
@@ -80,26 +85,35 @@ class Package extends Array {
         return this;
     }
 
-    toString() {
+    toString(filter) {
 
-        return  this.filter(function () {
+        filter = (filter instanceof Function)  &&  filter;
 
-            return arguments[0].source;
+        var _this_ = [ ],  source;
 
-        }).join('\n\n\n');
+        for (var module of this) {
+
+            if ( filter )  source = filter.call( module );
+
+            source = (source != null)  ?  source  :  module.source;
+
+            if ( source )  _this_.push( source );
+
+            source = null;
+        }
+
+        return _this_.join('\n\n\n');
     }
 
     getDependency(wrapper) {
 
-        var out_dep = [ ];
+        return  (wrapper instanceof Function)  ?
+            this.__external__.map(function (name) {
 
-        for (var module of this)
-            if (! module.source)
-                out_dep.push(
-                    wrapper  ?  wrapper.call(module, module.name)  :  module.name
-                );
+                return  wrapper(name,  this[ name ]);
 
-        return  wrapper  ?  out_dep.join(', ')  :  out_dep;
+            },  this).join(', ')  :
+            this.__external__.slice( 0 )
     }
 
     check() {

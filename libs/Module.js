@@ -76,7 +76,7 @@ class Module {
         this.source = this.source.replace(/^\(function/m,  `${toReturn} $&`);
     }
 
-    toString() {  return this.source;  }
+    toString() {  return  this.source || '';  }
 }
 
 
