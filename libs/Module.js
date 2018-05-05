@@ -22,7 +22,7 @@ class Module {
 
         if (! string)  return;
 
-        var root = this.name.replace(/[^\/\\]*$/, '');
+        var root = this.name.replace(/[^/\\]*$/, '');
 
         return  this.parent = string.trim().split(/\s*,\s*/).map(
             function (parent) {
@@ -47,7 +47,7 @@ class Module {
             /define\((\s*\[([\s\S]*?)\]\s*,)?\s*function\s*\(([\s\S]*?)\)/,
             (function () {
 
-                if (this.parseParent(arguments[2],  external || [ ]));
+                if (this.parseParent(arguments[2],  external || [ ]))
                     parentVar = arguments[3].trim().split(/\s*,\s*/);
 
                 return  `(function (${parentVar  &&  parentVar.join(', ')})`;
@@ -59,8 +59,20 @@ class Module {
 
         parentVar = this.parent.slice(0, parentVar.length);
 
+        var exports;
+
+        parentVar = parentVar.map(
+            name  =>  ((! exports)  &&  (exports = (name === 'exports')))  ?
+                '{ }'  :  Module.name2var( name )
+        );
+
         this.source = this.source.replace(
-            /^\}\);?/m,  `})(${parentVar.map( Module.name2var ).join(', ')});`
+            /^\}\);?/m,
+            `${
+                exports  ?  '\n    return exports;\n\n'  :  ''
+            }})(${
+                parentVar.join(', ')
+            });`
         );
 
         return this;

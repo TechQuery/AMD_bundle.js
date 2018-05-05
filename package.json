@@ -1,13 +1,15 @@
 {
   "name": "amd-bundle",
-  "version": "0.4.2",
+  "version": "0.4.3",
   "description": "A command-line tool for bundling up AMD modules, which is much easier to use than r.js with Almond or AMDclean",
   "main": "index.js",
   "bin": "index.js",
   "engines": {
-    "node": "^5.0.0"
+    "node": "^5.12.0"
   },
   "scripts": {
+    "lint": "eslint ./libs/ ./test/",
+    "precommit": "npm run lint",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -29,5 +31,9 @@
   "homepage": "https://github.com/TechQuery/AMD_bundle.js#readme",
   "dependencies": {
     "commander": "^2.11.0"
+  },
+  "devDependencies": {
+    "eslint": "^4.19.1",
+    "husky": "^0.14.3"
   }
 }

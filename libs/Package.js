@@ -16,12 +16,20 @@ class Package extends Array {
 
     register(name) {
 
-        (this[ name ] = new Module( name )).convert( this.__external__ );
+        this[ name ] = new Module( name );
+
+        if (this.__external__.indexOf( name )  >  -1)  return;
+
+        this[ name ].convert( this.__external__ );
 
         for (var ID  of  this[ name ].parent) {
 
-            if (! this[ ID ])
-                try {  this.register( ID );  } catch (error) { }
+            if (ID === 'exports') {
+
+                this[ ID ] = ID;  continue;
+            }
+
+            if (! this[ ID ])  this.register( ID );
 
             this[ ID ].child.push( name );
         }
@@ -31,9 +39,16 @@ class Package extends Array {
 
         return  this[name].level = this[name].level || this[name].child.reduce(
             (function (sum, cur) {
+                try {
+                    return  sum  +  this.updateLevel( cur );
 
-                return  sum  +  this.updateLevel( cur );
-
+                } catch (error) {
+                    throw (
+                        (error instanceof RangeError)  ?
+                            ReferenceError(`"${name}" has a Circular reference`)  :
+                            error
+                    );
+                }
             }).bind( this ),
             1
         );
@@ -65,9 +80,12 @@ class Package extends Array {
     }
 
     parse() {
+
         this.register( this.__name__ );
 
         for (var name  of  Object.keys( this )) {
+
+            if (name === 'exports')  continue;
 
             this.updateLevel( name );
 
@@ -113,7 +131,7 @@ class Package extends Array {
                 return  wrapper(name,  this[ name ]);
 
             },  this).join(', ')  :
-            this.__external__.slice( 0 )
+            this.__external__.slice( 0 );
     }
 
     check() {
@@ -121,7 +139,7 @@ class Package extends Array {
 
         this.forEach(function (module, index) {
 
-            var parent = [ ].concat( module.parent );
+            var parent = module.parent.filter(name => (name !== 'exports'));
 
             if (index && parent[0]) {
 
