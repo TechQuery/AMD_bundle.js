@@ -6,17 +6,20 @@ const Module = require('./Module');
 
 class Package extends Array {
 
-    constructor(name, external) {
+    constructor(path, name, external) {
 
-        Object.defineProperties(super(), {
-            __name__:        {value:  name},
-            __external__:    {value:  external || [ ]}
-        });
+        Object.defineProperties(
+            super(), {
+                __path__:        {value:  path},
+                __name__:        {value:  name},
+                __external__:    {value:  external || [ ]}
+            }
+        ).parse();
     }
 
     register(name) {
 
-        this[ name ] = new Module( name );
+        this[ name ] = new Module(this.__path__,  name);
 
         if (this.__external__.indexOf( name )  >  -1)  return;
 
@@ -38,7 +41,7 @@ class Package extends Array {
     updateLevel(name) {
 
         return  this[name].level = this[name].level || this[name].child.reduce(
-            (function (sum, cur) {
+            (sum, cur)  =>  {
                 try {
                     return  sum  +  this.updateLevel( cur );
 
@@ -49,18 +52,14 @@ class Package extends Array {
                             error
                     );
                 }
-            }).bind( this ),
+            },
             1
         );
     }
 
     updateDependency() {
 
-        this.sort(function (A, B) {
-
-            return  B.level - A.level;
-
-        }).forEach(function (_this_, index) {
+        this.sort((A, B)  =>  B.level - A.level).forEach((_this_, index)  =>  {
 
             for (var i = index + 1, parent;  this[i];  i++) {
 
@@ -74,7 +73,7 @@ class Package extends Array {
                     _this_.export();    break;
                 }
             }
-        }, this);
+        });
 
         this[this.length - 1].export( true );
     }
@@ -126,18 +125,16 @@ class Package extends Array {
     getDependency(wrapper) {
 
         return  (wrapper instanceof Function)  ?
-            this.__external__.map(function (name) {
-
-                return  wrapper(name,  this[ name ]);
-
-            },  this).join(', ')  :
+            this.__external__.map(
+                name  =>  wrapper(name,  this[ name ])
+            ).join(', ')  :
             this.__external__.slice( 0 );
     }
 
     check() {
         var out_dep = this.getDependency();
 
-        this.forEach(function (module, index) {
+        this.forEach((module, index)  =>  {
 
             var parent = module.parent.filter(name => (name !== 'exports'));
 
@@ -151,10 +148,9 @@ class Package extends Array {
                 }
 
                 if ( out_dep[0] )
-                    parent = parent.filter(function () {
-
-                        return  (out_dep.indexOf( arguments[0] )  <  0);
-                    });
+                    parent = parent.filter(
+                        name  =>  (out_dep.indexOf( name )  <  0)
+                    );
             }
 
             if ( parent[0] )
@@ -165,7 +161,7 @@ class Package extends Array {
                 }`;
             else
                 console.info(`[Module converted] ${module.name}\n`);
-        }, this);
+        });
 
         return this;
     }

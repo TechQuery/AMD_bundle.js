@@ -1,17 +1,17 @@
 #! /usr/bin/env node
 
-console.log('');
+console.info('');
 
 
-const  Path = require('path'),  FS = require('fs'),
-       Command = require('commander');
+const  Path = require('path'),  FS = require('fs');
+
+const  Command = require('commander'),  Config = require('./package.json');
+
+const  Package = require('./libs/Package'),  Module = require('./libs/Module');
 
 
-const  Package = require('./libs/Package'),  Module = require('./libs/Module'),
-       Config = require('./package.json');
-
-
-Command.version( Config.version ).usage('<file> [options]')
+Command.version( Config.version ).usage('<dir> <file> [options]')
+    .arguments('<dir> <file>')
     .option(
         '-e, --external <items>',
         'Declare module names of external dependencies'
@@ -20,33 +20,31 @@ Command.version( Config.version ).usage('<file> [options]')
     .parse( process.argv );
 
 
-const  bundle = (new Package(
-           'index',  Command.external && Command.external.split(',')
-       )).parse(),
-       out_name = process.argv[2],
-       filter = Command.filter && require(
-           Path.join(process.cwd(), Command.filter)
-       );
+const bundle = new Package(
+        Command.args[0],
+        'index',
+        Command.external && Command.external.split(',')
+    ),
+    out_name = Command.args[1],
+    filter = Command.filter && require(
+        Path.join(process.cwd(), Command.filter)
+    );
 
 
 var name = Path.basename( out_name ).split('.')[0],
     out_dep = {
-        AMD:        bundle.getDependency(function () {
-
-            return `'${arguments[0]}'`;
-        }),
-        CJS:        bundle.getDependency(function () {
-
-            return `require('${arguments[0]}')`;
-        }),
-        global:     bundle.getDependency(function () {
-
-            return `this['${arguments[0]}']`;
-        }),
-        factory:    bundle.getDependency(function () {
-
-            return  Module.name2var( arguments[0] );
-        })
+        AMD:        bundle.getDependency(
+            name => `'${name}'`
+        ),
+        CJS:        bundle.getDependency(
+            name => `require('${name}')`
+        ),
+        global:     bundle.getDependency(
+            name => `this['${name}']`
+        ),
+        factory:    bundle.getDependency(
+            name  =>  Module.variableOf( name )
+        )
     };
 
 FS.writeFileSync(out_name, `
@@ -57,8 +55,8 @@ FS.writeFileSync(out_name, `
 
     if ((typeof define === 'function')  &&  define.amd)
         define('${name}',${
-            out_dep.AMD  ?  `  [${out_dep.AMD}], `  :  ''
-        } factory);
+    out_dep.AMD  ?  `  [${out_dep.AMD}], `  :  ''
+} factory);
     else if (typeof module === 'object')
         module.exports = factory(${out_dep.CJS});
     else

@@ -3,6 +3,10 @@
 **A command-line tool for bundling up [AMD](https://github.com/amdjs/amdjs-api/blob/master/AMD.md) modules**,
 which is much easier to use than [`r.js`](https://github.com/requirejs/r.js) with [Almond](https://github.com/requirejs/almond) or [AMDclean](https://github.com/gfranko/amdclean).
 
+[![NPM Dependency](https://david-dm.org/TechQuery/AMD_bundle.js.svg)](https://david-dm.org/TechQuery/AMD_bundle.js)
+
+[![NPM](https://nodei.co/npm/amd-bundle.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/amd-bundle/)
+
 
 
 ## Recommended Usage
@@ -15,18 +19,21 @@ cd path/to/project/root
 
 npm install amd-bundle --save-dev
 
-cd path/to/project/source/code
-
-amd-bundle path/to/project/bundle_name.js -e ext_dep_2,ext_dep_3
+amd-bundle
+    path/to/project/source/folder \
+    path/to/project/bundle_name.js \
+    -e ext_dep_2,ext_dep_3
 ```
 
 `amd-bundle` will
 
- 1. start bunding from the entry point `path/to/project/source/code/index.js`
+ 1. start bundling from the entry point `path/to/project/source/folder/index.js`
 
  2. write into `path/to/project/bundle_name.js` with only one `define('bundle_name', [ ])` and `global.bundle_name` definition, just like [UMD](https://github.com/umdjs/umd) style
 
- 3. automatically treat missing dependency files (`ext_dep_1.js` for example) as external dependencies (option `-e` is needed if some of these dependencies are required by modules in sub directories)
+ 3. try to find `${process.cwd()}/node_modules/${module_full_name}`, if one dependent module can't be found in the source folder
+
+ 4. automatically treat missing dependency files (`ext_dep_1.js` for example) as external dependencies (option `-e` is needed if some of these dependencies are required by modules in sub directories)
 
 
 ### More options
@@ -52,14 +59,19 @@ module.exports = function () {
 
 ### Advanced
 
-First, install [Uglify-JS](https://www.npmjs.com/package/uglify-js) as a development dependency:
+Build **standalone release files** (Full source code, Minimized code & Source map) by executing a single command (`npm run build`).
 
-```Shell
-npm install uglify-js --save-dev
-```
-Then, refer to [the `scripts` section of `package.json` in iQuery.js](https://github.com/TechQuery/iQuery.js/blob/master/package.json) and edit yours.
+#### Multiple bundles from one source
 
-From now on, you can build your **standalone release files** (Full source code, Minimized code & Source map) by executing a single command (`npm run build`).
+ - Development dependency: [UglifyJS](http://lisperator.net/uglifyjs/)
+
+ - **NPM-scripts** reference: [iQuery.js](https://github.com/TechQuery/iQuery.js/blob/master/package.json#L22)
+
+#### Bundle ECMAScript 6+ codes
+
+ - Development dependency: [Babel](https://babeljs.io/)
+
+ - **NPM-scripts** reference: [EasyWebApp.js](https://github.com/TechQuery/EasyWebApp.js/blob/V5/package.json#L6)
 
 
 
