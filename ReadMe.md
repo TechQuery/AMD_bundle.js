@@ -19,7 +19,7 @@ cd path/to/project/root
 
 npm install amd-bundle --save-dev
 
-amd-bundle
+amd-bundle \
     path/to/project/source/folder \
     path/to/project/bundle_name.js \
     -e ext_dep_2,ext_dep_3

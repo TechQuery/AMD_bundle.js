@@ -1,137 +1,111 @@
-'use strict';
+import {dirname, join} from 'path';
 
-const  Path = require('path'),  FS = require('fs');
+import {readFile} from 'fs';
+
+import {promisify} from 'util';
+
+const loadFile = promisify( readFile ), AMD_CJS = ['require', 'exports', 'module'];
 
 
 
-class Module {
+export default  class Module {
 
-    constructor(path, name) {
+    constructor(name, path) {
 
-        this.path = path,  this.name = name;
+        this.name = name;
 
-        this.level = 0,  this.parent = [ ],  this.child = [ ];
+        this.base = dirname( name ).replace(/\\/g, '/');
+
+        this.path = path;
+
+        this.dependency = {
+            compile:  { },
+            runtime:  [ ]
+        };
     }
 
-    static variableOf(name) {  return  name.replace(/\W/g, '_');  }
+    get identifier() {
 
-    parseParent(string, external) {
+        return  this.name.replace(/[./]+/g, '_').replace(/^_/, '');
+    }
 
-        if (! string)  return;
+    get dependencyPath() {
 
-        external = external.concat('exports');
+        return  Object.keys( this.dependency.compile )
+            .concat( this.dependency.runtime );
+    }
 
-        var root = this.name.replace(/[^/\\]*$/, '');
+    async load() {
 
-        return  this.parent = string.trim().split(/\s*,\s*/).map(parent => {
+        return  this.source = await loadFile(
+            join(this.path, `${this.name}.js`),  {encoding: 'utf-8'}
+        );
+    }
 
-            parent = parent.slice(1, -1);
+    prefix(name) {
 
-            return  (external.indexOf( parent )  >  -1)  ?
-                parent  :  Path.normalize( Path.join(root, parent) );
-        });
+        return  join(this.base, name).replace(/\\/g, '/');
+    }
+
+    parseAMD() {
+
+        const dependency = this.dependency.compile;
+
+        this.source = this.source.replace(
+            /define\((?:\s*\[([\s\S]*?)\]\s*,)?\s*function\s*\(([\s\S]*?)\)\s*\{([\s\S]+)\}\s*\);?/,
+            (_, modName, varName, body) => {
+
+                var index = 0;  varName = varName.trim().split( /\s*,\s*/ );
+
+                modName.replace(/(?:'|")(.+?)(?:'|")/g,  (_, name) => {
+
+                    if (! AMD_CJS.includes( name ))
+                        dependency[this.prefix( name )] = varName[ index ];
+
+                    index++;
+                });
+
+                return  body.replace(/\r\n/g, '\n').replace(/^\n([\s\S]+)\n$/, '$1');
+            }
+        );
+
+        return dependency;
     }
 
     parseCJS() {
 
-        const dependency = {module: ['exports'],  variable: ['exports']};
+        const dependency = this.dependency.runtime;
 
-        this.source = this.source.replace(
-            /^\s*(?:var|let|const) ([^{]+?);/mg,  (match, require) => {
+        this.source.replace(
+            /(?:=\s*)?require\(\s*(?:'|")(.+?)(?:'|")\s*\)/mg,  (match, modName) => {
 
-                return (
-                    require !== require.replace(
-                        /(\w+) = require\((?:'|")(.+?)(?:'|")\)/g,
-                        (_, varName, modName) => {
+                dependency.push( this.prefix( modName ) );
 
-                            dependency.module.push( modName );
-
-                            dependency.variable.push( varName );
-                        }
-                    )
-                ) ? '' : match;
+                return match;
             }
         );
 
-        this.source = `define(${
-            JSON.stringify( dependency.module )
-        },  function (${
-            dependency.variable
+        return dependency;
+    }
+
+    async parse() {
+
+        await this.load();
+
+        this.parseAMD();
+
+        this.parseCJS();
+
+        return  this.source = `function ${this.identifier}(${
+
+            Object.values( this.dependency.compile ).concat( AMD_CJS ).join(', ')
         }) {${
             this.source
-        }});`;
-
-        return this;
+        }}`;
     }
 
-    parseAMD(external) {
+    toString() {
 
-        var AMD, parentVar = '';
-
-        this.source = this.source.replace(
-            /define\((?:\s*\[([\s\S]*?)\]\s*,)?\s*function\s*\(([\s\S]*?)\)/,
-            (_, modName, varName) => {
-
-                AMD = true;
-
-                if (this.parseParent(modName,  external || [ ]))
-                    parentVar = varName.trim().split(/\s*,\s*/);
-
-                return  `(function (${parentVar  &&  parentVar.join(', ')})`;
-            }
-        );
-
-        if (! AMD)  return  this.parseCJS().parseAMD( external );
-
-        this.parent.referCount = parentVar.length;
-
-        return  this.parent.slice(0, parentVar.length);
+        return  ('source' in this)  ?  (this.source + '')  :  '';
     }
-
-    convert(external) {
-
-        try {
-            this.source = FS.readFileSync(
-                Path.join(this.path, `${this.name}.js`)
-            );
-        } catch (error) {
-
-            this.source = FS.readFileSync(`node_modules/${this.name}.js`);
-        }
-
-        this.source = this.source.toString('utf-8').trim();
-
-        var parentVar = this.parseAMD( external ), exports;
-
-        parentVar = parentVar.map(
-            name  =>  ((! exports)  &&  (exports = (name === 'exports')))  ?
-                '{ }'  :  Module.variableOf( name )
-        );
-
-        this.source = this.source.replace(
-            /\}\);?$/,
-            `${
-                exports  ?  '\n    return exports;\n\n'  :  ''
-            }})(${
-                parentVar.join(', ')
-            });`
-        );
-
-        return this;
-    }
-
-    export(toReturn) {
-
-        if (! this.source)  return;
-
-        toReturn = toReturn  ?
-            'return '  :  `var ${Module.variableOf( this.name )} =`;
-
-        this.source = this.source.replace(/^\(function/m,  `${toReturn} $&`);
-    }
-
-    toString() {  return  this.source || '';  }
 }
-
-
-module.exports = Module;
