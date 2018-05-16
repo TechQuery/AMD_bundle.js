@@ -8,7 +8,10 @@ export function join(base, path) {
     return  (base + '/' + path)
         .replace(/\/\//g, '/')
         .replace(/[^/\.]+\/\.\.\//g, '')
-        .replace(/^\.\/|\/\./g, '');
+        .replace(/\.\//g,  function (match, index, input) {
+
+            return  (input[index - 1]  ===  '.')  ?  match  :  '';
+        });
 }
 
 
@@ -25,27 +28,46 @@ export default  class Package {
         this.module = { };
     }
 
-    register(module) {
+    register(modName) {
 
-        const index = this.module[ module.name ];
+        const index = this.module[ modName ];  var module;
 
-        if (index != null)  Array.prototype.splice.call(this, -index, 1);
+        if (index != null)
+            module = Array.prototype.splice.call(this, -index, 1)[0];
+        else
+            module = new Module(modName, this.base);
 
         Array.prototype.unshift.call(this, module);
 
-        this.module[ module.name ] = this.length;
+        this.module[ modName ] = this.length;
+
+        return module;
     }
 
-    async parse(modName) {
+    get entry() {  return  this[this.length - 1];  }
 
-        const module = new Module(modName, this.base);
+    hasCircular(module, parent) {
+
+        parent.children.push( module );
+
+        try {  JSON.stringify( this.entry );  } catch (error) {
+
+            if ( error.message.includes('circular') )
+                return  (!! parent.children.pop());
+        }
+    }
+
+    async parse(modName, parent) {
+
+        const module = this.register( modName );
+
+        if (parent  &&  this.hasCircular(module, parent))
+            return  console.warn(`Module "${modName}" has a circular reference`);
 
         await module.parse();
 
-        this.register( module );
-
         await Promise.all(
-            module.dependencyPath.map(path  =>  this.parse( path ))
+            module.dependencyPath.map(path  =>  this.parse(path, module))
         );
     }
 
@@ -53,7 +75,8 @@ export default  class Package {
 
         await this.parse( basename( this.path ) );
 
-        return `
+        return `function () {
+
     var module = {
         ${Array.from(
         this,  item => `'${item.name}':  {exports: { }}`
@@ -74,14 +97,16 @@ ${Array.from(this,  item => item.source).join('\n\n')}
     ${Array.from(this,  item => `module['${item.name}'].exports = ${item.identifier}(${
 
         Object.keys( item.dependency.compile ).map(
-            parent => `require('${parent}')`
+            child => `require('${child}')`
         ).concat(
-            `_require_.bind(null, '${item.name}')`,
+            `_require_.bind(null, '${item.base}')`,
             `require('${item.name}')`,
             `module['${item.name}']`
         ).join(', ')
 
     }) || require('${item.name}');`).join('\n\n    ')}
-`;
+
+    return require('${this.entry.name}');
+}`;
     }
 }

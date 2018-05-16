@@ -37,15 +37,13 @@ describe('Module parser',  () => {
      */
     it('Parse CommonJS',  () => {
 
-        module.parseCJS().should.be.eql( ['c'] );
+        module.parseCJS().should.be.eql( {c: 'C'} );
     });
 
     /**
      * @test {Module#parse}
      */
     it('Parse all',  () => {
-
-        module.dependency.runtime.length = 0;
 
         return module.parse().should.be.fulfilledWith(`
 function index(A, require, exports, module) {/* AMD module */
@@ -75,17 +73,15 @@ describe('Package bundler',  () => {
      */
     it('Register module',  () => {
 
-        pack.register({name: './a'});
+        pack.register('a');
 
-        pack.register({name: './b'});
+        pack.register('b');
 
-        pack.register({name: './c'});
+        pack.register('c');
 
-        pack.register({name: './b'});
+        pack.register('b');
 
-        Array.from( pack ).should.be.eql([
-            {name: './b'},  {name: './c'},  {name: './a'}
-        ]);
+        Array.from(pack,  module => module.name).should.be.eql(['b', 'c', 'a']);
     });
 
     /**
@@ -102,8 +98,27 @@ describe('Package bundler',  () => {
         ]);
     });
 
+
     it('Join module paths',  async () => {
 
         join('./../test//../', './example').should.be.equal('../example');
+    });
+
+    /**
+     * @test {Package#bundle}
+     */
+    it('Evaluate factory function',  async () => {
+
+        const factory = await (new Package('./test/example/index')).bundle();
+
+        try {
+            eval(`(${factory})()`).should.be.eql({
+                a:  'This is A',
+                c:  'This is C'
+            });
+        } catch (error) {
+
+            console.warn( factory );  throw error;
+        }
     });
 });

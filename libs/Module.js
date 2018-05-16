@@ -20,8 +20,10 @@ export default  class Module {
 
         this.dependency = {
             compile:  { },
-            runtime:  [ ]
+            runtime:  { }
         };
+
+        this.children = [ ];
     }
 
     get identifier() {
@@ -31,8 +33,9 @@ export default  class Module {
 
     get dependencyPath() {
 
-        return  Object.keys( this.dependency.compile )
-            .concat( this.dependency.runtime );
+        return  Object.keys( this.dependency.compile ).concat(
+            Object.keys( this.dependency.runtime )
+        );
     }
 
     async load() {
@@ -42,14 +45,12 @@ export default  class Module {
         );
     }
 
-    prefix(name) {
+    addChild(type, name, varName) {
 
-        return  join(this.base, name).replace(/\\/g, '/');
+        this.dependency[ type ][ join(this.base, name).replace(/\\/g, '/') ] = varName;
     }
 
     parseAMD() {
-
-        const dependency = this.dependency.compile;
 
         this.source = this.source.replace(
             /define\((?:\s*\[([\s\S]*?)\]\s*,)?\s*function\s*\(([\s\S]*?)\)\s*\{([\s\S]+)\}\s*\);?/,
@@ -60,7 +61,7 @@ export default  class Module {
                 modName.replace(/(?:'|")(.+?)(?:'|")/g,  (_, name) => {
 
                     if (! AMD_CJS.includes( name ))
-                        dependency[this.prefix( name )] = varName[ index ];
+                        this.addChild('compile',  name,  varName[ index ]);
 
                     index++;
                 });
@@ -69,23 +70,18 @@ export default  class Module {
             }
         );
 
-        return dependency;
+        return this.dependency.compile;
     }
 
     parseCJS() {
 
-        const dependency = this.dependency.runtime;
-
         this.source.replace(
-            /(?:=\s*)?require\(\s*(?:'|")(.+?)(?:'|")\s*\)/mg,  (match, modName) => {
-
-                dependency.push( this.prefix( modName ) );
-
-                return match;
-            }
+            /(?:(?:var|let|const)\s+(.+?)\s*=\s*)?require\(\s*(?:'|")(.+?)(?:'|")\s*\)/mg,
+            (match, varName, modName)  =>
+                this.addChild('runtime', modName, varName)  ||  match
         );
 
-        return dependency;
+        return this.dependency.runtime;
     }
 
     async parse() {
