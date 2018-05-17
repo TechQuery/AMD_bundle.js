@@ -31,16 +31,61 @@
     
   <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/libs/Module.js~Module.html">Module</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/libs/Package.js~Package.html">Package</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-join">join</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getNPMFile">getNPMFile</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getNPMIndex">getNPMIndex</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getNPMPackage">getNPMPackage</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-merge">merge</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-loadFile">loadFile</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-DependencyMap">DependencyMap</a></span></span></li>
 </ul>
 </div>
 </nav>
 
 <div class="content" data-ice="content"><h1 data-ice="title">test/index.js</h1>
-<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import Module from &apos;../libs/Module&apos;;
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import {merge, getNPMFile, getNPMIndex, getNPMPackage} from &apos;../libs/utility&apos;;
 
-import Package, {join} from &apos;../libs/Package&apos;;
+import Module from &apos;../libs/Module&apos;;
+
+import Package from &apos;../libs/Package&apos;;
+
+
+describe(&apos;Utility&apos;,  () =&gt; {
+    /**
+     * @test {merge}
+     */
+    it(&apos;Merge module paths&apos;,  () =&gt; {
+
+        merge(&apos;./../test//../&apos;, &apos;./example&apos;).should.be.equal(&apos;../example&apos;);
+    });
+
+    /**
+     * @test {getNPMFile}
+     */
+    it(&apos;Get path of JS modules&apos;,  () =&gt; {
+
+        getNPMFile(&apos;test&apos;).should.be.equal(&apos;node_modules/test.js&apos;);
+    });
+
+    /**
+     * @test {getNPMIndex}
+     */
+    it(&apos;Get &quot;index.js&quot; path of a module&apos;,  () =&gt; {
+
+        getNPMIndex(&apos;koapache/source&apos;).should.be.equal(
+            &apos;node_modules/koapache/source/index.js&apos;
+        );
+    });
+
+    /**
+     * @test {getNPMPackage}
+     */
+    it(&apos;Get entry file path from &quot;package.json&quot; of a module&apos;,  () =&gt; {
+
+        getNPMPackage(&apos;koapache&apos;).should.be.equal(
+            &apos;node_modules/koapache/source/index.js&apos;
+        );
+    });
+});
 
 
 /**
@@ -50,25 +95,20 @@ describe(&apos;Module parser&apos;,  () =&gt; {
 
     var module;
 
-    before(() =&gt; {
-
-        module = new Module(&apos;index&apos;, &apos;./test/example/&apos;);
-
-        return module.load();
-    });
+    before(()  =&gt;  (module = new Module(&apos;index&apos;, &apos;./test/example/&apos;)).load());
 
     /**
      * @test {Module#parseAMD}
      */
-    it(&apos;Parse AMD&apos;,  async () =&gt; {
+    it(&apos;Parse AMD&apos;,  () =&gt; {
 
-        module.parseAMD().should.be.eql( {a: &apos;A&apos;} );
+        module.parseAMD().should.be.eql( {&apos;./a&apos;: &apos;A&apos;} );
 
         (module + &apos;&apos;).should.be.equal(`/* AMD module */
 
     var C = require(&apos;./c&apos;);
 
-    return  {a: A, c: C};
+    return  {a: A, c: C, test: require(&apos;test&apos;)};
 `);
     });
 
@@ -77,29 +117,28 @@ describe(&apos;Module parser&apos;,  () =&gt; {
      */
     it(&apos;Parse CommonJS&apos;,  () =&gt; {
 
-        module.parseCJS().should.be.eql( {c: &apos;C&apos;} );
+        module.parseCJS().should.be.eql( {&apos;./c&apos;: &apos;C&apos;} );
     });
 
     /**
      * @test {Module#parse}
      */
-    it(&apos;Parse all&apos;,  () =&gt; {
+    it(&apos;Parse all&apos;,  () =&gt; module.parse().should.be.fulfilledWith(`
 
-        return module.parse().should.be.fulfilledWith(`
 function index(A, require, exports, module) {/* AMD module */
 
     var C = require(&apos;./c&apos;);
 
-    return  {a: A, c: C};
-}`.trim());
-    });
+    return  {a: A, c: C, test: require(&apos;test&apos;)};
+}`.trim())
+    );
 
     /**
      * @test {Module#dependencyPath}
      */
     it(&apos;Get paths of the dependency&apos;,  () =&gt; {
 
-        module.dependencyPath.should.be.eql( [&apos;a&apos;, &apos;c&apos;] );
+        module.dependencyPath.should.be.eql( [&apos;./a&apos;, &apos;./c&apos;] );
     });
 });
 
@@ -134,19 +173,11 @@ describe(&apos;Package bundler&apos;,  () =&gt; {
 
         pack = new Package(&apos;./test/example/index&apos;);
 
-        await pack.parse(&apos;index&apos;);
+        await pack.parse(&apos;./index&apos;);
 
         Array.from(pack,  module =&gt; module.name).should.be.eql([
-            &apos;c&apos;,  &apos;libs/b&apos;,  &apos;a&apos;,  &apos;index&apos;
+            &apos;./c&apos;,  &apos;./libs/b&apos;,  &apos;./a&apos;,  &apos;./index&apos;
         ]);
-    });
-
-    /**
-     * @test {join}
-     */
-    it(&apos;Join module paths&apos;,  async () =&gt; {
-
-        join(&apos;./../test//../&apos;, &apos;./example&apos;).should.be.equal(&apos;../example&apos;);
     });
 
     /**
@@ -154,12 +185,13 @@ describe(&apos;Package bundler&apos;,  () =&gt; {
      */
     it(&apos;Evaluate factory function&apos;,  async () =&gt; {
 
-        const factory = await (new Package(&apos;./test/example/index&apos;)).bundle();
+        const factory = await (new Package(&apos;./test/example/index&apos;, true)).bundle();
 
         try {
             eval(`(${factory})()`).should.be.eql({
-                a:  &apos;This is A&apos;,
-                c:  &apos;This is C&apos;
+                a:     &apos;This is A&apos;,
+                c:     &apos;This is C&apos;,
+                test:  {test: 1}
             });
         } catch (error) {
 

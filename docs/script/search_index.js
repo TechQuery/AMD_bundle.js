@@ -12,69 +12,117 @@ window.esdocSearchIndex = [
     "class"
   ],
   [
-    "amd-bundle/libs/package.js~join",
-    "function/index.html#static-function-join",
-    "<span>join</span> <span class=\"search-result-import-path\">amd-bundle/libs/Package.js</span>",
+    "amd-bundle/libs/utility.js~getnpmfile",
+    "function/index.html#static-function-getNPMFile",
+    "<span>getNPMFile</span> <span class=\"search-result-import-path\">amd-bundle/libs/utility.js</span>",
+    "function"
+  ],
+  [
+    "amd-bundle/libs/utility.js~getnpmindex",
+    "function/index.html#static-function-getNPMIndex",
+    "<span>getNPMIndex</span> <span class=\"search-result-import-path\">amd-bundle/libs/utility.js</span>",
+    "function"
+  ],
+  [
+    "amd-bundle/libs/utility.js~getnpmpackage",
+    "function/index.html#static-function-getNPMPackage",
+    "<span>getNPMPackage</span> <span class=\"search-result-import-path\">amd-bundle/libs/utility.js</span>",
+    "function"
+  ],
+  [
+    "amd-bundle/libs/utility.js~loadfile",
+    "variable/index.html#static-variable-loadFile",
+    "<span>loadFile</span> <span class=\"search-result-import-path\">amd-bundle/libs/utility.js</span>",
+    "variable"
+  ],
+  [
+    "amd-bundle/libs/utility.js~merge",
+    "function/index.html#static-function-merge",
+    "<span>merge</span> <span class=\"search-result-import-path\">amd-bundle/libs/utility.js</span>",
     "function"
   ],
   [
     "module libs/module.js~module,module",
-    "test-file/test/index.js.html#lineNumber9",
+    "test-file/test/index.js.html#lineNumber50",
     "Module parser",
     "test"
   ],
   [
     "module#dependencypath libs/module.js~module#dependencypath,module#dependencypath",
-    "test-file/test/index.js.html#lineNumber60",
+    "test-file/test/index.js.html#lineNumber95",
     "Module parser Get paths of the dependency",
     "test"
   ],
   [
     "module#parseamd libs/module.js~module#parseamd,module#parseamd",
-    "test-file/test/index.js.html#lineNumber23",
+    "test-file/test/index.js.html#lineNumber59",
     "Module parser Parse AMD",
     "test"
   ],
   [
     "module#parsecjs libs/module.js~module#parsecjs,module#parsecjs",
-    "test-file/test/index.js.html#lineNumber38",
+    "test-file/test/index.js.html#lineNumber74",
     "Module parser Parse CommonJS",
     "test"
   ],
   [
     "module#parse libs/module.js~module#parse,module#parse",
-    "test-file/test/index.js.html#lineNumber46",
+    "test-file/test/index.js.html#lineNumber82",
     "Module parser Parse all",
     "test"
   ],
   [
     "package libs/package.js~package,package",
-    "test-file/test/index.js.html#lineNumber70",
+    "test-file/test/index.js.html#lineNumber105",
     "Package bundler",
     "test"
   ],
   [
     "package#bundle libs/package.js~package#bundle,package#bundle",
-    "test-file/test/index.js.html#lineNumber115",
+    "test-file/test/index.js.html#lineNumber142",
     "Package bundler Evaluate factory function",
     "test"
   ],
   [
-    "join libs/package.js~join,join",
-    "test-file/test/index.js.html#lineNumber107",
-    "Package bundler Join module paths",
-    "test"
-  ],
-  [
     "package#parse libs/package.js~package#parse,package#parse",
-    "test-file/test/index.js.html#lineNumber93",
+    "test-file/test/index.js.html#lineNumber128",
     "Package bundler Parse package",
     "test"
   ],
   [
     "package#register libs/package.js~package#register,package#register",
-    "test-file/test/index.js.html#lineNumber77",
+    "test-file/test/index.js.html#lineNumber112",
     "Package bundler Register module",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/index.js.html#lineNumber8",
+    "Utility",
+    "test"
+  ],
+  [
+    "getnpmindex libs/utility.js~getnpmindex,getnpmindex",
+    "test-file/test/index.js.html#lineNumber28",
+    "Utility Get \"index.js\" path of a module",
+    "test"
+  ],
+  [
+    "getnpmpackage libs/utility.js~getnpmpackage,getnpmpackage",
+    "test-file/test/index.js.html#lineNumber38",
+    "Utility Get entry file path from \"package.json\" of a module",
+    "test"
+  ],
+  [
+    "getnpmfile libs/utility.js~getnpmfile,getnpmfile",
+    "test-file/test/index.js.html#lineNumber20",
+    "Utility Get path of JS modules",
+    "test"
+  ],
+  [
+    "merge libs/utility.js~merge,merge",
+    "test-file/test/index.js.html#lineNumber12",
+    "Utility Merge module paths",
     "test"
   ],
   [
@@ -450,6 +498,12 @@ window.esdocSearchIndex = [
     "member"
   ],
   [
+    "libs/module.js~module#searchnpm",
+    "class/libs/Module.js~Module.html#instance-method-searchNPM",
+    "libs/Module.js~Module#searchNPM",
+    "method"
+  ],
+  [
     "libs/module.js~module#source",
     "class/libs/Module.js~Module.html#instance-member-source",
     "libs/Module.js~Module#source",
@@ -498,6 +552,12 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
+    "libs/package.js~package#includeall",
+    "class/libs/Package.js~Package.html#instance-member-includeAll",
+    "libs/Package.js~Package#includeAll",
+    "member"
+  ],
+  [
     "libs/package.js~package#length",
     "class/libs/Package.js~Package.html#instance-member-length",
     "libs/Package.js~Package#length",
@@ -526,6 +586,12 @@ window.esdocSearchIndex = [
     "class/libs/Package.js~Package.html#instance-method-register",
     "libs/Package.js~Package#register",
     "method"
+  ],
+  [
+    "libs/utility.js",
+    "file/libs/utility.js.html",
+    "libs/utility.js",
+    "file"
   ],
   [
     "test/example/a.js",

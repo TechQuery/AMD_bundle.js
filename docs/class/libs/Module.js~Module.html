@@ -31,20 +31,24 @@
     
   <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/libs/Module.js~Module.html">Module</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/libs/Package.js~Package.html">Package</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-join">join</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getNPMFile">getNPMFile</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getNPMIndex">getNPMIndex</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getNPMPackage">getNPMPackage</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-merge">merge</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-loadFile">loadFile</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-DependencyMap">DependencyMap</a></span></span></li>
 </ul>
 </div>
 </nav>
 
 <div class="content" data-ice="content"><div class="header-notice">
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import Module from &apos;<span><a href="file/libs/Module.js.html#lineNumber20">amd-bundle/libs/Module.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import Module from &apos;<span><a href="file/libs/Module.js.html#lineNumber18">amd-bundle/libs/Module.js</a></span>&apos;</code></pre></div>
   <span data-ice="access">public</span>
   <span data-ice="kind">class</span>
   
   
   
-  <span data-ice="source">| <span><a href="file/libs/Module.js.html#lineNumber20">source</a></span></span>
+  <span data-ice="source">| <span><a href="file/libs/Module.js.html#lineNumber18">source</a></span></span>
 </div>
 
 <div class="self-detail detail">
@@ -76,7 +80,7 @@
     <h4>Test:</h4>
     <ul>
       
-    <li data-ice="test"><span><a href="test-file/test/index.js.html#lineNumber9">Module parser</a></span></li>
+    <li data-ice="test"><span><a href="test-file/test/index.js.html#lineNumber50">Module parser</a></span></li>
 </ul>
   </div>
 
@@ -103,7 +107,7 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/libs/Module.js~Module.html#instance-constructor-constructor">constructor</a></span></span><span class="code" data-ice="signature">(name: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, path: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>)</span>
+          <span class="code" data-ice="name"><span><a href="class/libs/Module.js~Module.html#instance-constructor-constructor">constructor</a></span></span><span class="code" data-ice="signature">(name: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, path: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, includeAll: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>)</span>
         </p>
       </div>
       <div>
@@ -230,7 +234,7 @@
       <div>
         
         
-        <div data-ice="description"><p>Paths of all the dependency</p>
+        <div data-ice="description"><p>Paths of all the dependency needed to be bundled</p>
 </div>
       </div>
     </td>
@@ -373,34 +377,6 @@
       <div>
         <p>
           
-          
-          
-          <span class="code" data-ice="name"><span><a href="class/libs/Module.js~Module.html#instance-method-addChild">addChild</a></span></span><span class="code" data-ice="signature">(type: <span>*</span>, name: <span>*</span>, varName: <span>*</span>)</span>
-        </p>
-      </div>
-      <div>
-        
-        
-        
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      
-      
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-          
           <span data-ice="async">async</span>
           
           <span class="code" data-ice="name"><span><a href="class/libs/Module.js~Module.html#instance-method-parse">parse</a></span></span><span class="code" data-ice="signature">(): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></span>
@@ -452,6 +428,35 @@
   <tbody>
   
   <tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">protected</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          
+          <span class="code" data-ice="name"><span><a href="class/libs/Module.js~Module.html#instance-method-addChild">addChild</a></span></span><span class="code" data-ice="signature">(type: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, name: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, varName: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>)</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Add a depended module of this module</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
     <td>
       <span class="access" data-ice="access">protected</span>
       
@@ -535,6 +540,34 @@
       
     </td>
   </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">protected</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          
+          <span class="code" data-ice="name"><span><a href="class/libs/Module.js~Module.html#instance-method-searchNPM">searchNPM</a></span></span><span class="code" data-ice="signature">(): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
 </tbody>
 </table>
 </div>
@@ -553,11 +586,11 @@
     
     
     
-    <span class="code" data-ice="name">constructor</span><span class="code" data-ice="signature">(name: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, path: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>)</span>
+    <span class="code" data-ice="name">constructor</span><span class="code" data-ice="signature">(name: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, path: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, includeAll: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>)</span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/libs/Module.js.html#lineNumber25">source</a></span></span>
+      <span data-ice="source"><span><a href="file/libs/Module.js.html#lineNumber24">source</a></span></span>
     </span>
   </h3>
 
@@ -588,6 +621,13 @@
       <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></td>
       <td data-ice="appendix"></td>
       <td data-ice="description"><p>Root path of the package which this module belongs to</p>
+</td>
+    </tr>
+<tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">includeAll</td>
+      <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p>Treat NPM modules as CommonJS modules</p>
 </td>
     </tr>
 </tbody>
@@ -627,7 +667,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/libs/Module.js.html#lineNumber38">source</a></span></span>
+      <span data-ice="source"><span><a href="file/libs/Module.js.html#lineNumber37">source</a></span></span>
     </span>
   </h3>
 
@@ -671,7 +711,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/libs/Module.js.html#lineNumber62">source</a></span></span>
+      <span data-ice="source"><span><a href="file/libs/Module.js.html#lineNumber63">source</a></span></span>
     </span>
   </h3>
 
@@ -738,14 +778,21 @@
       <td data-ice="name" class="code" data-depth="0">compile</td>
       <td data-ice="type" class="code"><span><a href="typedef/index.html#static-typedef-DependencyMap">DependencyMap</a></span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"><p>Compile-time dependency</p>
+      <td data-ice="description"><p>Compile-time dependency from AMD</p>
 </td>
     </tr>
 <tr data-ice="property" data-depth="0">
       <td data-ice="name" class="code" data-depth="0">runtime</td>
       <td data-ice="type" class="code"><span><a href="typedef/index.html#static-typedef-DependencyMap">DependencyMap</a></span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"><p>Runtime dependency</p>
+      <td data-ice="description"><p>Runtime dependency from CommonJS</p>
+</td>
+    </tr>
+<tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">outside</td>
+      <td data-ice="type" class="code"><span><a href="typedef/index.html#static-typedef-DependencyMap">DependencyMap</a></span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p>Outside dependency from NPM</p>
 </td>
     </tr>
 </tbody>
@@ -782,14 +829,14 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/libs/Module.js.html#lineNumber80">source</a></span></span>
+      <span data-ice="source"><span><a href="file/libs/Module.js.html#lineNumber78">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  <div data-ice="description"><p>Paths of all the dependency</p>
+  <div data-ice="description"><p>Paths of all the dependency needed to be bundled</p>
 </div>
 
   
@@ -813,7 +860,7 @@
     <h4>Test:</h4>
     <ul>
       
-    <li data-ice="test"><span><a href="test-file/test/index.js.html#lineNumber60">Module parser Get paths of the dependency</a></span></li>
+    <li data-ice="test"><span><a href="test-file/test/index.js.html#lineNumber95">Module parser Get paths of the dependency</a></span></li>
 </ul>
   </div>
 
@@ -832,7 +879,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/libs/Module.js.html#lineNumber70">source</a></span></span>
+      <span data-ice="source"><span><a href="file/libs/Module.js.html#lineNumber71">source</a></span></span>
     </span>
   </h3>
 
@@ -876,7 +923,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/libs/Module.js.html#lineNumber31">source</a></span></span>
+      <span data-ice="source"><span><a href="file/libs/Module.js.html#lineNumber30">source</a></span></span>
     </span>
   </h3>
 
@@ -920,7 +967,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/libs/Module.js.html#lineNumber45">source</a></span></span>
+      <span data-ice="source"><span><a href="file/libs/Module.js.html#lineNumber44">source</a></span></span>
     </span>
   </h3>
 
@@ -964,7 +1011,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/libs/Module.js.html#lineNumber111">source</a></span></span>
+      <span data-ice="source"><span><a href="file/libs/Module.js.html#lineNumber107">source</a></span></span>
     </span>
   </h3>
 
@@ -999,77 +1046,6 @@
 <div data-ice="methodDetails"><h2 data-ice="title">Public Methods</h2>
 
 <div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-method-addChild">
-    <span class="access" data-ice="access">public</span>
-    
-    
-    
-    
-    
-    <span class="code" data-ice="name">addChild</span><span class="code" data-ice="signature">(type: <span>*</span>, name: <span>*</span>, varName: <span>*</span>)</span>
-    <span class="right-info">
-      
-      
-      <span data-ice="source"><span><a href="file/libs/Module.js.html#lineNumber99">source</a></span></span>
-    </span>
-  </h3>
-
-  
-  
-  
-  
-
-  
-
-  <div data-ice="properties"><div data-ice="properties">
-  <h4 data-ice="title">Params:</h4>
-  <table class="params">
-    <thead>
-    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
-    </thead>
-    <tbody>
-    
-    <tr data-ice="property" data-depth="0">
-      <td data-ice="name" class="code" data-depth="0">type</td>
-      <td data-ice="type" class="code"><span>*</span></td>
-      <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
-    </tr>
-<tr data-ice="property" data-depth="0">
-      <td data-ice="name" class="code" data-depth="0">name</td>
-      <td data-ice="type" class="code"><span>*</span></td>
-      <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
-    </tr>
-<tr data-ice="property" data-depth="0">
-      <td data-ice="name" class="code" data-depth="0">varName</td>
-      <td data-ice="type" class="code"><span>*</span></td>
-      <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
-    </tr>
-</tbody>
-  </table>
-</div>
-</div>
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-  
-</div>
-<div class="detail" data-ice="detail">
   <h3 data-ice="anchor" id="instance-method-parse">
     <span class="access" data-ice="access">public</span>
     
@@ -1081,7 +1057,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/libs/Module.js.html#lineNumber151">source</a></span></span>
+      <span data-ice="source"><span><a href="file/libs/Module.js.html#lineNumber182">source</a></span></span>
     </span>
   </h3>
 
@@ -1124,7 +1100,7 @@
     <h4>Test:</h4>
     <ul>
       
-    <li data-ice="test"><span><a href="test-file/test/index.js.html#lineNumber46">Module parser Parse all</a></span></li>
+    <li data-ice="test"><span><a href="test-file/test/index.js.html#lineNumber82">Module parser Parse all</a></span></li>
 </ul>
   </div>
 
@@ -1143,7 +1119,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/libs/Module.js.html#lineNumber170">source</a></span></span>
+      <span data-ice="source"><span><a href="file/libs/Module.js.html#lineNumber201">source</a></span></span>
     </span>
   </h3>
 
@@ -1190,6 +1166,81 @@
 <h2 data-ice="title">Protected Methods</h2>
 
 <div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-addChild">
+    <span class="access" data-ice="access">protected</span>
+    
+    
+    
+    
+    
+    <span class="code" data-ice="name">addChild</span><span class="code" data-ice="signature">(type: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, name: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, varName: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>)</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/libs/Module.js.html#lineNumber124">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>Add a depended module of this module</p>
+</div>
+
+  
+
+  <div data-ice="properties"><div data-ice="properties">
+  <h4 data-ice="title">Params:</h4>
+  <table class="params">
+    <thead>
+    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+    
+    <tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">type</td>
+      <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p><code>compile</code> for AMD &amp; <code>runtime</code> for CJS</p>
+</td>
+    </tr>
+<tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">name</td>
+      <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p>Name of a module</p>
+</td>
+    </tr>
+<tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">varName</td>
+      <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p>Variable name of a module in another module</p>
+</td>
+    </tr>
+</tbody>
+  </table>
+</div>
+</div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
   <h3 data-ice="anchor" id="instance-method-load">
     <span class="access" data-ice="access">protected</span>
     
@@ -1201,7 +1252,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/libs/Module.js.html#lineNumber92">source</a></span></span>
+      <span data-ice="source"><span><a href="file/libs/Module.js.html#lineNumber105">source</a></span></span>
     </span>
   </h3>
 
@@ -1257,7 +1308,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/libs/Module.js.html#lineNumber109">source</a></span></span>
+      <span data-ice="source"><span><a href="file/libs/Module.js.html#lineNumber142">source</a></span></span>
     </span>
   </h3>
 
@@ -1300,7 +1351,7 @@
     <h4>Test:</h4>
     <ul>
       
-    <li data-ice="test"><span><a href="test-file/test/index.js.html#lineNumber23">Module parser Parse AMD</a></span></li>
+    <li data-ice="test"><span><a href="test-file/test/index.js.html#lineNumber59">Module parser Parse AMD</a></span></li>
 </ul>
   </div>
 
@@ -1319,7 +1370,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/libs/Module.js.html#lineNumber137">source</a></span></span>
+      <span data-ice="source"><span><a href="file/libs/Module.js.html#lineNumber168">source</a></span></span>
     </span>
   </h3>
 
@@ -1362,9 +1413,65 @@
     <h4>Test:</h4>
     <ul>
       
-    <li data-ice="test"><span><a href="test-file/test/index.js.html#lineNumber38">Module parser Parse CommonJS</a></span></li>
+    <li data-ice="test"><span><a href="test-file/test/index.js.html#lineNumber74">Module parser Parse CommonJS</a></span></li>
 </ul>
   </div>
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-searchNPM">
+    <span class="access" data-ice="access">protected</span>
+    
+    
+    
+    
+    
+    <span class="code" data-ice="name">searchNPM</span><span class="code" data-ice="signature">(): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/libs/Module.js.html#lineNumber90">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tbody>
+        <tr>
+          <td class="return-type code" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span> (nullable: true)</td>
+          <td class="return-desc" data-ice="returnDescription"><p>Entry file path of this module in <code>./node_modules/</code></p>
+</td>
+        </tr>
+      </tbody>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
 
   
   

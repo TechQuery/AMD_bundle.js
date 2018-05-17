@@ -31,7 +31,11 @@
     
   <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/libs/Module.js~Module.html">Module</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/libs/Package.js~Package.html">Package</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-join">join</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getNPMFile">getNPMFile</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getNPMIndex">getNPMIndex</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getNPMPackage">getNPMPackage</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-merge">merge</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-loadFile">loadFile</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-DependencyMap">DependencyMap</a></span></span></li>
 </ul>
 </div>
@@ -40,12 +44,10 @@
 <div class="content" data-ice="content"><h1 data-ice="title">libs/Module.js</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import {dirname, join} from &apos;path&apos;;
 
-import {readFile} from &apos;fs&apos;;
+import * as Utility from &apos;./utility&apos;;
 
-import {promisify} from &apos;util&apos;;
 
-const loadFile = promisify( readFile ), AMD_CJS = [&apos;require&apos;, &apos;exports&apos;, &apos;module&apos;];
-
+const AMD_CJS = [&apos;require&apos;, &apos;exports&apos;, &apos;module&apos;];
 
 /**
  * Key for module path &amp; value for local variable
@@ -59,10 +61,11 @@ const loadFile = promisify( readFile ), AMD_CJS = [&apos;require&apos;, &apos;ex
  */
 export default  class Module {
     /**
-     * @param {string} name - Path of this module
-     * @param {string} path - Root path of the package which this module belongs to
+     * @param {string}  name       - Path of this module
+     * @param {string}  path       - Root path of the package which this module belongs to
+     * @param {boolean} includeAll - Treat NPM modules as CommonJS modules
      */
-    constructor(name, path) {
+    constructor(name, path, includeAll) {
         /**
          * Path of this module
          *
@@ -86,12 +89,14 @@ export default  class Module {
 
         /**
          * @type     {Object}
-         * @property {DependencyMap} compile - Compile-time dependency
-         * @property {DependencyMap} runtime - Runtime dependency
+         * @property {DependencyMap} compile - Compile-time dependency from AMD
+         * @property {DependencyMap} runtime - Runtime dependency from CommonJS
+         * @property {DependencyMap} outside - Outside dependency from NPM
          */
         this.dependency = {
             compile:  { },
-            runtime:  { }
+            runtime:  { },
+            outside:  includeAll ? null : { }
         };
 
         /**
@@ -107,13 +112,10 @@ export default  class Module {
      *
      * @type {string}
      */
-    get identifier() {
-
-        return  this.name.replace(/[./]+/g, &apos;_&apos;).replace(/^_/, &apos;&apos;);
-    }
+    get identifier() {  return  this.name.replace(/[./]+/g, &apos;_&apos;);  }
 
     /**
-     * Paths of all the dependency
+     * Paths of all the dependency needed to be bundled
      *
      * @type {string[]}
      */
@@ -127,18 +129,53 @@ export default  class Module {
     /**
      * @protected
      *
+     * @return {?string} Entry file path of this module in `./node_modules/`
+     */
+    searchNPM() {
+
+        for (let method  of  [&apos;getNPMFile&apos;, &apos;getNPMPackage&apos;, &apos;getNPMIndex&apos;]) {
+
+            let path;
+
+            if (path = Utility[method]( this.name ))  return path;
+        }
+    }
+
+    /**
+     * @protected
+     *
      * @return {string} Original source code of this module
      */
     async load() {
 
-        return  this.source = (await loadFile(
-            join(this.path, `${this.name}.js`),  {encoding: &apos;utf-8&apos;}
-        )).replace(/\r\n/g, &apos;\n&apos;);
+        this.source = await Utility.loadFile(
+            ((! this.dependency.outside)  &amp;&amp;  /^\w/.test( this.name ))  ?
+                this.searchNPM()  :  join(this.path, `${this.name}.js`)
+        );
+
+        return  this.source = (this.source + &apos;&apos;).replace(/\r\n/g, &apos;\n&apos;);
     }
 
+    /**
+     * Add a depended module of this module
+     *
+     * @protected
+     *
+     * @param {string} type    - `compile` for AMD &amp; `runtime` for CJS
+     * @param {string} name    - Name of a module
+     * @param {string} varName - Variable name of a module in another module
+     */
     addChild(type, name, varName) {
 
-        this.dependency[ type ][ join(this.base, name).replace(/\\/g, &apos;/&apos;) ] = varName;
+        if ((type === &apos;compile&apos;)  &amp;&amp;  AMD_CJS.includes( name ))  return;
+
+        const NPM = /^\w/.test( name );
+
+        if (this.dependency.outside &amp;&amp; NPM)  type = &apos;outside&apos;;
+
+        name = (NPM ? &apos;&apos; : &apos;./&apos;)  +  join(this.base, name).replace(/\\/g, &apos;/&apos;);
+
+        this.dependency[ type ][ name ] = varName;
     }
 
     /**
@@ -154,13 +191,11 @@ export default  class Module {
 
                 var index = 0;  varName = varName.trim().split( /\s*,\s*/ );
 
-                modName.replace(/(?:&apos;|&quot;)(.+?)(?:&apos;|&quot;)/g,  (_, name) =&gt; {
-
-                    if (! AMD_CJS.includes( name ))
-                        this.addChild(&apos;compile&apos;,  name,  varName[ index ]);
-
-                    index++;
-                });
+                modName.replace(
+                    /(?:&apos;|&quot;)(.+?)(?:&apos;|&quot;)/g,
+                    (_, name)  =&gt;
+                        this.addChild(&apos;compile&apos;,  name,  varName[ index ])  ||  index++
+                );
 
                 return  body.replace(/^\n([\s\S]+)\n$/, &apos;$1&apos;);
             }

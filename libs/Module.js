@@ -1,11 +1,9 @@
 import {dirname, join} from 'path';
 
-import {readFile} from 'fs';
+import * as Utility from './utility';
 
-import {promisify} from 'util';
 
-const loadFile = promisify( readFile ), AMD_CJS = ['require', 'exports', 'module'];
-
+const AMD_CJS = ['require', 'exports', 'module'];
 
 /**
  * Key for module path & value for local variable
@@ -19,10 +17,11 @@ const loadFile = promisify( readFile ), AMD_CJS = ['require', 'exports', 'module
  */
 export default  class Module {
     /**
-     * @param {string} name - Path of this module
-     * @param {string} path - Root path of the package which this module belongs to
+     * @param {string}  name       - Path of this module
+     * @param {string}  path       - Root path of the package which this module belongs to
+     * @param {boolean} includeAll - Treat NPM modules as CommonJS modules
      */
-    constructor(name, path) {
+    constructor(name, path, includeAll) {
         /**
          * Path of this module
          *
@@ -46,12 +45,14 @@ export default  class Module {
 
         /**
          * @type     {Object}
-         * @property {DependencyMap} compile - Compile-time dependency
-         * @property {DependencyMap} runtime - Runtime dependency
+         * @property {DependencyMap} compile - Compile-time dependency from AMD
+         * @property {DependencyMap} runtime - Runtime dependency from CommonJS
+         * @property {DependencyMap} outside - Outside dependency from NPM
          */
         this.dependency = {
             compile:  { },
-            runtime:  { }
+            runtime:  { },
+            outside:  includeAll ? null : { }
         };
 
         /**
@@ -67,13 +68,10 @@ export default  class Module {
      *
      * @type {string}
      */
-    get identifier() {
-
-        return  this.name.replace(/[./]+/g, '_').replace(/^_/, '');
-    }
+    get identifier() {  return  this.name.replace(/[./]+/g, '_');  }
 
     /**
-     * Paths of all the dependency
+     * Paths of all the dependency needed to be bundled
      *
      * @type {string[]}
      */
@@ -87,18 +85,53 @@ export default  class Module {
     /**
      * @protected
      *
+     * @return {?string} Entry file path of this module in `./node_modules/`
+     */
+    searchNPM() {
+
+        for (let method  of  ['getNPMFile', 'getNPMPackage', 'getNPMIndex']) {
+
+            let path;
+
+            if (path = Utility[method]( this.name ))  return path;
+        }
+    }
+
+    /**
+     * @protected
+     *
      * @return {string} Original source code of this module
      */
     async load() {
 
-        return  this.source = (await loadFile(
-            join(this.path, `${this.name}.js`),  {encoding: 'utf-8'}
-        )).replace(/\r\n/g, '\n');
+        this.source = await Utility.loadFile(
+            ((! this.dependency.outside)  &&  /^\w/.test( this.name ))  ?
+                this.searchNPM()  :  join(this.path, `${this.name}.js`)
+        );
+
+        return  this.source = (this.source + '').replace(/\r\n/g, '\n');
     }
 
+    /**
+     * Add a depended module of this module
+     *
+     * @protected
+     *
+     * @param {string} type    - `compile` for AMD & `runtime` for CJS
+     * @param {string} name    - Name of a module
+     * @param {string} varName - Variable name of a module in another module
+     */
     addChild(type, name, varName) {
 
-        this.dependency[ type ][ join(this.base, name).replace(/\\/g, '/') ] = varName;
+        if ((type === 'compile')  &&  AMD_CJS.includes( name ))  return;
+
+        const NPM = /^\w/.test( name );
+
+        if (this.dependency.outside && NPM)  type = 'outside';
+
+        name = (NPM ? '' : './')  +  join(this.base, name).replace(/\\/g, '/');
+
+        this.dependency[ type ][ name ] = varName;
     }
 
     /**
@@ -114,13 +147,11 @@ export default  class Module {
 
                 var index = 0;  varName = varName.trim().split( /\s*,\s*/ );
 
-                modName.replace(/(?:'|")(.+?)(?:'|")/g,  (_, name) => {
-
-                    if (! AMD_CJS.includes( name ))
-                        this.addChild('compile',  name,  varName[ index ]);
-
-                    index++;
-                });
+                modName.replace(
+                    /(?:'|")(.+?)(?:'|")/g,
+                    (_, name)  =>
+                        this.addChild('compile',  name,  varName[ index ])  ||  index++
+                );
 
                 return  body.replace(/^\n([\s\S]+)\n$/, '$1');
             }

@@ -31,7 +31,11 @@
     
   <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/libs/Module.js~Module.html">Module</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/libs/Package.js~Package.html">Package</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-join">join</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getNPMFile">getNPMFile</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getNPMIndex">getNPMIndex</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getNPMPackage">getNPMPackage</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-merge">merge</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-loadFile">loadFile</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-DependencyMap">DependencyMap</a></span></span></li>
 </ul>
 </div>
@@ -42,25 +46,7 @@
 
 import Module from &apos;./Module&apos;;
 
-
-/**
- * This will be used in the bundled source
- *
- * @param {string} base - Root path
- * @param {string} path - Path relative to `base`
- *
- * @return {string} Joined &amp; normalized path
- */
-export function join(base, path) {
-
-    return  (base + &apos;/&apos; + path)
-        .replace(/\/\//g, &apos;/&apos;)
-        .replace(/[^/\.]+\/\.\.\//g, &apos;&apos;)
-        .replace(/\.\//g,  function (match, index, input) {
-
-            return  (input[index - 1]  ===  &apos;.&apos;)  ?  match  :  &apos;&apos;;
-        });
-}
+import {merge} from &apos;./utility&apos;;
 
 
 /**
@@ -68,10 +54,11 @@ export function join(base, path) {
  */
 export default  class Package {
     /**
-     * @param {string} path - The entry file path of this package
-     *                        (relative to `process.cwd()`)
+     * @param {string}  path       - The entry file path of this package
+     *                               (relative to `process.cwd()`)
+     * @param {boolean} includeAll - Include NPM modules in the final bundle
      */
-    constructor(path) {
+    constructor(path, includeAll) {
         /**
          * The entry file path of this package (relative to `process.cwd()`)
          *
@@ -85,6 +72,13 @@ export default  class Package {
          * @type {string}
          */
         this.base = dirname( path );
+
+        /**
+         * Whether include NPM modules in the final bundle
+         *
+         * @type {boolean}
+         */
+        this.includeAll = includeAll;
 
         /**
          * Module count of this package
@@ -115,7 +109,7 @@ export default  class Package {
         if (index != null)
             module = Array.prototype.splice.call(this, -index, 1)[0];
         else
-            module = new Module(modName, this.base);
+            module = new Module(modName, this.base, this.includeAll);
 
         Array.prototype.unshift.call(this, module);
 
@@ -175,7 +169,7 @@ export default  class Package {
      */
     async bundle() {  /* eslint no-useless-escape: &quot;off&quot; */
 
-        await this.parse( basename( this.path ) );
+        await this.parse(`./${basename( this.path )}`);
 
         return `function () {
 
@@ -185,11 +179,13 @@ export default  class Package {
     ).join(&apos;,\n        &apos;)}
     };
 
-${join}
+${merge}
 
     function _require_(base, path) {
 
-        return  module[join(base, path)].exports;
+        return module[
+            /^\\w/.test( path )  ?  path  :  (&apos;./&apos; + merge(base, path))
+        ].exports;
     }
 
     var require = _require_.bind(null, &apos;./&apos;);

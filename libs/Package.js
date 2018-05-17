@@ -2,25 +2,7 @@ import {basename, dirname} from 'path';
 
 import Module from './Module';
 
-
-/**
- * This will be used in the bundled source
- *
- * @param {string} base - Root path
- * @param {string} path - Path relative to `base`
- *
- * @return {string} Joined & normalized path
- */
-export function join(base, path) {
-
-    return  (base + '/' + path)
-        .replace(/\/\//g, '/')
-        .replace(/[^/\.]+\/\.\.\//g, '')
-        .replace(/\.\//g,  function (match, index, input) {
-
-            return  (input[index - 1]  ===  '.')  ?  match  :  '';
-        });
-}
+import {merge} from './utility';
 
 
 /**
@@ -28,10 +10,11 @@ export function join(base, path) {
  */
 export default  class Package {
     /**
-     * @param {string} path - The entry file path of this package
-     *                        (relative to `process.cwd()`)
+     * @param {string}  path       - The entry file path of this package
+     *                               (relative to `process.cwd()`)
+     * @param {boolean} includeAll - Include NPM modules in the final bundle
      */
-    constructor(path) {
+    constructor(path, includeAll) {
         /**
          * The entry file path of this package (relative to `process.cwd()`)
          *
@@ -45,6 +28,13 @@ export default  class Package {
          * @type {string}
          */
         this.base = dirname( path );
+
+        /**
+         * Whether include NPM modules in the final bundle
+         *
+         * @type {boolean}
+         */
+        this.includeAll = includeAll;
 
         /**
          * Module count of this package
@@ -75,7 +65,7 @@ export default  class Package {
         if (index != null)
             module = Array.prototype.splice.call(this, -index, 1)[0];
         else
-            module = new Module(modName, this.base);
+            module = new Module(modName, this.base, this.includeAll);
 
         Array.prototype.unshift.call(this, module);
 
@@ -135,7 +125,7 @@ export default  class Package {
      */
     async bundle() {  /* eslint no-useless-escape: "off" */
 
-        await this.parse( basename( this.path ) );
+        await this.parse(`./${basename( this.path )}`);
 
         return `function () {
 
@@ -145,11 +135,13 @@ export default  class Package {
     ).join(',\n        ')}
     };
 
-${join}
+${merge}
 
     function _require_(base, path) {
 
-        return  module[join(base, path)].exports;
+        return module[
+            /^\\w/.test( path )  ?  path  :  ('./' + merge(base, path))
+        ].exports;
     }
 
     var require = _require_.bind(null, './');

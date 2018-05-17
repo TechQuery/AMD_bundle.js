@@ -9,6 +9,7 @@
   },
   "scripts": {
     "lint": "eslint index.js libs/ test/",
+    "install": "echo exports.test = 1;> node_modules/test.js",
     "test": "mocha -r babel-register -r babel-polyfill -r should --no-timeouts -c --inline-diffs --exit",
     "debug": "npm test -- --inspect-brk",
     "build": "esdoc",
