@@ -64,6 +64,9 @@ function index(A, require, exports, module) {/* AMD module */
 });
 
 
+/**
+ * @test {Package}
+ */
 describe('Package bundler',  () => {
 
     var pack = new Package('');
@@ -98,7 +101,9 @@ describe('Package bundler',  () => {
         ]);
     });
 
-
+    /**
+     * @test {join}
+     */
     it('Join module paths',  async () => {
 
         join('./../test//../', './example').should.be.equal('../example');

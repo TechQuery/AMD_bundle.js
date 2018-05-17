@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../">
+  <title data-ice="title">libs/Module.js | amd-bundle</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  <script src="script/manual.js"></script>
+<meta name="description" content="A command-line tool for bundling up AMD modules, which is much easier to use than r.js with Almond or AMDclean"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="amd-bundle"><meta property="twitter:description" content="A command-line tool for bundling up AMD modules, which is much easier to use than r.js with Almond or AMDclean"></head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  <a href="test.html" data-ice="testLink">Test</a>
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+<a style="position:relative; top:3px;" href="https://github.com/TechQuery/AMD_bundle.js"><img width="20px" src="./image/github.png"></a></header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/libs/Module.js~Module.html">Module</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/libs/Package.js~Package.html">Package</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-join">join</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-DependencyMap">DependencyMap</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">libs/Module.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import {dirname, join} from &apos;path&apos;;
+
+import {readFile} from &apos;fs&apos;;
+
+import {promisify} from &apos;util&apos;;
+
+const loadFile = promisify( readFile ), AMD_CJS = [&apos;require&apos;, &apos;exports&apos;, &apos;module&apos;];
+
+
+/**
+ * Key for module path &amp; value for local variable
+ *
+ * @typedef {Object} DependencyMap
+ */
+
+
+/**
+ * CommonJS or AMD module
+ */
+export default  class Module {
+    /**
+     * @param {string} name - Path of this module
+     * @param {string} path - Root path of the package which this module belongs to
+     */
+    constructor(name, path) {
+        /**
+         * Path of this module
+         *
+         * @type {string}
+         */
+        this.name = name;
+
+        /**
+         * Directory path of this module
+         *
+         * @type {string}
+         */
+        this.base = dirname( name ).replace(/\\/g, &apos;/&apos;);
+
+        /**
+         * Root path of the package which this module belongs to
+         *
+         * @type {string}
+         */
+        this.path = path;
+
+        /**
+         * @type     {Object}
+         * @property {DependencyMap} compile - Compile-time dependency
+         * @property {DependencyMap} runtime - Runtime dependency
+         */
+        this.dependency = {
+            compile:  { },
+            runtime:  { }
+        };
+
+        /**
+         * Modules which this module depends
+         *
+         * @type {Module[]}
+         */
+        this.children = [ ];
+    }
+
+    /**
+     * Identifier of this module in JS code
+     *
+     * @type {string}
+     */
+    get identifier() {
+
+        return  this.name.replace(/[./]+/g, &apos;_&apos;).replace(/^_/, &apos;&apos;);
+    }
+
+    /**
+     * Paths of all the dependency
+     *
+     * @type {string[]}
+     */
+    get dependencyPath() {
+
+        return  Object.keys( this.dependency.compile ).concat(
+            Object.keys( this.dependency.runtime )
+        );
+    }
+
+    /**
+     * @protected
+     *
+     * @return {string} Original source code of this module
+     */
+    async load() {
+
+        return  this.source = (await loadFile(
+            join(this.path, `${this.name}.js`),  {encoding: &apos;utf-8&apos;}
+        )).replace(/\r\n/g, &apos;\n&apos;);
+    }
+
+    addChild(type, name, varName) {
+
+        this.dependency[ type ][ join(this.base, name).replace(/\\/g, &apos;/&apos;) ] = varName;
+    }
+
+    /**
+     * @protected
+     *
+     * @return {DependencyMap} Compile-time dependency
+     */
+    parseAMD() {
+
+        this.source = this.source.replace(
+            /define\((?:\s*\[([\s\S]*?)\]\s*,)?\s*function\s*\(([\s\S]*?)\)\s*\{([\s\S]+)\}\s*\);?/,
+            (_, modName, varName, body) =&gt; {
+
+                var index = 0;  varName = varName.trim().split( /\s*,\s*/ );
+
+                modName.replace(/(?:&apos;|&quot;)(.+?)(?:&apos;|&quot;)/g,  (_, name) =&gt; {
+
+                    if (! AMD_CJS.includes( name ))
+                        this.addChild(&apos;compile&apos;,  name,  varName[ index ]);
+
+                    index++;
+                });
+
+                return  body.replace(/^\n([\s\S]+)\n$/, &apos;$1&apos;);
+            }
+        );
+
+        return this.dependency.compile;
+    }
+
+    /**
+     * @protected
+     *
+     * @return {DependencyMap} Runtime dependency
+     */
+    parseCJS() {
+
+        this.source.replace(
+            /(?:(?:var|let|const)\s+(.+?)\s*=\s*)?require\(\s*(?:&apos;|&quot;)(.+?)(?:&apos;|&quot;)\s*\)/mg,
+            (match, varName, modName)  =&gt;
+                this.addChild(&apos;runtime&apos;, modName, varName)  ||  match
+        );
+
+        return this.dependency.runtime;
+    }
+
+    /**
+     * @return {string} Factory code of this parsed module
+     */
+    async parse() {
+
+        await this.load();
+
+        this.parseAMD();
+
+        this.parseCJS();
+
+        return  this.source = `function ${this.identifier}(${
+
+            Object.values( this.dependency.compile ).concat( AMD_CJS ).join(&apos;, &apos;)
+        }) {${
+            this.source
+        }}`;
+    }
+
+    /**
+     * @return {string} Factory code of this parsed module
+     */
+    toString() {
+
+        return  (&apos;source&apos; in this)  ?  (this.source + &apos;&apos;)  :  &apos;&apos;;
+    }
+}
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(1.1.0)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

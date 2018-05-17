@@ -3,6 +3,14 @@ import {basename, dirname} from 'path';
 import Module from './Module';
 
 
+/**
+ * This will be used in the bundled source
+ *
+ * @param {string} base - Root path
+ * @param {string} path - Path relative to `base`
+ *
+ * @return {string} Joined & normalized path
+ */
 export function join(base, path) {
 
     return  (base + '/' + path)
@@ -15,19 +23,51 @@ export function join(base, path) {
 }
 
 
+/**
+ * Package to be bundled
+ */
 export default  class Package {
-
+    /**
+     * @param {string} path - The entry file path of this package
+     *                        (relative to `process.cwd()`)
+     */
     constructor(path) {
-
+        /**
+         * The entry file path of this package (relative to `process.cwd()`)
+         *
+         * @type {string}
+         */
         this.path = path;
 
+        /**
+         * The root path of this package (relative to `process.cwd()`)
+         *
+         * @type {string}
+         */
         this.base = dirname( path );
 
+        /**
+         * Module count of this package
+         *
+         * @type {number}
+         */
         this.length = 0;
 
+        /**
+         * Module index in this package (key for name & value for index)
+         *
+         * @type {Object}
+         */
         this.module = { };
     }
 
+    /**
+     * @protected
+     *
+     * @param {string} modName - Path of a module
+     *
+     * @return {Module} New or loaded module
+     */
     register(modName) {
 
         const index = this.module[ modName ];  var module;
@@ -44,8 +84,21 @@ export default  class Package {
         return module;
     }
 
+    /**
+     * Entry module of this package
+     *
+     * @type {Module}
+     */
     get entry() {  return  this[this.length - 1];  }
 
+    /**
+     * @protected
+     *
+     * @param {Module} module
+     * @param {Module} parent
+     *
+     * @return {boolean} Whether `module` has a circular dependency
+     */
     hasCircular(module, parent) {
 
         parent.children.push( module );
@@ -57,6 +110,12 @@ export default  class Package {
         }
     }
 
+    /**
+     * @protected
+     *
+     * @param {string}  modName - Path of a module
+     * @param {?Module} parent  - Module depends `modName`
+     */
     async parse(modName, parent) {
 
         const module = this.register( modName );
@@ -71,6 +130,9 @@ export default  class Package {
         );
     }
 
+    /**
+     * @return {string} Factory code of this package
+     */
     async bundle() {  /* eslint no-useless-escape: "off" */
 
         await this.parse( basename( this.path ) );
