@@ -35,7 +35,6 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getNPMIndex">getNPMIndex</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getNPMPackage">getNPMPackage</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-merge">merge</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-loadFile">loadFile</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-DependencyMap">DependencyMap</a></span></span></li>
 </ul>
 </div>
@@ -48,23 +47,26 @@ import Module from &apos;./Module&apos;;
 
 import {merge} from &apos;./utility&apos;;
 
+const Array_proto = Array.prototype;
+
 
 /**
  * Package to be bundled
  */
 export default  class Package {
     /**
-     * @param {string}  path       - The entry file path of this package
-     *                               (relative to `process.cwd()`)
-     * @param {boolean} includeAll - Include NPM modules in the final bundle
+     * @param {string}  path         - The entry file path of this package
+     *                                 (relative to `process.cwd()`)
+     * @param {boolean} [includeAll] - Include NPM modules in the final bundle
+     * @param {boolean} [noLog]      - Disable log output
      */
-    constructor(path, includeAll) {
+    constructor(path, includeAll, noLog) {
         /**
-         * The entry file path of this package (relative to `process.cwd()`)
+         * Module name of this bundled package
          *
          * @type {string}
          */
-        this.path = path;
+        this.name = basename( path );
 
         /**
          * The root path of this package (relative to `process.cwd()`)
@@ -93,6 +95,25 @@ export default  class Package {
          * @type {Object}
          */
         this.module = { };
+
+        /**
+         * Whether show logs during the bundle process
+         *
+         * @type {boolean}
+         */
+        this.showLog = (! noLog);
+    }
+
+    /**
+     * @param {string} name - Name of a module
+     *
+     * @return {number}
+     */
+    indexOf(name) {
+
+        for (let i = 0;  this[i];  i++)  if (this[i].name === name)  return i;
+
+        return -1;
     }
 
     /**
@@ -104,16 +125,14 @@ export default  class Package {
      */
     register(modName) {
 
-        const index = this.module[ modName ];  var module;
+        const index = this.indexOf( modName );  var module;
 
-        if (index != null)
-            module = Array.prototype.splice.call(this, -index, 1)[0];
+        if (index &gt; -1)
+            module = Array_proto.splice.call(this,  index - this.length,  1)[0];
         else
             module = new Module(modName, this.base, this.includeAll);
 
-        Array.prototype.unshift.call(this, module);
-
-        this.module[ modName ] = this.length;
+        Array_proto.unshift.call(this, module);
 
         return module;
     }
@@ -147,17 +166,22 @@ export default  class Package {
     /**
      * @protected
      *
-     * @param {string}  modName - Path of a module
-     * @param {?Module} parent  - Module depends `modName`
+     * @param {string} modName  - Path of a module
+     * @param {Module} [parent] - Module depends `modName`
      */
     async parse(modName, parent) {
 
         const module = this.register( modName );
 
         if (parent  &amp;&amp;  this.hasCircular(module, parent))
-            return  console.warn(`Module &quot;${modName}&quot; has a circular reference`);
+            return  this.showLog &amp;&amp; console.warn(
+                `! Module &quot;${modName}&quot; has a circular reference`
+            );
 
         await module.parse();
+
+        if ( this.showLog )
+            console.info(`&#x221A; Module &quot;${modName}&quot; has been bundled`);
 
         await Promise.all(
             module.dependencyPath.map(path  =&gt;  this.parse(path, module))
@@ -165,17 +189,60 @@ export default  class Package {
     }
 
     /**
-     * @return {string} Factory code of this package
+     * Outside dependencies of this package
+     *
+     * @type {DependencyMap}
      */
-    async bundle() {  /* eslint no-useless-escape: &quot;off&quot; */
+    get outDependency() {
 
-        await this.parse(`./${basename( this.path )}`);
+        return  this.includeAll  ?  [ ]  :  Object.assign(
+            ... Array.from(this,  module =&gt; module.dependency.outside)
+        );
+    }
 
-        return `function () {
+    /**
+     * @protected
+     *
+     * @param {function(modName: string[], varName: string[]): string} bundler
+     *
+     * @return {string} Bundled source with UMD wrapper
+     */
+    wrap(bundler) {
+
+        const outside = this.outDependency;
+
+        const modName = Object.keys( outside ), varName = Object.values( outside );
+
+        return `
+//
+//  Generated by https://www.npmjs.com/package/amd-bundle
+//
+(function (factory) {
+
+    if ((typeof define === &apos;function&apos;)  &amp;&amp;  define.amd)
+        define(&apos;${this.name}&apos;, ${JSON.stringify( modName )}, factory);
+    else if (typeof module === &apos;object&apos;)
+        return  module.exports = factory(${modName.map(name =&gt; `require(&apos;${name}&apos;)`)});
+    else
+        return  this.${this.name} = factory(${modName.map(name =&gt; `this.${name}`)});
+
+})(${bundler(modName, varName)});`.trim();
+    }
+
+    /**
+     * @return {string} Source code of this package
+     */
+    async bundle() {
+
+        await this.parse(`./${this.name}`);
+
+        return  this.wrap((modName, varName) =&gt; `function (${varName}) {
 
     var module = {
         ${Array.from(
         this,  item =&gt; `&apos;${item.name}&apos;:  {exports: { }}`
+    ).concat(
+        modName.map((name, index)  =&gt;  `&apos;${name}&apos;:  {exports: ${varName[index]}}`)
     ).join(&apos;,\n        &apos;)}
     };
 
@@ -205,7 +272,7 @@ ${Array.from(this,  item =&gt; item.source).join(&apos;\n\n&apos;)}
     }) || require(&apos;${item.name}&apos;);`).join(&apos;\n\n    &apos;)}
 
     return require(&apos;${this.entry.name}&apos;);
-}`;
+}`);
     }
 }
 </code></pre>

@@ -6,9 +6,9 @@ window.esdocSearchIndex = [
     "class"
   ],
   [
-    "amd-bundle/libs/package.js~package",
+    "amd-bundle~package",
     "class/libs/Package.js~Package.html",
-    "<span>Package</span> <span class=\"search-result-import-path\">amd-bundle/libs/Package.js</span>",
+    "<span>Package</span> <span class=\"search-result-import-path\">amd-bundle</span>",
     "class"
   ],
   [
@@ -30,98 +30,122 @@ window.esdocSearchIndex = [
     "function"
   ],
   [
-    "amd-bundle/libs/utility.js~loadfile",
-    "variable/index.html#static-variable-loadFile",
-    "<span>loadFile</span> <span class=\"search-result-import-path\">amd-bundle/libs/utility.js</span>",
-    "variable"
-  ],
-  [
     "amd-bundle/libs/utility.js~merge",
     "function/index.html#static-function-merge",
     "<span>merge</span> <span class=\"search-result-import-path\">amd-bundle/libs/utility.js</span>",
     "function"
   ],
   [
+    "",
+    "test-file/test/index.js.html#lineNumber198",
+    "Command line",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/index.js.html#lineNumber200",
+    "Command line Output to a file",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/index.js.html#lineNumber223",
+    "Command line Write into stdout without printing",
+    "test"
+  ],
+  [
     "module libs/module.js~module,module",
-    "test-file/test/index.js.html#lineNumber50",
+    "test-file/test/index.js.html#lineNumber57",
     "Module parser",
     "test"
   ],
   [
     "module#dependencypath libs/module.js~module#dependencypath,module#dependencypath",
-    "test-file/test/index.js.html#lineNumber95",
+    "test-file/test/index.js.html#lineNumber102",
     "Module parser Get paths of the dependency",
     "test"
   ],
   [
     "module#parseamd libs/module.js~module#parseamd,module#parseamd",
-    "test-file/test/index.js.html#lineNumber59",
+    "test-file/test/index.js.html#lineNumber66",
     "Module parser Parse AMD",
     "test"
   ],
   [
     "module#parsecjs libs/module.js~module#parsecjs,module#parsecjs",
-    "test-file/test/index.js.html#lineNumber74",
+    "test-file/test/index.js.html#lineNumber81",
     "Module parser Parse CommonJS",
     "test"
   ],
   [
     "module#parse libs/module.js~module#parse,module#parse",
-    "test-file/test/index.js.html#lineNumber82",
+    "test-file/test/index.js.html#lineNumber89",
     "Module parser Parse all",
     "test"
   ],
   [
     "package libs/package.js~package,package",
-    "test-file/test/index.js.html#lineNumber105",
+    "test-file/test/index.js.html#lineNumber112",
     "Package bundler",
     "test"
   ],
   [
     "package#bundle libs/package.js~package#bundle,package#bundle",
-    "test-file/test/index.js.html#lineNumber142",
-    "Package bundler Evaluate factory function",
+    "test-file/test/index.js.html#lineNumber189",
+    "Package bundler Bundle all dependencies",
+    "test"
+  ],
+  [
+    "package#bundle libs/package.js~package#bundle,package#bundle",
+    "test-file/test/index.js.html#lineNumber194",
+    "Package bundler Bundle without NPM packages",
     "test"
   ],
   [
     "package#parse libs/package.js~package#parse,package#parse",
-    "test-file/test/index.js.html#lineNumber128",
+    "test-file/test/index.js.html#lineNumber135",
     "Package bundler Parse package",
     "test"
   ],
   [
     "package#register libs/package.js~package#register,package#register",
-    "test-file/test/index.js.html#lineNumber112",
+    "test-file/test/index.js.html#lineNumber119",
     "Package bundler Register module",
     "test"
   ],
   [
+    "package#wrap libs/package.js~package#wrap,package#wrap",
+    "test-file/test/index.js.html#lineNumber149",
+    "Package bundler UMD wrapper",
+    "test"
+  ],
+  [
     "",
-    "test-file/test/index.js.html#lineNumber8",
+    "test-file/test/index.js.html#lineNumber15",
     "Utility",
     "test"
   ],
   [
     "getnpmindex libs/utility.js~getnpmindex,getnpmindex",
-    "test-file/test/index.js.html#lineNumber28",
+    "test-file/test/index.js.html#lineNumber35",
     "Utility Get \"index.js\" path of a module",
     "test"
   ],
   [
     "getnpmpackage libs/utility.js~getnpmpackage,getnpmpackage",
-    "test-file/test/index.js.html#lineNumber38",
+    "test-file/test/index.js.html#lineNumber45",
     "Utility Get entry file path from \"package.json\" of a module",
     "test"
   ],
   [
     "getnpmfile libs/utility.js~getnpmfile,getnpmfile",
-    "test-file/test/index.js.html#lineNumber20",
+    "test-file/test/index.js.html#lineNumber27",
     "Utility Get path of JS modules",
     "test"
   ],
   [
     "merge libs/utility.js~merge,merge",
-    "test-file/test/index.js.html#lineNumber12",
+    "test-file/test/index.js.html#lineNumber19",
     "Utility Merge module paths",
     "test"
   ],
@@ -516,6 +540,12 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
+    "libs/module.js~module.identifierof",
+    "class/libs/Module.js~Module.html#static-method-identifierOf",
+    "libs/Module.js~Module.identifierOf",
+    "method"
+  ],
+  [
     "libs/package.js",
     "file/libs/Package.js.html",
     "libs/Package.js",
@@ -558,6 +588,12 @@ window.esdocSearchIndex = [
     "member"
   ],
   [
+    "libs/package.js~package#indexof",
+    "class/libs/Package.js~Package.html#instance-method-indexOf",
+    "libs/Package.js~Package#indexOf",
+    "method"
+  ],
+  [
     "libs/package.js~package#length",
     "class/libs/Package.js~Package.html#instance-member-length",
     "libs/Package.js~Package#length",
@@ -570,21 +606,39 @@ window.esdocSearchIndex = [
     "member"
   ],
   [
+    "libs/package.js~package#name",
+    "class/libs/Package.js~Package.html#instance-member-name",
+    "libs/Package.js~Package#name",
+    "member"
+  ],
+  [
+    "libs/package.js~package#outdependency",
+    "class/libs/Package.js~Package.html#instance-get-outDependency",
+    "libs/Package.js~Package#outDependency",
+    "member"
+  ],
+  [
     "libs/package.js~package#parse",
     "class/libs/Package.js~Package.html#instance-method-parse",
     "libs/Package.js~Package#parse",
     "method"
   ],
   [
-    "libs/package.js~package#path",
-    "class/libs/Package.js~Package.html#instance-member-path",
-    "libs/Package.js~Package#path",
-    "member"
-  ],
-  [
     "libs/package.js~package#register",
     "class/libs/Package.js~Package.html#instance-method-register",
     "libs/Package.js~Package#register",
+    "method"
+  ],
+  [
+    "libs/package.js~package#showlog",
+    "class/libs/Package.js~Package.html#instance-member-showLog",
+    "libs/Package.js~Package#showLog",
+    "member"
+  ],
+  [
+    "libs/package.js~package#wrap",
+    "class/libs/Package.js~Package.html#instance-method-wrap",
+    "libs/Package.js~Package#wrap",
     "method"
   ],
   [

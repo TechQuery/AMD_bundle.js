@@ -1,11 +1,6 @@
 import {join} from 'path';
 
-import {readFile, existsSync, readFileSync, statSync} from 'fs';
-
-import {promisify} from 'util';
-
-
-export const loadFile = promisify( readFile );
+import {existsSync, readFileSync, statSync} from 'fs';
 
 
 /**

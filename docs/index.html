@@ -35,7 +35,6 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getNPMIndex">getNPMIndex</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getNPMPackage">getNPMPackage</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-merge">merge</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-loadFile">loadFile</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-DependencyMap">DependencyMap</a></span></span></li>
 </ul>
 </div>
@@ -49,20 +48,17 @@ which is much easier to use than <a href="https://github.com/requirejs/r.js"><co
 
 npm install amd-bundle --save-dev
 
-amd-bundle \
-    path/to/project/source/folder \
-    path/to/project/bundle_name.js \
-    -e ext_dep_2,ext_dep_3</code>
+amd-bundle -a \
+    path/to/project/source/entry \
+    path/to/project/bundle/folder</code>
 </code></pre>
 <p><code>amd-bundle</code> will</p>
 <ol>
-<li><p>start bundling from the entry point <code>path/to/project/source/folder/index.js</code></p>
+<li><p>start bundling from the entry point <code>path/to/project/source/entry.js</code></p>
 </li>
-<li><p>write into <code>path/to/project/bundle_name.js</code> with only one <code>define(&apos;bundle_name&apos;, [ ])</code> and <code>global.bundle_name</code> definition, just like <a href="https://github.com/umdjs/umd">UMD</a> style</p>
+<li><p>write into <code>path/to/project/bundle/folder/entry.js</code> with only one <code>define(&apos;entry&apos;, [ ])</code> and <code>global.entry</code> definition, just like <a href="https://github.com/umdjs/umd">UMD</a> style</p>
 </li>
-<li><p>try to find <code>${process.cwd()}/node_modules/${module_full_name}</code>, if one dependent module can&apos;t be found in the source folder</p>
-</li>
-<li><p>automatically treat missing dependency files (<code>ext_dep_1.js</code> for example) as external dependencies (option <code>-e</code> is needed if some of these dependencies are required by modules in sub directories)</p>
+<li><p>treat <code>${process.cwd()}/node_modules/${module_full_name}</code> as a user&apos;s module to pack in</p>
 </li>
 </ol>
 <h3 id="more-options">More options</h3><p>Option <code>-f</code> accepts a path of CommonJS Module as shown below:</p>
@@ -97,7 +93,7 @@ amd-bundle \
 <h2 id="typical-cases">Typical Cases</h2><ol>
 <li><p><a href="https://github.com/TechQuery/iQuery.js">iQuery.js</a> (where the prototype of <code>amd-bundle</code> came from)</p>
 </li>
-<li><p><a href="https://github.com/TechQuery/EasyWebApp.js">EasyWebApp.js</a></p>
+<li><p><a href="https://github.com/EasyWebApp/WebCell">WebCell</a> (where <code>v1.0</code> rewritten out)</p>
 </li>
 <li><p><a href="https://github.com/TechQuery/EasyWebUI">EasyWebUI</a></p>
 </li>

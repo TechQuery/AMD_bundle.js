@@ -1,5 +1,7 @@
 import {dirname, join} from 'path';
 
+import {readFile} from 'fs-extra';
+
 import * as Utility from './utility';
 
 
@@ -64,11 +66,20 @@ export default  class Module {
     }
 
     /**
+     * @protected
+     *
+     * @param {string} name - Name of a module
+     *
+     * @return {string}
+     */
+    static identifierOf(name) {  return  name.replace(/[./]+/g, '_');  }
+
+    /**
      * Identifier of this module in JS code
      *
      * @type {string}
      */
-    get identifier() {  return  this.name.replace(/[./]+/g, '_');  }
+    get identifier() {  return  Module.identifierOf( this.name );  }
 
     /**
      * Paths of all the dependency needed to be bundled
@@ -104,7 +115,7 @@ export default  class Module {
      */
     async load() {
 
-        this.source = await Utility.loadFile(
+        this.source = await readFile(
             ((! this.dependency.outside)  &&  /^\w/.test( this.name ))  ?
                 this.searchNPM()  :  join(this.path, `${this.name}.js`)
         );
@@ -117,9 +128,9 @@ export default  class Module {
      *
      * @protected
      *
-     * @param {string} type    - `compile` for AMD & `runtime` for CJS
-     * @param {string} name    - Name of a module
-     * @param {string} varName - Variable name of a module in another module
+     * @param {string} type      - `compile` for AMD & `runtime` for CJS
+     * @param {string} name      - Name of a module
+     * @param {string} [varName] - Variable name of a module in another module
      */
     addChild(type, name, varName) {
 
@@ -131,7 +142,7 @@ export default  class Module {
 
         name = (NPM ? '' : './')  +  join(this.base, name).replace(/\\/g, '/');
 
-        this.dependency[ type ][ name ] = varName;
+        this.dependency[ type ][ name ] = varName  ||  Module.identifierOf( name );
     }
 
     /**
@@ -168,9 +179,8 @@ export default  class Module {
     parseCJS() {
 
         this.source.replace(
-            /(?:(?:var|let|const)\s+(.+?)\s*=\s*)?require\(\s*(?:'|")(.+?)(?:'|")\s*\)/mg,
-            (match, varName, modName)  =>
-                this.addChild('runtime', modName, varName)  ||  match
+            /(?:(?:var|let|const)\s+[\s\S]+?=\s*)?require\(\s*(?:'|")(.+?)(?:'|")\s*\)/mg,
+            (match, modName)  =>  this.addChild('runtime', modName)  ||  match
         );
 
         return this.dependency.runtime;

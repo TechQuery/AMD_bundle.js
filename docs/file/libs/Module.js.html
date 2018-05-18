@@ -35,7 +35,6 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getNPMIndex">getNPMIndex</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getNPMPackage">getNPMPackage</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-merge">merge</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-loadFile">loadFile</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-DependencyMap">DependencyMap</a></span></span></li>
 </ul>
 </div>
@@ -43,6 +42,8 @@
 
 <div class="content" data-ice="content"><h1 data-ice="title">libs/Module.js</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import {dirname, join} from &apos;path&apos;;
+
+import {readFile} from &apos;fs-extra&apos;;
 
 import * as Utility from &apos;./utility&apos;;
 
@@ -108,11 +109,20 @@ export default  class Module {
     }
 
     /**
+     * @protected
+     *
+     * @param {string} name - Name of a module
+     *
+     * @return {string}
+     */
+    static identifierOf(name) {  return  name.replace(/[./]+/g, &apos;_&apos;);  }
+
+    /**
      * Identifier of this module in JS code
      *
      * @type {string}
      */
-    get identifier() {  return  this.name.replace(/[./]+/g, &apos;_&apos;);  }
+    get identifier() {  return  Module.identifierOf( this.name );  }
 
     /**
      * Paths of all the dependency needed to be bundled
@@ -148,7 +158,7 @@ export default  class Module {
      */
     async load() {
 
-        this.source = await Utility.loadFile(
+        this.source = await readFile(
             ((! this.dependency.outside)  &amp;&amp;  /^\w/.test( this.name ))  ?
                 this.searchNPM()  :  join(this.path, `${this.name}.js`)
         );
@@ -161,9 +171,9 @@ export default  class Module {
      *
      * @protected
      *
-     * @param {string} type    - `compile` for AMD &amp; `runtime` for CJS
-     * @param {string} name    - Name of a module
-     * @param {string} varName - Variable name of a module in another module
+     * @param {string} type      - `compile` for AMD &amp; `runtime` for CJS
+     * @param {string} name      - Name of a module
+     * @param {string} [varName] - Variable name of a module in another module
      */
     addChild(type, name, varName) {
 
@@ -175,7 +185,7 @@ export default  class Module {
 
         name = (NPM ? &apos;&apos; : &apos;./&apos;)  +  join(this.base, name).replace(/\\/g, &apos;/&apos;);
 
-        this.dependency[ type ][ name ] = varName;
+        this.dependency[ type ][ name ] = varName  ||  Module.identifierOf( name );
     }
 
     /**
@@ -212,9 +222,8 @@ export default  class Module {
     parseCJS() {
 
         this.source.replace(
-            /(?:(?:var|let|const)\s+(.+?)\s*=\s*)?require\(\s*(?:&apos;|&quot;)(.+?)(?:&apos;|&quot;)\s*\)/mg,
-            (match, varName, modName)  =&gt;
-                this.addChild(&apos;runtime&apos;, modName, varName)  ||  match
+            /(?:(?:var|let|const)\s+[\s\S]+?=\s*)?require\(\s*(?:&apos;|&quot;)(.+?)(?:&apos;|&quot;)\s*\)/mg,
+            (match, modName)  =&gt;  this.addChild(&apos;runtime&apos;, modName)  ||  match
         );
 
         return this.dependency.runtime;

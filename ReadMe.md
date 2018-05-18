@@ -19,21 +19,18 @@ cd path/to/project/root
 
 npm install amd-bundle --save-dev
 
-amd-bundle \
-    path/to/project/source/folder \
-    path/to/project/bundle_name.js \
-    -e ext_dep_2,ext_dep_3
+amd-bundle -a \
+    path/to/project/source/entry \
+    path/to/project/bundle/folder
 ```
 
 `amd-bundle` will
 
- 1. start bundling from the entry point `path/to/project/source/folder/index.js`
+ 1. start bundling from the entry point `path/to/project/source/entry.js`
 
- 2. write into `path/to/project/bundle_name.js` with only one `define('bundle_name', [ ])` and `global.bundle_name` definition, just like [UMD](https://github.com/umdjs/umd) style
+ 2. write into `path/to/project/bundle/folder/entry.js` with only one `define('entry', [ ])` and `global.entry` definition, just like [UMD](https://github.com/umdjs/umd) style
 
- 3. try to find `${process.cwd()}/node_modules/${module_full_name}`, if one dependent module can't be found in the source folder
-
- 4. automatically treat missing dependency files (`ext_dep_1.js` for example) as external dependencies (option `-e` is needed if some of these dependencies are required by modules in sub directories)
+ 3. treat `${process.cwd()}/node_modules/${module_full_name}` as a user's module to pack in
 
 
 ### More options
@@ -79,6 +76,6 @@ Build **standalone release files** (Full source code, Minimized code & Source ma
 
  1. [iQuery.js](https://github.com/TechQuery/iQuery.js) (where the prototype of `amd-bundle` came from)
 
- 2. [EasyWebApp.js](https://github.com/TechQuery/EasyWebApp.js)
+ 2. [WebCell](https://github.com/EasyWebApp/WebCell) (where `v1.0` rewritten out)
 
  3. [EasyWebUI](https://github.com/TechQuery/EasyWebUI)
