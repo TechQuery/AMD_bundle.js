@@ -47,7 +47,8 @@ export default  class Package {
         this.length = 0;
 
         /**
-         * Module index in this package (key for name & value for index)
+         * Reference count of modules in this package
+         * (key for name & value for count)
          *
          * @type {Object}
          */
@@ -62,13 +63,18 @@ export default  class Package {
     }
 
     /**
-     * @param {string} name - Name of a module
+     * @param {Module|string} module - Instance or name of a module
      *
      * @return {number}
      */
-    indexOf(name) {
+    indexOf(module) {
 
-        for (let i = 0;  this[i];  i++)  if (this[i].name === name)  return i;
+        for (let i = 0;  this[i];  i++)
+            if (
+                (module instanceof Module)  ?
+                    (module === this[i])  :  (module === this[i].name)
+            )
+                return i;
 
         return -1;
     }
@@ -78,20 +84,31 @@ export default  class Package {
      *
      * @param {string} modName - Path of a module
      *
-     * @return {Module} New or loaded module
+     * @return {?Module} New module
      */
     register(modName) {
 
-        const index = this.indexOf( modName );  var module;
+        const index = this.indexOf( modName );
 
-        if (index > -1)
-            module = Array_proto.splice.call(this,  index - this.length,  1)[0];
-        else
-            module = new Module(modName, this.base, this.includeAll);
+        this.module[modName] = (this.module[modName] || 0)  +  1;
 
-        Array_proto.unshift.call(this, module);
+        if (index < 0) {
 
-        return module;
+            Array_proto.unshift.call(
+                this,  new Module(modName, this.base, this.includeAll)
+            );
+
+            return this[0];
+        }
+
+        Array_proto.sort.call(this,  (A, B) => {
+
+            if (B.dependencyPath.includes( A.name ))  return -1;
+
+            if (A.dependencyPath.includes( B.name ))  return 1;
+
+            return  this.module[ B.name ]  -  this.module[ A.name ];
+        });
     }
 
     /**
@@ -104,36 +121,13 @@ export default  class Package {
     /**
      * @protected
      *
-     * @param {Module} module
-     * @param {Module} parent
-     *
-     * @return {boolean} Whether `module` has a circular dependency
+     * @param {string} modName - Path of a module
      */
-    hasCircular(module, parent) {
-
-        parent.children.push( module );
-
-        try {  JSON.stringify( this.entry );  } catch (error) {
-
-            if ( error.message.includes('circular') )
-                return  (!! parent.children.pop());
-        }
-    }
-
-    /**
-     * @protected
-     *
-     * @param {string} modName  - Path of a module
-     * @param {Module} [parent] - Module depends `modName`
-     */
-    async parse(modName, parent) {
+    async parse(modName) {
 
         const module = this.register( modName );
 
-        if (parent  &&  this.hasCircular(module, parent))
-            return  this.showLog && console.warn(
-                `! Module "${modName}" has a circular reference`
-            );
+        if (! module)  return;
 
         await module.parse();
 
@@ -141,7 +135,7 @@ export default  class Package {
             console.info(`√ Module "${modName}" has been bundled`);
 
         await Promise.all(
-            module.dependencyPath.map(path  =>  this.parse(path, module))
+            module.dependencyPath.map(path  =>  this.parse( path ))
         );
     }
 

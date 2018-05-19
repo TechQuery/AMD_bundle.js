@@ -56,13 +56,6 @@ export default  class Module {
             runtime:  { },
             outside:  includeAll ? null : { }
         };
-
-        /**
-         * Modules which this module depends
-         *
-         * @type {Module[]}
-         */
-        this.children = [ ];
     }
 
     /**

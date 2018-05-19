@@ -1,19 +1,19 @@
 {
-  "coverage": "88.09%",
-  "expectCount": 42,
-  "actualCount": 37,
+  "coverage": "87.5%",
+  "expectCount": 40,
+  "actualCount": 35,
   "files": {
     "libs/Module.js": {
-      "expectCount": 19,
-      "actualCount": 17,
+      "expectCount": 18,
+      "actualCount": 16,
       "undocumentLines": [
         8,
-        118
+        111
       ]
     },
     "libs/Package.js": {
-      "expectCount": 17,
-      "actualCount": 16,
+      "expectCount": 16,
+      "actualCount": 15,
       "undocumentLines": [
         7
       ]

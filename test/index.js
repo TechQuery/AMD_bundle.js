@@ -1,4 +1,4 @@
-import {spawnSync, execSync} from 'child_process';
+import {execSync} from 'child_process';
 
 import {removeSync} from 'fs-extra';
 
@@ -139,7 +139,7 @@ describe('Package bundler',  () => {
         await pack.parse('./index');
 
         Array.from(pack,  module => module.name).should.be.eql([
-            './c',  './libs/b',  './a',  './index'
+            './libs/b',  './c',  './a',  './index'
         ]);
     });
 
@@ -199,24 +199,13 @@ describe('Command line',  () => {
 
     it('Output to a file',  () => {
 
-        const result = spawnSync(
-            'node',
-            ['index', 'test/example/index', 'test/example/build'],
-            {encoding: 'utf-8'}
-        );
-
-        result.stdout.should.be.startWith(`
+        (execSync('node index test/example/index test/example/build') + '')
+            .should.be.startWith(`
 √ Module "./index" has been bundled
 √ Module "./a" has been bundled
 √ Module "./c" has been bundled
-√ Module "./libs/b" has been bundled
 √ Module "./libs/b" has been bundled`.trim()
-        );
-
-        result.stderr.trim().should.be.equal(`
-! Module "./c" has a circular reference
-! Module "./c" has a circular reference`.trim()
-        );
+            );
     });
 
 

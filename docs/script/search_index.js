@@ -49,7 +49,7 @@ window.esdocSearchIndex = [
   ],
   [
     "",
-    "test-file/test/index.js.html#lineNumber223",
+    "test-file/test/index.js.html#lineNumber212",
     "Command line Write into stdout without printing",
     "test"
   ],
@@ -456,12 +456,6 @@ window.esdocSearchIndex = [
     "member"
   ],
   [
-    "libs/module.js~module#children",
-    "class/libs/Module.js~Module.html#instance-member-children",
-    "libs/Module.js~Module#children",
-    "member"
-  ],
-  [
     "libs/module.js~module#constructor",
     "class/libs/Module.js~Module.html#instance-constructor-constructor",
     "libs/Module.js~Module#constructor",
@@ -574,12 +568,6 @@ window.esdocSearchIndex = [
     "class/libs/Package.js~Package.html#instance-get-entry",
     "libs/Package.js~Package#entry",
     "member"
-  ],
-  [
-    "libs/package.js~package#hascircular",
-    "class/libs/Package.js~Package.html#instance-method-hasCircular",
-    "libs/Package.js~Package#hasCircular",
-    "method"
   ],
   [
     "libs/package.js~package#includeall",

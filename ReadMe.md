@@ -68,7 +68,7 @@ Build **standalone release files** (Full source code, Minimized code & Source ma
 
  - Development dependency: [Babel](https://babeljs.io/)
 
- - **NPM-scripts** reference: [EasyWebApp.js](https://github.com/TechQuery/EasyWebApp.js/blob/V5/package.json#L6)
+ - **NPM-scripts** reference: [WebCell](https://github.com/EasyWebApp/WebCell/blob/master/package.json#L33)
 
 
 
