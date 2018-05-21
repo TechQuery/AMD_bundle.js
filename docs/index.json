@@ -564,10 +564,22 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 48,
+    "__docId__": 49,
+    "kind": "external",
+    "name": "http~ClientRequest",
+    "externalLink": "https://nodejs.org/dist/latest/docs/api/http.html#http_class_http_clientrequest",
+    "memberof": "libs/.external-nodejs.js",
+    "static": true,
+    "longname": "libs/.external-nodejs.js~http~ClientRequest",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 50,
     "kind": "file",
     "name": "libs/Module.js",
-    "content": "import {dirname, join} from 'path';\n\nimport {readFile} from 'fs-extra';\n\nimport * as Utility from './utility';\n\n\nconst AMD_CJS = ['require', 'exports', 'module'];\n\n/**\n * Key for module path & value for local variable\n *\n * @typedef {Object} DependencyMap\n */\n\n\n/**\n * CommonJS or AMD module\n */\nexport default  class Module {\n    /**\n     * @param {string}  name       - Path of this module\n     * @param {string}  path       - Root path of the package which this module belongs to\n     * @param {boolean} includeAll - Treat NPM modules as CommonJS modules\n     */\n    constructor(name, path, includeAll) {\n        /**\n         * Path of this module\n         *\n         * @type {string}\n         */\n        this.name = name;\n\n        /**\n         * Directory path of this module\n         *\n         * @type {string}\n         */\n        this.base = dirname( name ).replace(/\\\\/g, '/');\n\n        /**\n         * Root path of the package which this module belongs to\n         *\n         * @type {string}\n         */\n        this.path = path;\n\n        /**\n         * @type     {Object}\n         * @property {DependencyMap} compile - Compile-time dependency from AMD\n         * @property {DependencyMap} runtime - Runtime dependency from CommonJS\n         * @property {DependencyMap} outside - Outside dependency from NPM\n         */\n        this.dependency = {\n            compile:  { },\n            runtime:  { },\n            outside:  includeAll ? null : { }\n        };\n    }\n\n    /**\n     * @protected\n     *\n     * @param {string} name - Name of a module\n     *\n     * @return {string}\n     */\n    static identifierOf(name) {  return  name.replace(/[./]+/g, '_');  }\n\n    /**\n     * Identifier of this module in JS code\n     *\n     * @type {string}\n     */\n    get identifier() {  return  Module.identifierOf( this.name );  }\n\n    /**\n     * Paths of all the dependency needed to be bundled\n     *\n     * @type {string[]}\n     */\n    get dependencyPath() {\n\n        return  Object.keys( this.dependency.compile ).concat(\n            Object.keys( this.dependency.runtime )\n        );\n    }\n\n    /**\n     * @protected\n     *\n     * @return {?string} Entry file path of this module in `./node_modules/`\n     */\n    searchNPM() {\n\n        for (let method  of  ['getNPMFile', 'getNPMPackage', 'getNPMIndex']) {\n\n            let path;\n\n            if (path = Utility[method]( this.name ))  return path;\n        }\n    }\n\n    /**\n     * @protected\n     *\n     * @return {string} Original source code of this module\n     */\n    async load() {\n\n        this.source = await readFile(\n            ((! this.dependency.outside)  &&  /^\\w/.test( this.name ))  ?\n                this.searchNPM()  :  join(this.path, `${this.name}.js`)\n        );\n\n        return  this.source = (this.source + '').replace(/\\r\\n/g, '\\n');\n    }\n\n    /**\n     * Add a depended module of this module\n     *\n     * @protected\n     *\n     * @param {string} type      - `compile` for AMD & `runtime` for CJS\n     * @param {string} name      - Name of a module\n     * @param {string} [varName] - Variable name of a module in another module\n     */\n    addChild(type, name, varName) {\n\n        if ((type === 'compile')  &&  AMD_CJS.includes( name ))  return;\n\n        const NPM = /^\\w/.test( name );\n\n        if (this.dependency.outside && NPM)  type = 'outside';\n\n        name = (NPM ? '' : './')  +  join(this.base, name).replace(/\\\\/g, '/');\n\n        this.dependency[ type ][ name ] = varName  ||  Module.identifierOf( name );\n    }\n\n    /**\n     * @protected\n     *\n     * @return {DependencyMap} Compile-time dependency\n     */\n    parseAMD() {\n\n        this.source = this.source.replace(\n            /define\\((?:\\s*\\[([\\s\\S]*?)\\]\\s*,)?\\s*function\\s*\\(([\\s\\S]*?)\\)\\s*\\{([\\s\\S]+)\\}\\s*\\);?/,\n            (_, modName, varName, body) => {\n\n                var index = 0;  varName = varName.trim().split( /\\s*,\\s*/ );\n\n                modName.replace(\n                    /(?:'|\")(.+?)(?:'|\")/g,\n                    (_, name)  =>\n                        this.addChild('compile',  name,  varName[ index ])  ||  index++\n                );\n\n                return  body.replace(/^\\n([\\s\\S]+)\\n$/, '$1');\n            }\n        );\n\n        return this.dependency.compile;\n    }\n\n    /**\n     * @protected\n     *\n     * @return {DependencyMap} Runtime dependency\n     */\n    parseCJS() {\n\n        this.source.replace(\n            /(?:(?:var|let|const)\\s+[\\s\\S]+?=\\s*)?require\\(\\s*(?:'|\")(.+?)(?:'|\")\\s*\\)/mg,\n            (match, modName)  =>  this.addChild('runtime', modName)  ||  match\n        );\n\n        return this.dependency.runtime;\n    }\n\n    /**\n     * @return {string} Factory code of this parsed module\n     */\n    async parse() {\n\n        await this.load();\n\n        this.parseAMD();\n\n        this.parseCJS();\n\n        return  this.source = `function ${this.identifier}(${\n\n            Object.values( this.dependency.compile ).concat( AMD_CJS ).join(', ')\n        }) {${\n            this.source\n        }}`;\n    }\n\n    /**\n     * @return {string} Factory code of this parsed module\n     */\n    toString() {\n\n        return  ('source' in this)  ?  (this.source + '')  :  '';\n    }\n}\n",
+    "content": "import {EventEmitter} from 'events';\n\nimport {dirname, join} from 'path';\n\nimport {readFile} from 'fs-extra';\n\nimport * as Utility from './utility';\n\n\nconst AMD_CJS = ['require', 'exports', 'module'];\n\n/**\n * Key for module path & value for local variable\n *\n * @typedef {Object} DependencyMap\n */\n\n\n/**\n * CommonJS or AMD module\n */\nexport default  class Module extends EventEmitter {\n    /**\n     * @param {string}  name               - Path of this module\n     * @param {string}  [path='.']         - Root path of the package which this module belongs to\n     * @param {boolean} [includeAll=false] - Treat NPM modules as CommonJS modules\n     * @param {Object}  [nameMap={}] `     - Map to replace some dependencies to others\n     */\n    constructor(name,  path = '.',  includeAll = false,  nameMap = { }) {\n        /**\n         * Path of this module\n         *\n         * @type {string}\n         */\n        super().name = name;\n\n        /**\n         * Directory path of this module\n         *\n         * @type {string}\n         */\n        this.base = dirname( name ).replace(/\\\\/g, '/');\n\n        /**\n         * Root path of the package which this module belongs to\n         *\n         * @type {string}\n         */\n        this.path = path;\n\n        /**\n         * @type     {Object}\n         * @property {DependencyMap} compile - Compile-time dependency from AMD\n         * @property {DependencyMap} runtime - Runtime dependency from CommonJS\n         * @property {DependencyMap} outside - Outside dependency from NPM\n         */\n        this.dependency = {\n            compile:  { },\n            runtime:  { },\n            outside:  includeAll ? null : { }\n        };\n\n        /**\n         * Key for original name of a module & value for module name of the replacement\n         *\n         * @type {Object}\n         */\n        this.nameMap = nameMap;\n    }\n\n    /**\n     * @protected\n     *\n     * @param {string} name - Name of a module\n     *\n     * @return {string}\n     */\n    static identifierOf(name) {  return  name.replace(/[./]+/g, '_');  }\n\n    /**\n     * Identifier of this module in JS code\n     *\n     * @type {string}\n     */\n    get identifier() {  return  Module.identifierOf( this.name );  }\n\n    /**\n     * Paths of all the dependency needed to be bundled\n     *\n     * @type {string[]}\n     */\n    get dependencyPath() {\n\n        return  Object.keys( this.dependency.compile ).concat(\n            Object.keys( this.dependency.runtime )\n        );\n    }\n\n    /**\n     * @protected\n     *\n     * @return {?string} Entry file path of this module in `./node_modules/`\n     */\n    searchNPM() {\n\n        for (let method  of  ['getNPMFile', 'getNPMPackage', 'getNPMIndex']) {\n\n            let path;\n\n            if (path = Utility[method]( this.name ))  return path;\n        }\n    }\n\n    /**\n     * @protected\n     *\n     * @return {string} Original source code of this module\n     */\n    async load() {\n\n        this.source = await readFile(\n            ((! this.dependency.outside)  &&  /^\\w/.test( this.name ))  ?\n                this.searchNPM()  :  join(this.path, `${this.name}.js`)\n        );\n\n        return  this.source = (this.source + '').replace(/\\r\\n/g, '\\n');\n    }\n\n    /**\n     * @protected\n     *\n     * @param {string} module - Name of a module\n     *\n     * @return {string} Module name used finally\n     */\n    mapName(module) {\n\n        if (module in this.nameMap)\n            this.emit('replace',  module,  module = this.nameMap[ module ]);\n\n        return module;\n    }\n\n    /**\n     * Add a depended module of this module\n     *\n     * @protected\n     *\n     * @param {string} type      - `compile` for AMD & `runtime` for CJS\n     * @param {string} name      - Name of a module\n     * @param {string} [varName] - Variable name of a module in another module\n     */\n    addChild(type, name, varName) {\n\n        if ((type === 'compile')  &&  AMD_CJS.includes( name ))  return;\n\n        const NPM = /^\\w/.test( name );\n\n        if (this.dependency.outside && NPM)  type = 'outside';\n\n        name = (NPM ? '' : './')  +  join(this.base, name).replace(/\\\\/g, '/');\n\n        this.dependency[ type ][ name ] = varName  ||  Module.identifierOf( name );\n    }\n\n    /**\n     * @protected\n     *\n     * @return {DependencyMap} Compile-time dependency\n     */\n    parseAMD() {\n\n        this.source = this.source.replace(\n            /define\\((?:\\s*\\[([\\s\\S]*?)\\]\\s*,)?\\s*function\\s*\\(([\\s\\S]*?)\\)\\s*\\{([\\s\\S]+)\\}\\s*\\);?/,\n            (_, modName, varName, body) => {\n\n                var index = 0;  varName = varName.trim().split( /\\s*,\\s*/ );\n\n                (modName || '').replace(\n                    /(?:'|\")(.+?)(?:'|\")/g,\n                    (_, name)  =>  {\n\n                        this.addChild(\n                            'compile',  this.mapName( name ),  varName[ index ]\n                        );\n\n                        index++;\n                    }\n                );\n\n                return  body.replace(/^\\n([\\s\\S]+)\\n$/, '$1');\n            }\n        );\n\n        return this.dependency.compile;\n    }\n\n    /**\n     * @protected\n     *\n     * @return {DependencyMap} Runtime dependency\n     */\n    parseCJS() {\n\n        this.source = this.source.replace(\n            /((?:var|let|const)\\s+[\\s\\S]+?=\\s*)?require\\(\\s*(?:'|\")(.+?)(?:'|\")\\s*\\)/mg,\n            (_, assign, modName)  =>  {\n\n                this.addChild('runtime',  modName = this.mapName( modName ));\n\n                return  `${assign || ''}require('${modName}')`;\n            }\n        );\n\n        return this.dependency.runtime;\n    }\n\n    /**\n     * @return {string} Factory code of this parsed module\n     */\n    async parse() {\n\n        await this.load();\n\n        this.parseAMD();\n\n        this.parseCJS();\n\n        return  this.source = `function ${this.identifier}(${\n\n            Object.values( this.dependency.compile ).concat( AMD_CJS ).join(', ')\n        }) {${\n            this.source\n        }}`;\n    }\n\n    /**\n     * @return {string} Factory code of this parsed module\n     */\n    toString() {\n\n        return  ('source' in this)  ?  (this.source + '')  :  '';\n    }\n}\n",
     "static": true,
     "longname": "D:/TechQuery/AMD_bundle.js/libs/Module.js",
     "access": "public",
@@ -575,7 +587,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 49,
+    "__docId__": 51,
     "kind": "variable",
     "name": "AMD_CJS",
     "memberof": "libs/Module.js",
@@ -586,7 +598,7 @@
     "importPath": "amd-bundle/libs/Module.js",
     "importStyle": null,
     "description": null,
-    "lineNumber": 8,
+    "lineNumber": 10,
     "undocument": true,
     "type": {
       "types": [
@@ -596,7 +608,7 @@
     "ignore": true
   },
   {
-    "__docId__": 50,
+    "__docId__": 52,
     "kind": "typedef",
     "name": "DependencyMap",
     "memberof": "libs/Module.js",
@@ -613,7 +625,7 @@
     }
   },
   {
-    "__docId__": 51,
+    "__docId__": 53,
     "kind": "class",
     "name": "Module",
     "memberof": "libs/Module.js",
@@ -624,11 +636,14 @@
     "importPath": "amd-bundle/libs/Module.js",
     "importStyle": "Module",
     "description": "CommonJS or AMD module",
-    "lineNumber": 20,
-    "interface": false
+    "lineNumber": 22,
+    "interface": false,
+    "extends": [
+      "events~EventEmitter"
+    ]
   },
   {
-    "__docId__": 52,
+    "__docId__": 54,
     "kind": "constructor",
     "name": "constructor",
     "memberof": "libs/Module.js~Module",
@@ -638,7 +653,7 @@
     "longname": "libs/Module.js~Module#constructor",
     "access": "public",
     "description": "",
-    "lineNumber": 26,
+    "lineNumber": 29,
     "params": [
       {
         "nullable": null,
@@ -656,7 +671,9 @@
           "string"
         ],
         "spread": false,
-        "optional": false,
+        "optional": true,
+        "defaultValue": "'.'",
+        "defaultRaw": "'.'",
         "name": "path",
         "description": "Root path of the package which this module belongs to"
       },
@@ -666,33 +683,28 @@
           "boolean"
         ],
         "spread": false,
-        "optional": false,
+        "optional": true,
+        "defaultValue": "false",
+        "defaultRaw": false,
         "name": "includeAll",
         "description": "Treat NPM modules as CommonJS modules"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": true,
+        "defaultValue": "{}",
+        "defaultRaw": {},
+        "name": "nameMap",
+        "description": "`     - Map to replace some dependencies to others"
       }
     ]
   },
   {
-    "__docId__": 53,
-    "kind": "member",
-    "name": "name",
-    "memberof": "libs/Module.js~Module",
-    "static": false,
-    "longname": "libs/Module.js~Module#name",
-    "access": "public",
-    "description": "Path of this module",
-    "lineNumber": 32,
-    "type": {
-      "nullable": null,
-      "types": [
-        "string"
-      ],
-      "spread": false,
-      "description": null
-    }
-  },
-  {
-    "__docId__": 54,
+    "__docId__": 55,
     "kind": "member",
     "name": "base",
     "memberof": "libs/Module.js~Module",
@@ -700,26 +712,7 @@
     "longname": "libs/Module.js~Module#base",
     "access": "public",
     "description": "Directory path of this module",
-    "lineNumber": 39,
-    "type": {
-      "nullable": null,
-      "types": [
-        "string"
-      ],
-      "spread": false,
-      "description": null
-    }
-  },
-  {
-    "__docId__": 55,
-    "kind": "member",
-    "name": "path",
-    "memberof": "libs/Module.js~Module",
-    "static": false,
-    "longname": "libs/Module.js~Module#path",
-    "access": "public",
-    "description": "Root path of the package which this module belongs to",
-    "lineNumber": 46,
+    "lineNumber": 42,
     "type": {
       "nullable": null,
       "types": [
@@ -732,13 +725,32 @@
   {
     "__docId__": 56,
     "kind": "member",
+    "name": "path",
+    "memberof": "libs/Module.js~Module",
+    "static": false,
+    "longname": "libs/Module.js~Module#path",
+    "access": "public",
+    "description": "Root path of the package which this module belongs to",
+    "lineNumber": 49,
+    "type": {
+      "nullable": null,
+      "types": [
+        "string"
+      ],
+      "spread": false,
+      "description": null
+    }
+  },
+  {
+    "__docId__": 57,
+    "kind": "member",
     "name": "dependency",
     "memberof": "libs/Module.js~Module",
     "static": false,
     "longname": "libs/Module.js~Module#dependency",
     "access": "public",
     "description": "",
-    "lineNumber": 54,
+    "lineNumber": 57,
     "properties": [
       {
         "nullable": null,
@@ -781,7 +793,26 @@
     }
   },
   {
-    "__docId__": 57,
+    "__docId__": 58,
+    "kind": "member",
+    "name": "nameMap",
+    "memberof": "libs/Module.js~Module",
+    "static": false,
+    "longname": "libs/Module.js~Module#nameMap",
+    "access": "public",
+    "description": "Key for original name of a module & value for module name of the replacement",
+    "lineNumber": 68,
+    "type": {
+      "nullable": null,
+      "types": [
+        "Object"
+      ],
+      "spread": false,
+      "description": null
+    }
+  },
+  {
+    "__docId__": 59,
     "kind": "method",
     "name": "identifierOf",
     "memberof": "libs/Module.js~Module",
@@ -791,7 +822,7 @@
     "longname": "libs/Module.js~Module.identifierOf",
     "access": "protected",
     "description": "",
-    "lineNumber": 68,
+    "lineNumber": 78,
     "params": [
       {
         "nullable": null,
@@ -814,7 +845,7 @@
     }
   },
   {
-    "__docId__": 58,
+    "__docId__": 60,
     "kind": "get",
     "name": "identifier",
     "memberof": "libs/Module.js~Module",
@@ -824,7 +855,7 @@
     "longname": "libs/Module.js~Module#identifier",
     "access": "public",
     "description": "Identifier of this module in JS code",
-    "lineNumber": 75,
+    "lineNumber": 85,
     "type": {
       "nullable": null,
       "types": [
@@ -835,7 +866,7 @@
     }
   },
   {
-    "__docId__": 59,
+    "__docId__": 61,
     "kind": "get",
     "name": "dependencyPath",
     "memberof": "libs/Module.js~Module",
@@ -845,7 +876,7 @@
     "longname": "libs/Module.js~Module#dependencyPath",
     "access": "public",
     "description": "Paths of all the dependency needed to be bundled",
-    "lineNumber": 82,
+    "lineNumber": 92,
     "type": {
       "nullable": null,
       "types": [
@@ -856,7 +887,7 @@
     }
   },
   {
-    "__docId__": 60,
+    "__docId__": 62,
     "kind": "method",
     "name": "searchNPM",
     "memberof": "libs/Module.js~Module",
@@ -866,7 +897,7 @@
     "longname": "libs/Module.js~Module#searchNPM",
     "access": "protected",
     "description": "",
-    "lineNumber": 94,
+    "lineNumber": 104,
     "return": {
       "nullable": true,
       "types": [
@@ -878,7 +909,7 @@
     "params": []
   },
   {
-    "__docId__": 61,
+    "__docId__": 63,
     "kind": "method",
     "name": "load",
     "memberof": "libs/Module.js~Module",
@@ -888,7 +919,7 @@
     "longname": "libs/Module.js~Module#load",
     "access": "protected",
     "description": "",
-    "lineNumber": 109,
+    "lineNumber": 119,
     "return": {
       "nullable": null,
       "types": [
@@ -900,7 +931,7 @@
     "params": []
   },
   {
-    "__docId__": 62,
+    "__docId__": 64,
     "kind": "member",
     "name": "source",
     "memberof": "libs/Module.js~Module",
@@ -908,7 +939,7 @@
     "longname": "libs/Module.js~Module#source",
     "access": "public",
     "description": null,
-    "lineNumber": 111,
+    "lineNumber": 121,
     "undocument": true,
     "type": {
       "types": [
@@ -917,7 +948,40 @@
     }
   },
   {
-    "__docId__": 63,
+    "__docId__": 65,
+    "kind": "method",
+    "name": "mapName",
+    "memberof": "libs/Module.js~Module",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "libs/Module.js~Module#mapName",
+    "access": "protected",
+    "description": "",
+    "lineNumber": 136,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "module",
+        "description": "Name of a module"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "string"
+      ],
+      "spread": false,
+      "description": "Module name used finally"
+    }
+  },
+  {
+    "__docId__": 66,
     "kind": "method",
     "name": "addChild",
     "memberof": "libs/Module.js~Module",
@@ -927,7 +991,7 @@
     "longname": "libs/Module.js~Module#addChild",
     "access": "protected",
     "description": "Add a depended module of this module",
-    "lineNumber": 128,
+    "lineNumber": 153,
     "params": [
       {
         "nullable": null,
@@ -963,7 +1027,7 @@
     "return": null
   },
   {
-    "__docId__": 64,
+    "__docId__": 67,
     "kind": "method",
     "name": "parseAMD",
     "memberof": "libs/Module.js~Module",
@@ -973,7 +1037,7 @@
     "longname": "libs/Module.js~Module#parseAMD",
     "access": "protected",
     "description": "",
-    "lineNumber": 146,
+    "lineNumber": 171,
     "return": {
       "nullable": null,
       "types": [
@@ -985,7 +1049,7 @@
     "params": []
   },
   {
-    "__docId__": 66,
+    "__docId__": 69,
     "kind": "method",
     "name": "parseCJS",
     "memberof": "libs/Module.js~Module",
@@ -995,7 +1059,7 @@
     "longname": "libs/Module.js~Module#parseCJS",
     "access": "protected",
     "description": "",
-    "lineNumber": 172,
+    "lineNumber": 203,
     "return": {
       "nullable": null,
       "types": [
@@ -1007,7 +1071,7 @@
     "params": []
   },
   {
-    "__docId__": 67,
+    "__docId__": 71,
     "kind": "method",
     "name": "parse",
     "memberof": "libs/Module.js~Module",
@@ -1017,7 +1081,7 @@
     "longname": "libs/Module.js~Module#parse",
     "access": "public",
     "description": "",
-    "lineNumber": 185,
+    "lineNumber": 221,
     "return": {
       "nullable": null,
       "types": [
@@ -1029,7 +1093,7 @@
     "params": []
   },
   {
-    "__docId__": 68,
+    "__docId__": 72,
     "kind": "method",
     "name": "toString",
     "memberof": "libs/Module.js~Module",
@@ -1039,7 +1103,7 @@
     "longname": "libs/Module.js~Module#toString",
     "access": "public",
     "description": "",
-    "lineNumber": 204,
+    "lineNumber": 240,
     "return": {
       "nullable": null,
       "types": [
@@ -1051,10 +1115,10 @@
     "params": []
   },
   {
-    "__docId__": 69,
+    "__docId__": 73,
     "kind": "file",
     "name": "libs/Package.js",
-    "content": "import {basename, dirname} from 'path';\n\nimport Module from './Module';\n\nimport {merge} from './utility';\n\nconst Array_proto = Array.prototype;\n\n\n/**\n * Package to be bundled\n */\nexport default  class Package {\n    /**\n     * @param {string}  path         - The entry file path of this package\n     *                                 (relative to `process.cwd()`)\n     * @param {boolean} [includeAll] - Include NPM modules in the final bundle\n     * @param {boolean} [noLog]      - Disable log output\n     */\n    constructor(path, includeAll, noLog) {\n        /**\n         * Module name of this bundled package\n         *\n         * @type {string}\n         */\n        this.name = basename( path );\n\n        /**\n         * The root path of this package (relative to `process.cwd()`)\n         *\n         * @type {string}\n         */\n        this.base = dirname( path );\n\n        /**\n         * Whether include NPM modules in the final bundle\n         *\n         * @type {boolean}\n         */\n        this.includeAll = includeAll;\n\n        /**\n         * Module count of this package\n         *\n         * @type {number}\n         */\n        this.length = 0;\n\n        /**\n         * Reference count of modules in this package\n         * (key for name & value for count)\n         *\n         * @type {Object}\n         */\n        this.module = { };\n\n        /**\n         * Whether show logs during the bundle process\n         *\n         * @type {boolean}\n         */\n        this.showLog = (! noLog);\n    }\n\n    /**\n     * @param {Module|string} module - Instance or name of a module\n     *\n     * @return {number}\n     */\n    indexOf(module) {\n\n        for (let i = 0;  this[i];  i++)\n            if (\n                (module instanceof Module)  ?\n                    (module === this[i])  :  (module === this[i].name)\n            )\n                return i;\n\n        return -1;\n    }\n\n    /**\n     * @protected\n     *\n     * @param {string} modName - Path of a module\n     *\n     * @return {?Module} New module\n     */\n    register(modName) {\n\n        const index = this.indexOf( modName );\n\n        this.module[modName] = (this.module[modName] || 0)  +  1;\n\n        if (index < 0) {\n\n            Array_proto.unshift.call(\n                this,  new Module(modName, this.base, this.includeAll)\n            );\n\n            return this[0];\n        }\n\n        Array_proto.sort.call(this,  (A, B) => {\n\n            if (B.dependencyPath.includes( A.name ))  return -1;\n\n            if (A.dependencyPath.includes( B.name ))  return 1;\n\n            return  this.module[ B.name ]  -  this.module[ A.name ];\n        });\n    }\n\n    /**\n     * Entry module of this package\n     *\n     * @type {Module}\n     */\n    get entry() {  return  this[this.length - 1];  }\n\n    /**\n     * @protected\n     *\n     * @param {string} modName - Path of a module\n     */\n    async parse(modName) {\n\n        const module = this.register( modName );\n\n        if (! module)  return;\n\n        await module.parse();\n\n        if ( this.showLog )\n            console.info(`√ Module \"${modName}\" has been bundled`);\n\n        await Promise.all(\n            module.dependencyPath.map(path  =>  this.parse( path ))\n        );\n    }\n\n    /**\n     * Outside dependencies of this package\n     *\n     * @type {DependencyMap}\n     */\n    get outDependency() {\n\n        return  this.includeAll  ?  [ ]  :  Object.assign(\n            ... Array.from(this,  module => module.dependency.outside)\n        );\n    }\n\n    /**\n     * @protected\n     *\n     * @param {function(modName: string[], varName: string[]): string} bundler\n     *\n     * @return {string} Bundled source with UMD wrapper\n     */\n    wrap(bundler) {\n\n        const outside = this.outDependency;\n\n        const modName = Object.keys( outside ), varName = Object.values( outside );\n\n        return `\n//\n//  Generated by https://www.npmjs.com/package/amd-bundle\n//\n(function (factory) {\n\n    if ((typeof define === 'function')  &&  define.amd)\n        define('${this.name}', ${JSON.stringify( modName )}, factory);\n    else if (typeof module === 'object')\n        return  module.exports = factory(${modName.map(name => `require('${name}')`)});\n    else\n        return  this.${this.name} = factory(${modName.map(name => `this.${name}`)});\n\n})(${bundler(modName, varName)});`.trim();\n    }\n\n    /**\n     * @return {string} Source code of this package\n     */\n    async bundle() {\n\n        await this.parse(`./${this.name}`);\n\n        return  this.wrap((modName, varName) => `function (${varName}) {\n\n    var module = {\n        ${Array.from(\n        this,  item => `'${item.name}':  {exports: { }}`\n    ).concat(\n        modName.map((name, index)  =>  `'${name}':  {exports: ${varName[index]}}`)\n    ).join(',\\n        ')}\n    };\n\n${merge}\n\n    function _require_(base, path) {\n\n        return module[\n            /^\\\\w/.test( path )  ?  path  :  ('./' + merge(base, path))\n        ].exports;\n    }\n\n    var require = _require_.bind(null, './');\n\n${Array.from(this,  item => item.source).join('\\n\\n')}\n\n    ${Array.from(this,  item => `module['${item.name}'].exports = ${item.identifier}(${\n\n        Object.keys( item.dependency.compile ).map(\n            child => `require('${child}')`\n        ).concat(\n            `_require_.bind(null, '${item.base}')`,\n            `require('${item.name}')`,\n            `module['${item.name}']`\n        ).join(', ')\n\n    }) || require('${item.name}');`).join('\\n\\n    ')}\n\n    return require('${this.entry.name}');\n}`);\n    }\n}\n",
+    "content": "import {basename, dirname} from 'path';\n\nimport Module from './Module';\n\nimport {merge} from './utility';\n\nconst Array_proto = Array.prototype;\n\n\n/**\n * Package to be bundled\n */\nexport default  class Package {\n    /**\n     * @param {string}  path         - The entry file path of this package\n     *                                 (relative to `process.cwd()`)\n     * @param {boolean} [includeAll=false] - Include NPM modules in the final bundle\n     * @param {Object}  [moduleMap={}]     - Map to replace some dependencies to others\n     * @param {boolean} [noLog=false]      - Disable log output\n     */\n    constructor(path,  includeAll = false,  moduleMap = { },  noLog = false) {\n        /**\n         * Module name of this bundled package\n         *\n         * @type {string}\n         */\n        this.name = basename( path );\n\n        /**\n         * The root path of this package (relative to `process.cwd()`)\n         *\n         * @type {string}\n         */\n        this.base = dirname( path );\n\n        /**\n         * Whether include NPM modules in the final bundle\n         *\n         * @type {boolean}\n         */\n        this.includeAll = includeAll;\n\n        /**\n         * Module count of this package\n         *\n         * @type {number}\n         */\n        this.length = 0;\n\n        /**\n         * Reference count of modules in this package\n         * (key for name & value for count)\n         *\n         * @type {Object}\n         */\n        this.module = { };\n\n        /**\n         * Key for original name of a module & value for module name of the replacement\n         *\n         * @type {Object}\n         */\n        this.moduleMap = moduleMap;\n\n        /**\n         * Whether show logs during the bundle process\n         *\n         * @type {boolean}\n         */\n        this.showLog = (! noLog);\n    }\n\n    /**\n     * @param {Module|string} module - Instance or name of a module\n     *\n     * @return {number}\n     */\n    indexOf(module) {\n\n        for (let i = 0;  this[i];  i++)\n            if (\n                (module instanceof Module)  ?\n                    (module === this[i])  :  (module === this[i].name)\n            )\n                return i;\n\n        return -1;\n    }\n\n    /**\n     * @protected\n     *\n     * @param {string} modName - Path of a module\n     *\n     * @return {?Module} New module\n     */\n    register(modName) {\n\n        const index = this.indexOf( modName );\n\n        this.module[modName] = (this.module[modName] || 0)  +  1;\n\n        if (index < 0) {\n\n            Array_proto.unshift.call(\n                this,\n                new Module(modName, this.base, this.includeAll, this.moduleMap)\n            );\n\n            return this[0];\n        }\n\n        Array_proto.sort.call(this,  (A, B) => {\n\n            if (B.dependencyPath.includes( A.name ))  return -1;\n\n            if (A.dependencyPath.includes( B.name ))  return 1;\n\n            return  this.module[ B.name ]  -  this.module[ A.name ];\n        });\n    }\n\n    /**\n     * Entry module of this package\n     *\n     * @type {Module}\n     */\n    get entry() {  return  this[this.length - 1];  }\n\n    /**\n     * @protected\n     *\n     * @param {string} modName - Path of a module\n     */\n    async parse(modName) {\n\n        const module = this.register( modName );\n\n        if (! module)  return;\n\n        if ( this.showLog )\n            module.on('replace',  (oldMod, newMod)  =>\n                console.info(\n                    `→ Module \"${oldMod}\" will be replaced by \"${newMod}\"`\n                )\n            );\n\n        await module.parse();\n\n        if ( this.showLog )\n            console.info(`√ Module \"${modName}\" has been bundled`);\n\n        await Promise.all(\n            module.dependencyPath.map(path  =>  this.parse( path ))\n        );\n    }\n\n    /**\n     * Outside dependencies of this package\n     *\n     * @type {DependencyMap}\n     */\n    get outDependency() {\n\n        return  this.includeAll  ?  [ ]  :  Object.assign(\n            ... Array.from(this,  module => module.dependency.outside)\n        );\n    }\n\n    /**\n     * @protected\n     *\n     * @param {function(modName: string[], varName: string[]): string} bundler\n     *\n     * @return {string} Bundled source with UMD wrapper\n     */\n    wrap(bundler) {\n\n        const outside = this.outDependency;\n\n        const modName = Object.keys( outside ), varName = Object.values( outside );\n\n        return `\n//\n//  Generated by https://www.npmjs.com/package/amd-bundle\n//\n(function (factory) {\n\n    if ((typeof define === 'function')  &&  define.amd)\n        define('${this.name}', ${JSON.stringify( modName )}, factory);\n    else if (typeof module === 'object')\n        return  module.exports = factory(${modName.map(name => `require('${name}')`)});\n    else\n        return  this.${this.name} = factory(${modName.map(name => `this.${name}`)});\n\n})(${bundler(modName, varName)});`.trim();\n    }\n\n    /**\n     * @return {string} Source code of this package\n     */\n    async bundle() {\n\n        await this.parse(`./${this.name}`);\n\n        return  this.wrap((modName, varName) => `function (${varName}) {\n\n    var module = {\n        ${Array.from(\n        this,  item => `'${item.name}':  {exports: { }}`\n    ).concat(\n        modName.map((name, index)  =>  `'${name}':  {exports: ${varName[index]}}`)\n    ).join(',\\n        ')}\n    };\n\n${merge}\n\n    function _require_(base, path) {\n\n        return module[\n            /^\\\\w/.test( path )  ?  path  :  ('./' + merge(base, path))\n        ].exports;\n    }\n\n    var require = _require_.bind(null, './');\n\n${Array.from(this,  item => item.source).join('\\n\\n')}\n\n    ${Array.from(this,  item => `module['${item.name}'].exports = ${item.identifier}(${\n\n        Object.keys( item.dependency.compile ).map(\n            child => `require('${child}')`\n        ).concat(\n            `_require_.bind(null, '${item.base}')`,\n            `require('${item.name}')`,\n            `module['${item.name}']`\n        ).join(', ')\n\n    }) || require('${item.name}');`).join('\\n\\n    ')}\n\n    return require('${this.entry.name}');\n}`);\n    }\n}\n",
     "static": true,
     "longname": "D:/TechQuery/AMD_bundle.js/libs/Package.js",
     "access": "public",
@@ -1062,7 +1126,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 70,
+    "__docId__": 74,
     "kind": "variable",
     "name": "Array_proto",
     "memberof": "libs/Package.js",
@@ -1083,7 +1147,7 @@
     "ignore": true
   },
   {
-    "__docId__": 71,
+    "__docId__": 75,
     "kind": "class",
     "name": "Package",
     "memberof": "libs/Package.js",
@@ -1098,7 +1162,7 @@
     "interface": false
   },
   {
-    "__docId__": 72,
+    "__docId__": 76,
     "kind": "constructor",
     "name": "constructor",
     "memberof": "libs/Package.js~Package",
@@ -1108,7 +1172,7 @@
     "longname": "libs/Package.js~Package#constructor",
     "access": "public",
     "description": "",
-    "lineNumber": 20,
+    "lineNumber": 21,
     "params": [
       {
         "nullable": null,
@@ -1127,8 +1191,22 @@
         ],
         "spread": false,
         "optional": true,
+        "defaultValue": "false",
+        "defaultRaw": false,
         "name": "includeAll",
         "description": "Include NPM modules in the final bundle"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": true,
+        "defaultValue": "{}",
+        "defaultRaw": {},
+        "name": "moduleMap",
+        "description": "Map to replace some dependencies to others"
       },
       {
         "nullable": null,
@@ -1137,13 +1215,15 @@
         ],
         "spread": false,
         "optional": true,
+        "defaultValue": "false",
+        "defaultRaw": false,
         "name": "noLog",
         "description": "Disable log output"
       }
     ]
   },
   {
-    "__docId__": 73,
+    "__docId__": 77,
     "kind": "member",
     "name": "name",
     "memberof": "libs/Package.js~Package",
@@ -1151,7 +1231,7 @@
     "longname": "libs/Package.js~Package#name",
     "access": "public",
     "description": "Module name of this bundled package",
-    "lineNumber": 26,
+    "lineNumber": 27,
     "type": {
       "nullable": null,
       "types": [
@@ -1162,7 +1242,7 @@
     }
   },
   {
-    "__docId__": 74,
+    "__docId__": 78,
     "kind": "member",
     "name": "base",
     "memberof": "libs/Package.js~Package",
@@ -1170,7 +1250,7 @@
     "longname": "libs/Package.js~Package#base",
     "access": "public",
     "description": "The root path of this package (relative to `process.cwd()`)",
-    "lineNumber": 33,
+    "lineNumber": 34,
     "type": {
       "nullable": null,
       "types": [
@@ -1181,7 +1261,7 @@
     }
   },
   {
-    "__docId__": 75,
+    "__docId__": 79,
     "kind": "member",
     "name": "includeAll",
     "memberof": "libs/Package.js~Package",
@@ -1189,7 +1269,7 @@
     "longname": "libs/Package.js~Package#includeAll",
     "access": "public",
     "description": "Whether include NPM modules in the final bundle",
-    "lineNumber": 40,
+    "lineNumber": 41,
     "type": {
       "nullable": null,
       "types": [
@@ -1200,7 +1280,7 @@
     }
   },
   {
-    "__docId__": 76,
+    "__docId__": 80,
     "kind": "member",
     "name": "length",
     "memberof": "libs/Package.js~Package",
@@ -1208,7 +1288,7 @@
     "longname": "libs/Package.js~Package#length",
     "access": "public",
     "description": "Module count of this package",
-    "lineNumber": 47,
+    "lineNumber": 48,
     "type": {
       "nullable": null,
       "types": [
@@ -1219,7 +1299,7 @@
     }
   },
   {
-    "__docId__": 77,
+    "__docId__": 81,
     "kind": "member",
     "name": "module",
     "memberof": "libs/Package.js~Package",
@@ -1227,7 +1307,7 @@
     "longname": "libs/Package.js~Package#module",
     "access": "public",
     "description": "Reference count of modules in this package\n(key for name & value for count)",
-    "lineNumber": 55,
+    "lineNumber": 56,
     "type": {
       "nullable": null,
       "types": [
@@ -1238,7 +1318,26 @@
     }
   },
   {
-    "__docId__": 78,
+    "__docId__": 82,
+    "kind": "member",
+    "name": "moduleMap",
+    "memberof": "libs/Package.js~Package",
+    "static": false,
+    "longname": "libs/Package.js~Package#moduleMap",
+    "access": "public",
+    "description": "Key for original name of a module & value for module name of the replacement",
+    "lineNumber": 63,
+    "type": {
+      "nullable": null,
+      "types": [
+        "Object"
+      ],
+      "spread": false,
+      "description": null
+    }
+  },
+  {
+    "__docId__": 83,
     "kind": "member",
     "name": "showLog",
     "memberof": "libs/Package.js~Package",
@@ -1246,7 +1345,7 @@
     "longname": "libs/Package.js~Package#showLog",
     "access": "public",
     "description": "Whether show logs during the bundle process",
-    "lineNumber": 62,
+    "lineNumber": 70,
     "type": {
       "nullable": null,
       "types": [
@@ -1257,7 +1356,7 @@
     }
   },
   {
-    "__docId__": 79,
+    "__docId__": 84,
     "kind": "method",
     "name": "indexOf",
     "memberof": "libs/Package.js~Package",
@@ -1267,7 +1366,7 @@
     "longname": "libs/Package.js~Package#indexOf",
     "access": "public",
     "description": "",
-    "lineNumber": 70,
+    "lineNumber": 78,
     "params": [
       {
         "nullable": null,
@@ -1291,7 +1390,7 @@
     }
   },
   {
-    "__docId__": 80,
+    "__docId__": 85,
     "kind": "method",
     "name": "register",
     "memberof": "libs/Package.js~Package",
@@ -1301,7 +1400,7 @@
     "longname": "libs/Package.js~Package#register",
     "access": "protected",
     "description": "",
-    "lineNumber": 89,
+    "lineNumber": 97,
     "params": [
       {
         "nullable": null,
@@ -1324,7 +1423,7 @@
     }
   },
   {
-    "__docId__": 81,
+    "__docId__": 86,
     "kind": "get",
     "name": "entry",
     "memberof": "libs/Package.js~Package",
@@ -1334,7 +1433,7 @@
     "longname": "libs/Package.js~Package#entry",
     "access": "public",
     "description": "Entry module of this package",
-    "lineNumber": 119,
+    "lineNumber": 128,
     "type": {
       "nullable": null,
       "types": [
@@ -1345,7 +1444,7 @@
     }
   },
   {
-    "__docId__": 82,
+    "__docId__": 87,
     "kind": "method",
     "name": "parse",
     "memberof": "libs/Package.js~Package",
@@ -1355,7 +1454,7 @@
     "longname": "libs/Package.js~Package#parse",
     "access": "protected",
     "description": "",
-    "lineNumber": 126,
+    "lineNumber": 135,
     "params": [
       {
         "nullable": null,
@@ -1371,7 +1470,7 @@
     "return": null
   },
   {
-    "__docId__": 83,
+    "__docId__": 88,
     "kind": "get",
     "name": "outDependency",
     "memberof": "libs/Package.js~Package",
@@ -1381,7 +1480,7 @@
     "longname": "libs/Package.js~Package#outDependency",
     "access": "public",
     "description": "Outside dependencies of this package",
-    "lineNumber": 147,
+    "lineNumber": 163,
     "type": {
       "nullable": null,
       "types": [
@@ -1392,7 +1491,7 @@
     }
   },
   {
-    "__docId__": 84,
+    "__docId__": 89,
     "kind": "method",
     "name": "wrap",
     "memberof": "libs/Package.js~Package",
@@ -1402,7 +1501,7 @@
     "longname": "libs/Package.js~Package#wrap",
     "access": "protected",
     "description": "",
-    "lineNumber": 161,
+    "lineNumber": 177,
     "params": [
       {
         "nullable": null,
@@ -1425,7 +1524,7 @@
     }
   },
   {
-    "__docId__": 85,
+    "__docId__": 90,
     "kind": "method",
     "name": "bundle",
     "memberof": "libs/Package.js~Package",
@@ -1435,7 +1534,7 @@
     "longname": "libs/Package.js~Package#bundle",
     "access": "public",
     "description": "",
-    "lineNumber": 186,
+    "lineNumber": 202,
     "return": {
       "nullable": null,
       "types": [
@@ -1447,7 +1546,7 @@
     "params": []
   },
   {
-    "__docId__": 86,
+    "__docId__": 91,
     "kind": "file",
     "name": "libs/utility.js",
     "content": "import {join} from 'path';\n\nimport {existsSync, readFileSync, statSync} from 'fs';\n\n\n/**\n * This will be used in the bundled source\n *\n * @param {string} base - Root path\n * @param {string} path - Path relative to `base`\n *\n * @return {string} Joined & normalized path\n */\nexport function merge(base, path) {\n\n    return  (base + '/' + path)\n        .replace(/\\/\\//g, '/')\n        .replace(/[^/.]+\\/\\.\\.\\//g, '')\n        .replace(/\\.\\//g,  function (match, index, input) {\n\n            return  (input[index - 1]  ===  '.')  ?  match  :  '';\n        });\n}\n\n\nfunction inNPM(path) {\n\n    if (existsSync(path = join('node_modules', path)))\n        return  path.replace(/\\\\/g, '/');\n}\n\n\nfunction findNPMFile(list) {\n\n    for (let path of list)  if (path = inNPM( path ))  return path;\n}\n\n\n/**\n * @param {string} name - Name of a module\n *\n * @return {?string} Valid `name` in `./node_modules/` is a JS or JSON file\n */\nexport function getNPMFile(name) {\n\n    return  findNPMFile([name, `${name}.js`, `${name}.json`]);\n}\n\n\n/**\n * @param {string} name - Name of a module\n *\n * @return {?string} Valid `name` in `./node_modules/` is `index.js` or `index.json`\n */\nexport function getNPMIndex(name) {\n\n    return  findNPMFile([`${name}/index.js`, `${name}/index.json`]);\n}\n\n\n/**\n * @param {string} name - Name of a module\n *\n * @return {?string} Entry file path of an existing `package.json`\n */\nexport function getNPMPackage(name) {\n\n    var path = inNPM(`${name}/package.json`);\n\n    if (! path)  return;\n\n    const config = JSON.parse( readFileSync( path ) );\n\n    for (let key  of  ['main', 'browser'])\n        if (path = inNPM( join(name, config[key]) ))\n            return  statSync( path ).isFile()  ?  path  :  getNPMIndex( path );\n}\n",
@@ -1458,7 +1557,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 87,
+    "__docId__": 92,
     "kind": "function",
     "name": "merge",
     "memberof": "libs/utility.js",
@@ -1504,7 +1603,7 @@
     }
   },
   {
-    "__docId__": 88,
+    "__docId__": 93,
     "kind": "function",
     "name": "inNPM",
     "memberof": "libs/utility.js",
@@ -1535,7 +1634,7 @@
     "ignore": true
   },
   {
-    "__docId__": 89,
+    "__docId__": 94,
     "kind": "function",
     "name": "findNPMFile",
     "memberof": "libs/utility.js",
@@ -1566,7 +1665,7 @@
     "ignore": true
   },
   {
-    "__docId__": 90,
+    "__docId__": 95,
     "kind": "function",
     "name": "getNPMFile",
     "memberof": "libs/utility.js",
@@ -1602,7 +1701,7 @@
     }
   },
   {
-    "__docId__": 91,
+    "__docId__": 96,
     "kind": "function",
     "name": "getNPMIndex",
     "memberof": "libs/utility.js",
@@ -1638,7 +1737,7 @@
     }
   },
   {
-    "__docId__": 92,
+    "__docId__": 97,
     "kind": "function",
     "name": "getNPMPackage",
     "memberof": "libs/utility.js",
@@ -1683,14 +1782,14 @@
   },
   {
     "kind": "packageJSON",
-    "content": "{\n  \"name\": \"amd-bundle\",\n  \"version\": \"1.0.0\",\n  \"description\": \"A command-line tool for bundling up AMD modules, which is much easier to use than r.js with Almond or AMDclean\",\n  \"main\": \"libs/Package.js\",\n  \"bin\": \"index.js\",\n  \"engines\": {\n    \"node\": \"^6.5.0\"\n  },\n  \"scripts\": {\n    \"lint\": \"eslint index.js libs/ test/\",\n    \"install\": \"echo exports.test = 1;> node_modules/test.js\",\n    \"test\": \"mocha -r babel-register -r babel-polyfill -r should --no-timeouts -c --inline-diffs --exit\",\n    \"debug\": \"npm test -- --inspect-brk\",\n    \"build\": \"esdoc\",\n    \"start\": \"web-server docs/ -o\",\n    \"precommit\": \"npm run lint  &&  npm test\"\n  },\n  \"repository\": {\n    \"type\": \"git\",\n    \"url\": \"git+https://github.com/TechQuery/AMD_bundle.js.git\"\n  },\n  \"keywords\": [\n    \"javascript\",\n    \"amd-loader\",\n    \"bundle\",\n    \"require-js\",\n    \"command-line\"\n  ],\n  \"author\": \"shiy007@qq.com\",\n  \"license\": \"AGPL-3.0\",\n  \"bugs\": {\n    \"url\": \"https://github.com/TechQuery/AMD_bundle.js/issues\"\n  },\n  \"homepage\": \"https://github.com/TechQuery/AMD_bundle.js#readme\",\n  \"dependencies\": {\n    \"babel-env\": \"^2.4.1\",\n    \"babel-polyfill\": \"^6.26.0\",\n    \"babel-register\": \"^6.26.0\",\n    \"commander\": \"^2.11.0\",\n    \"fs-extra\": \"^6.0.1\"\n  },\n  \"devDependencies\": {\n    \"esdoc\": \"^1.1.0\",\n    \"esdoc-standard-plugin\": \"^1.0.0\",\n    \"eslint\": \"^4.19.1\",\n    \"husky\": \"^0.14.3\",\n    \"koapache\": \"^0.2.2\",\n    \"mocha\": \"^5.1.1\",\n    \"should\": \"^13.2.1\"\n  },\n  \"babel\": {\n    \"presets\": [\n      \"env\"\n    ]\n  },\n  \"esdoc\": {\n    \"source\": \"./libs\",\n    \"destination\": \"./docs\",\n    \"plugins\": [\n      {\n        \"name\": \"esdoc-standard-plugin\",\n        \"option\": {\n          \"test\": {\n            \"source\": \"./test\",\n            \"interfaces\": [\n              \"describe\",\n              \"it\"\n            ],\n            \"includes\": [\n              \"\\\\.js$\"\n            ]\n          }\n        }\n      }\n    ]\n  }\n}\n",
+    "content": "{\n  \"name\": \"amd-bundle\",\n  \"version\": \"1.0.0\",\n  \"description\": \"A command-line tool for bundling up AMD modules, which is much easier to use than r.js with Almond or AMDclean\",\n  \"main\": \"libs/Package.js\",\n  \"bin\": \"index.js\",\n  \"engines\": {\n    \"node\": \"^6.5.0\"\n  },\n  \"scripts\": {\n    \"lint\": \"eslint index.js libs/ test/\",\n    \"install\": \"echo exports.test = 1;> node_modules/test.js\",\n    \"test\": \"mocha -r babel-register -r babel-polyfill -r should --no-timeouts -c --inline-diffs --exit\",\n    \"debug\": \"npm test -- --inspect-brk\",\n    \"build\": \"esdoc\",\n    \"start\": \"web-server docs/ -o\",\n    \"precommit\": \"npm run lint  &&  npm test\"\n  },\n  \"repository\": {\n    \"type\": \"git\",\n    \"url\": \"git+https://github.com/TechQuery/AMD_bundle.js.git\"\n  },\n  \"keywords\": [\n    \"javascript\",\n    \"amd-loader\",\n    \"bundle\",\n    \"require-js\",\n    \"command-line\"\n  ],\n  \"author\": \"shiy007@qq.com\",\n  \"license\": \"AGPL-3.0\",\n  \"bugs\": {\n    \"url\": \"https://github.com/TechQuery/AMD_bundle.js/issues\"\n  },\n  \"homepage\": \"https://github.com/TechQuery/AMD_bundle.js#readme\",\n  \"dependencies\": {\n    \"babel-env\": \"^2.4.1\",\n    \"babel-polyfill\": \"^6.26.0\",\n    \"babel-register\": \"^6.26.0\",\n    \"commander\": \"^2.11.0\",\n    \"fs-extra\": \"^6.0.1\"\n  },\n  \"devDependencies\": {\n    \"esdoc\": \"^1.1.0\",\n    \"esdoc-external-nodejs-plugin\": \"^1.0.0\",\n    \"esdoc-standard-plugin\": \"^1.0.0\",\n    \"eslint\": \"^4.19.1\",\n    \"husky\": \"^0.14.3\",\n    \"koapache\": \"^0.2.2\",\n    \"mocha\": \"^5.1.1\",\n    \"should\": \"^13.2.1\"\n  },\n  \"babel\": {\n    \"presets\": [\n      \"env\"\n    ]\n  }\n}\n",
     "longname": "D:\\TechQuery\\AMD_bundle.js\\package.json",
     "name": "package.json",
     "static": true,
     "access": "public"
   },
   {
-    "__docId__": 93,
+    "__docId__": 98,
     "kind": "testFile",
     "name": "test/example/a.js",
     "content": "require('./libs/b');\n\nmodule.exports = 'This is A';\n",
@@ -1701,7 +1800,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 94,
+    "__docId__": 99,
     "kind": "testFile",
     "name": "test/example/c.js",
     "content": "require('./libs/b');\n\nmodule.exports = 'This is C';\n",
@@ -1712,7 +1811,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 95,
+    "__docId__": 100,
     "kind": "testFile",
     "name": "test/example/index.js",
     "content": "/* AMD module */\ndefine(['./a', 'require', 'exports', 'module'],  function (A, require) {\n\n    var C = require('./c');\n\n    return  {a: A, c: C, test: require('test')};\n});\n",
@@ -1723,7 +1822,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 96,
+    "__docId__": 101,
     "kind": "testFile",
     "name": "test/example/libs/b.js",
     "content": "require('../c');\n\nmodule.exports = 'This is B';\n",
@@ -1734,10 +1833,10 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 97,
+    "__docId__": 102,
     "kind": "testFile",
     "name": "test/index.js",
-    "content": "import {execSync} from 'child_process';\n\nimport {removeSync} from 'fs-extra';\n\n\nimport {merge, getNPMFile, getNPMIndex, getNPMPackage} from '../libs/utility';\n\nimport Module from '../libs/Module';\n\nimport Package from '../libs/Package';\n\nvar bundle_code;\n\n\ndescribe('Utility',  () => {\n    /**\n     * @test {merge}\n     */\n    it('Merge module paths',  () => {\n\n        merge('./../test//../', './example').should.be.equal('../example');\n    });\n\n    /**\n     * @test {getNPMFile}\n     */\n    it('Get path of JS modules',  () => {\n\n        getNPMFile('test').should.be.equal('node_modules/test.js');\n    });\n\n    /**\n     * @test {getNPMIndex}\n     */\n    it('Get \"index.js\" path of a module',  () => {\n\n        getNPMIndex('koapache/source').should.be.equal(\n            'node_modules/koapache/source/index.js'\n        );\n    });\n\n    /**\n     * @test {getNPMPackage}\n     */\n    it('Get entry file path from \"package.json\" of a module',  () => {\n\n        getNPMPackage('koapache').should.be.equal(\n            'node_modules/koapache/source/index.js'\n        );\n    });\n});\n\n\n/**\n * @test {Module}\n */\ndescribe('Module parser',  () => {\n\n    var module;\n\n    before(()  =>  (module = new Module('index', './test/example/')).load());\n\n    /**\n     * @test {Module#parseAMD}\n     */\n    it('Parse AMD',  () => {\n\n        module.parseAMD().should.be.eql( {'./a': 'A'} );\n\n        (module + '').should.be.equal(`/* AMD module */\n\n    var C = require('./c');\n\n    return  {a: A, c: C, test: require('test')};\n`);\n    });\n\n    /**\n     * @test {Module#parseCJS}\n     */\n    it('Parse CommonJS',  () => {\n\n        module.parseCJS().should.be.eql( {'./c': '_c'} );\n    });\n\n    /**\n     * @test {Module#parse}\n     */\n    it('Parse all',  () => module.parse().should.be.fulfilledWith(`\n\nfunction index(A, require, exports, module) {/* AMD module */\n\n    var C = require('./c');\n\n    return  {a: A, c: C, test: require('test')};\n}`.trim())\n    );\n\n    /**\n     * @test {Module#dependencyPath}\n     */\n    it('Get paths of the dependency',  () => {\n\n        module.dependencyPath.should.be.eql( ['./a', './c'] );\n    });\n});\n\n\n/**\n * @test {Package}\n */\ndescribe('Package bundler',  () => {\n\n    var pack = new Package('');\n\n    /**\n     * @test {Package#register}\n     */\n    it('Register module',  () => {\n\n        pack.register('a');\n\n        pack.register('b');\n\n        pack.register('c');\n\n        pack.register('b');\n\n        Array.from(pack,  module => module.name).should.be.eql(['b', 'c', 'a']);\n    });\n\n    /**\n     * @test {Package#parse}\n     */\n    it('Parse package',  async () => {\n\n        pack = new Package('./test/example/index');\n\n        await pack.parse('./index');\n\n        Array.from(pack,  module => module.name).should.be.eql([\n            './libs/b',  './c',  './a',  './index'\n        ]);\n    });\n\n    /**\n     * @test {Package#wrap}\n     */\n    it('UMD wrapper',  () => {\n\n        pack.wrap(\n            (modName, varName)  =>\n                `function (${varName}) {  ${JSON.stringify( modName )};  }`\n        ).should.be.equal(`\n//\n//  Generated by https://www.npmjs.com/package/amd-bundle\n//\n(function (factory) {\n\n    if ((typeof define === 'function')  &&  define.amd)\n        define('index', [\"test\"], factory);\n    else if (typeof module === 'object')\n        return  module.exports = factory(require('test'));\n    else\n        return  this.index = factory(this.test);\n\n})(function (test) {  [\"test\"];  });`.trim());\n    });\n\n    async function testBundle(all) {\n\n        bundle_code = await (new Package('./test/example/index', all)).bundle();\n\n        try {\n            eval( bundle_code ).should.be.eql({\n                a:     'This is A',\n                c:     'This is C',\n                test:  {test: 1}\n            });\n        } catch (error) {\n\n            console.warn( bundle_code );  throw error;\n        }\n    }\n\n    /**\n     * @test {Package#bundle}\n     */\n    it('Bundle all dependencies',  testBundle.bind(null, true));\n\n    /**\n     * @test {Package#bundle}\n     */\n    it('Bundle without NPM packages',  testBundle.bind(null, false));\n});\n\n\ndescribe('Command line',  () => {\n\n    it('Output to a file',  () => {\n\n        (execSync('node index test/example/index test/example/build') + '')\n            .should.be.startWith(`\n√ Module \"./index\" has been bundled\n√ Module \"./a\" has been bundled\n√ Module \"./c\" has been bundled\n√ Module \"./libs/b\" has been bundled`.trim()\n            );\n    });\n\n\n    it('Write into stdout without printing',  () => {\n\n        (execSync('node index test/example/index test/example/build -s') + '')\n            .should.be.eql( bundle_code );\n    });\n\n    after(() => removeSync('test/example/build'));\n});\n",
+    "content": "import {execSync} from 'child_process';\n\nimport {readFileSync, removeSync} from 'fs-extra';\n\n\nimport {merge, getNPMFile, getNPMIndex, getNPMPackage} from '../libs/utility';\n\nimport Module from '../libs/Module';\n\nimport Package from '../libs/Package';\n\nvar bundle_code;\n\n\ndescribe('Utility',  () => {\n    /**\n     * @test {merge}\n     */\n    it('Merge module paths',  () => {\n\n        merge('./../test//../', './example').should.be.equal('../example');\n    });\n\n    /**\n     * @test {getNPMFile}\n     */\n    it('Get path of JS modules',  () => {\n\n        getNPMFile('test').should.be.equal('node_modules/test.js');\n    });\n\n    /**\n     * @test {getNPMIndex}\n     */\n    it('Get \"index.js\" path of a module',  () => {\n\n        getNPMIndex('koapache/source').should.be.equal(\n            'node_modules/koapache/source/index.js'\n        );\n    });\n\n    /**\n     * @test {getNPMPackage}\n     */\n    it('Get entry file path from \"package.json\" of a module',  () => {\n\n        getNPMPackage('koapache').should.be.equal(\n            'node_modules/koapache/source/index.js'\n        );\n    });\n});\n\n\n/**\n * @test {Module}\n */\ndescribe('Module parser',  () => {\n\n    var module;\n\n    before(()  =>  (module = new Module('./index', './test/example/')).load());\n\n    /**\n     * @test {Module#parseAMD}\n     */\n    it('Parse AMD',  () => {\n\n        module.parseAMD().should.be.eql( {'./a': 'A'} );\n\n        (module + '').should.be.equal(`/* AMD module */\n\n    var C = require('./c');\n\n    return  {a: A, c: C, test: require('test')};\n`);\n    });\n\n    /**\n     * @test {Module#parseCJS}\n     */\n    it('Parse CommonJS',  () => {\n\n        module.parseCJS().should.be.eql( {'./c': '_c'} );\n    });\n\n    /**\n     * @test {Module#parse}\n     */\n    it('Parse all',  () => module.parse().should.be.fulfilledWith(`\n\nfunction _index(A, require, exports, module) {/* AMD module */\n\n    var C = require('./c');\n\n    return  {a: A, c: C, test: require('test')};\n}`.trim())\n    );\n\n    /**\n     * @test {Module#dependencyPath}\n     */\n    it('Get paths of the dependency',  () => {\n\n        module.dependencyPath.should.be.eql( ['./a', './c'] );\n    });\n\n\n    it('Replace a dependency',  async () => {\n\n        module = new Module(\n            './index',  './test/example/',  true,  {test: 'jquery'}\n        );\n\n        (await module.parse()).should.be.equal(`\n\nfunction _index(A, require, exports, module) {/* AMD module */\n\n    var C = require('./c');\n\n    return  {a: A, c: C, test: require('jquery')};\n}`.trim());\n\n        module.dependencyPath.should.be.containEql('jquery');\n    });\n});\n\n\n/**\n * @test {Package}\n */\ndescribe('Package bundler',  () => {\n\n    var pack = new Package('');\n\n    /**\n     * @test {Package#register}\n     */\n    it('Register module',  () => {\n\n        pack.register('a');\n\n        pack.register('b');\n\n        pack.register('c');\n\n        pack.register('b');\n\n        Array.from(pack,  module => module.name).should.be.eql(['b', 'c', 'a']);\n    });\n\n    /**\n     * @test {Package#parse}\n     */\n    it('Parse package',  async () => {\n\n        pack = new Package('./test/example/index');\n\n        await pack.parse('./index');\n\n        Array.from(pack,  module => module.name).should.be.eql([\n            './libs/b',  './c',  './a',  './index'\n        ]);\n    });\n\n    /**\n     * @test {Package#wrap}\n     */\n    it('UMD wrapper',  () => {\n\n        pack.wrap(\n            (modName, varName)  =>\n                `function (${varName}) {  ${JSON.stringify( modName )};  }`\n        ).should.be.equal(`\n//\n//  Generated by https://www.npmjs.com/package/amd-bundle\n//\n(function (factory) {\n\n    if ((typeof define === 'function')  &&  define.amd)\n        define('index', [\"test\"], factory);\n    else if (typeof module === 'object')\n        return  module.exports = factory(require('test'));\n    else\n        return  this.index = factory(this.test);\n\n})(function (test) {  [\"test\"];  });`.trim());\n    });\n\n    async function testBundle(all) {\n\n        bundle_code = await (new Package('./test/example/index', all)).bundle();\n\n        try {\n            eval( bundle_code ).should.be.eql({\n                a:     'This is A',\n                c:     'This is C',\n                test:  {test: 1}\n            });\n        } catch (error) {\n\n            console.warn( bundle_code );  throw error;\n        }\n    }\n\n    /**\n     * @test {Package#bundle}\n     */\n    it('Bundle all dependencies',  testBundle.bind(null, true));\n\n    /**\n     * @test {Package#bundle}\n     */\n    it('Bundle without NPM packages',  testBundle.bind(null, false));\n});\n\n\ndescribe('Command line',  () => {\n\n    it('Output to a file',  () => {\n\n        (execSync('node index test/example/index test/example/build') + '')\n            .should.be.startWith(`\n√ Module \"./index\" has been bundled\n√ Module \"./a\" has been bundled\n√ Module \"./c\" has been bundled\n√ Module \"./libs/b\" has been bundled`.trim()\n            );\n    });\n\n\n    it('Write into stdout without printing',  () => {\n\n        (execSync('node index test/example/index -s') + '')\n            .should.be.eql( bundle_code );\n    });\n\n\n    it('Replace a module by the map option',  () => {\n        (\n            execSync(\n                'node index test/example/index test/example/build -m test:jquery'\n            ) + ''\n        ).should.be.startWith(`\n→ Module \"test\" will be replaced by \"jquery\"\n√ Module \"./index\" has been bundled\n√ Module \"./a\" has been bundled\n√ Module \"./c\" has been bundled\n√ Module \"./libs/b\" has been bundled`.trim()\n        );\n\n        (readFileSync('test/example/build/index.js') + '').should.be.equal(\n            bundle_code.replace(/test([^:(])/g, 'jquery$1')\n        );\n    });\n\n\n    after(() => removeSync('test/example/build'));\n});\n",
     "static": true,
     "longname": "D:/TechQuery/AMD_bundle.js/test/index.js",
     "access": null,
@@ -1745,7 +1844,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 98,
+    "__docId__": 103,
     "kind": "test",
     "name": "describe0",
     "testId": 0,
@@ -1758,7 +1857,7 @@
     "lineNumber": 15
   },
   {
-    "__docId__": 99,
+    "__docId__": 104,
     "kind": "test",
     "name": "it1",
     "testId": 1,
@@ -1774,7 +1873,7 @@
     ]
   },
   {
-    "__docId__": 100,
+    "__docId__": 105,
     "kind": "test",
     "name": "it2",
     "testId": 2,
@@ -1790,7 +1889,7 @@
     ]
   },
   {
-    "__docId__": 101,
+    "__docId__": 106,
     "kind": "test",
     "name": "it3",
     "testId": 3,
@@ -1806,7 +1905,7 @@
     ]
   },
   {
-    "__docId__": 102,
+    "__docId__": 107,
     "kind": "test",
     "name": "it4",
     "testId": 4,
@@ -1822,7 +1921,7 @@
     ]
   },
   {
-    "__docId__": 103,
+    "__docId__": 108,
     "kind": "test",
     "name": "describe5",
     "testId": 5,
@@ -1838,7 +1937,7 @@
     ]
   },
   {
-    "__docId__": 104,
+    "__docId__": 109,
     "kind": "test",
     "name": "it6",
     "testId": 6,
@@ -1854,7 +1953,7 @@
     ]
   },
   {
-    "__docId__": 105,
+    "__docId__": 110,
     "kind": "test",
     "name": "it7",
     "testId": 7,
@@ -1870,7 +1969,7 @@
     ]
   },
   {
-    "__docId__": 106,
+    "__docId__": 111,
     "kind": "test",
     "name": "it8",
     "testId": 8,
@@ -1886,7 +1985,7 @@
     ]
   },
   {
-    "__docId__": 107,
+    "__docId__": 112,
     "kind": "test",
     "name": "it9",
     "testId": 9,
@@ -1902,138 +2001,164 @@
     ]
   },
   {
-    "__docId__": 108,
+    "__docId__": 113,
     "kind": "test",
-    "name": "describe10",
+    "name": "it10",
     "testId": 10,
+    "memberof": "test/index.js~describe5",
+    "testDepth": 1,
+    "static": true,
+    "longname": "test/index.js~describe5.it10",
+    "access": null,
+    "description": "Replace a dependency",
+    "lineNumber": 108
+  },
+  {
+    "__docId__": 114,
+    "kind": "test",
+    "name": "describe11",
+    "testId": 11,
     "memberof": "test/index.js",
     "testDepth": 0,
     "static": true,
-    "longname": "test/index.js~describe10",
+    "longname": "test/index.js~describe11",
     "access": null,
     "description": "Package bundler",
-    "lineNumber": 112,
+    "lineNumber": 131,
     "testTargets": [
       "Package"
     ]
   },
   {
-    "__docId__": 109,
+    "__docId__": 115,
     "kind": "test",
-    "name": "it11",
-    "testId": 11,
-    "memberof": "test/index.js~describe10",
+    "name": "it12",
+    "testId": 12,
+    "memberof": "test/index.js~describe11",
     "testDepth": 1,
     "static": true,
-    "longname": "test/index.js~describe10.it11",
+    "longname": "test/index.js~describe11.it12",
     "access": null,
     "description": "Register module",
-    "lineNumber": 119,
+    "lineNumber": 138,
     "testTargets": [
       "Package#register"
     ]
   },
   {
-    "__docId__": 110,
+    "__docId__": 116,
     "kind": "test",
-    "name": "it12",
-    "testId": 12,
-    "memberof": "test/index.js~describe10",
+    "name": "it13",
+    "testId": 13,
+    "memberof": "test/index.js~describe11",
     "testDepth": 1,
     "static": true,
-    "longname": "test/index.js~describe10.it12",
+    "longname": "test/index.js~describe11.it13",
     "access": null,
     "description": "Parse package",
-    "lineNumber": 135,
+    "lineNumber": 154,
     "testTargets": [
       "Package#parse"
     ]
   },
   {
-    "__docId__": 111,
+    "__docId__": 117,
     "kind": "test",
-    "name": "it13",
-    "testId": 13,
-    "memberof": "test/index.js~describe10",
+    "name": "it14",
+    "testId": 14,
+    "memberof": "test/index.js~describe11",
     "testDepth": 1,
     "static": true,
-    "longname": "test/index.js~describe10.it13",
+    "longname": "test/index.js~describe11.it14",
     "access": null,
     "description": "UMD wrapper",
-    "lineNumber": 149,
+    "lineNumber": 168,
     "testTargets": [
       "Package#wrap"
     ]
   },
   {
-    "__docId__": 112,
-    "kind": "test",
-    "name": "it14",
-    "testId": 14,
-    "memberof": "test/index.js~describe10",
-    "testDepth": 1,
-    "static": true,
-    "longname": "test/index.js~describe10.it14",
-    "access": null,
-    "description": "Bundle all dependencies",
-    "lineNumber": 189,
-    "testTargets": [
-      "Package#bundle"
-    ]
-  },
-  {
-    "__docId__": 113,
+    "__docId__": 118,
     "kind": "test",
     "name": "it15",
     "testId": 15,
-    "memberof": "test/index.js~describe10",
+    "memberof": "test/index.js~describe11",
     "testDepth": 1,
     "static": true,
-    "longname": "test/index.js~describe10.it15",
+    "longname": "test/index.js~describe11.it15",
     "access": null,
-    "description": "Bundle without NPM packages",
-    "lineNumber": 194,
+    "description": "Bundle all dependencies",
+    "lineNumber": 208,
     "testTargets": [
       "Package#bundle"
     ]
   },
   {
-    "__docId__": 114,
+    "__docId__": 119,
     "kind": "test",
-    "name": "describe16",
+    "name": "it16",
     "testId": 16,
+    "memberof": "test/index.js~describe11",
+    "testDepth": 1,
+    "static": true,
+    "longname": "test/index.js~describe11.it16",
+    "access": null,
+    "description": "Bundle without NPM packages",
+    "lineNumber": 213,
+    "testTargets": [
+      "Package#bundle"
+    ]
+  },
+  {
+    "__docId__": 120,
+    "kind": "test",
+    "name": "describe17",
+    "testId": 17,
     "memberof": "test/index.js",
     "testDepth": 0,
     "static": true,
-    "longname": "test/index.js~describe16",
+    "longname": "test/index.js~describe17",
     "access": null,
     "description": "Command line",
-    "lineNumber": 198
+    "lineNumber": 217
   },
   {
-    "__docId__": 115,
-    "kind": "test",
-    "name": "it17",
-    "testId": 17,
-    "memberof": "test/index.js~describe16",
-    "testDepth": 1,
-    "static": true,
-    "longname": "test/index.js~describe16.it17",
-    "access": null,
-    "description": "Output to a file",
-    "lineNumber": 200
-  },
-  {
-    "__docId__": 116,
+    "__docId__": 121,
     "kind": "test",
     "name": "it18",
     "testId": 18,
-    "memberof": "test/index.js~describe16",
+    "memberof": "test/index.js~describe17",
     "testDepth": 1,
     "static": true,
-    "longname": "test/index.js~describe16.it18",
+    "longname": "test/index.js~describe17.it18",
+    "access": null,
+    "description": "Output to a file",
+    "lineNumber": 219
+  },
+  {
+    "__docId__": 122,
+    "kind": "test",
+    "name": "it19",
+    "testId": 19,
+    "memberof": "test/index.js~describe17",
+    "testDepth": 1,
+    "static": true,
+    "longname": "test/index.js~describe17.it19",
     "access": null,
     "description": "Write into stdout without printing",
-    "lineNumber": 212
+    "lineNumber": 231
+  },
+  {
+    "__docId__": 123,
+    "kind": "test",
+    "name": "it20",
+    "testId": 20,
+    "memberof": "test/index.js~describe17",
+    "testDepth": 1,
+    "static": true,
+    "longname": "test/index.js~describe17.it20",
+    "access": null,
+    "description": "Replace a module by the map option",
+    "lineNumber": 238
   }
 ]

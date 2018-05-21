@@ -14,10 +14,11 @@ export default  class Package {
     /**
      * @param {string}  path         - The entry file path of this package
      *                                 (relative to `process.cwd()`)
-     * @param {boolean} [includeAll] - Include NPM modules in the final bundle
-     * @param {boolean} [noLog]      - Disable log output
+     * @param {boolean} [includeAll=false] - Include NPM modules in the final bundle
+     * @param {Object}  [moduleMap={}]     - Map to replace some dependencies to others
+     * @param {boolean} [noLog=false]      - Disable log output
      */
-    constructor(path, includeAll, noLog) {
+    constructor(path,  includeAll = false,  moduleMap = { },  noLog = false) {
         /**
          * Module name of this bundled package
          *
@@ -53,6 +54,13 @@ export default  class Package {
          * @type {Object}
          */
         this.module = { };
+
+        /**
+         * Key for original name of a module & value for module name of the replacement
+         *
+         * @type {Object}
+         */
+        this.moduleMap = moduleMap;
 
         /**
          * Whether show logs during the bundle process
@@ -95,7 +103,8 @@ export default  class Package {
         if (index < 0) {
 
             Array_proto.unshift.call(
-                this,  new Module(modName, this.base, this.includeAll)
+                this,
+                new Module(modName, this.base, this.includeAll, this.moduleMap)
             );
 
             return this[0];
@@ -128,6 +137,13 @@ export default  class Package {
         const module = this.register( modName );
 
         if (! module)  return;
+
+        if ( this.showLog )
+            module.on('replace',  (oldMod, newMod)  =>
+                console.info(
+                    `→ Module "${oldMod}" will be replaced by "${newMod}"`
+                )
+            );
 
         await module.parse();
 

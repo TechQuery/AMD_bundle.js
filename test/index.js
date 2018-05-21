@@ -1,6 +1,6 @@
 import {execSync} from 'child_process';
 
-import {removeSync} from 'fs-extra';
+import {readFileSync, removeSync} from 'fs-extra';
 
 
 import {merge, getNPMFile, getNPMIndex, getNPMPackage} from '../libs/utility';
@@ -58,7 +58,7 @@ describe('Module parser',  () => {
 
     var module;
 
-    before(()  =>  (module = new Module('index', './test/example/')).load());
+    before(()  =>  (module = new Module('./index', './test/example/')).load());
 
     /**
      * @test {Module#parseAMD}
@@ -88,7 +88,7 @@ describe('Module parser',  () => {
      */
     it('Parse all',  () => module.parse().should.be.fulfilledWith(`
 
-function index(A, require, exports, module) {/* AMD module */
+function _index(A, require, exports, module) {/* AMD module */
 
     var C = require('./c');
 
@@ -102,6 +102,25 @@ function index(A, require, exports, module) {/* AMD module */
     it('Get paths of the dependency',  () => {
 
         module.dependencyPath.should.be.eql( ['./a', './c'] );
+    });
+
+
+    it('Replace a dependency',  async () => {
+
+        module = new Module(
+            './index',  './test/example/',  true,  {test: 'jquery'}
+        );
+
+        (await module.parse()).should.be.equal(`
+
+function _index(A, require, exports, module) {/* AMD module */
+
+    var C = require('./c');
+
+    return  {a: A, c: C, test: require('jquery')};
+}`.trim());
+
+        module.dependencyPath.should.be.containEql('jquery');
     });
 });
 
@@ -211,9 +230,29 @@ describe('Command line',  () => {
 
     it('Write into stdout without printing',  () => {
 
-        (execSync('node index test/example/index test/example/build -s') + '')
+        (execSync('node index test/example/index -s') + '')
             .should.be.eql( bundle_code );
     });
+
+
+    it('Replace a module by the map option',  () => {
+        (
+            execSync(
+                'node index test/example/index test/example/build -m test:jquery'
+            ) + ''
+        ).should.be.startWith(`
+→ Module "test" will be replaced by "jquery"
+√ Module "./index" has been bundled
+√ Module "./a" has been bundled
+√ Module "./c" has been bundled
+√ Module "./libs/b" has been bundled`.trim()
+        );
+
+        (readFileSync('test/example/build/index.js') + '').should.be.equal(
+            bundle_code.replace(/test([^:(])/g, 'jquery$1')
+        );
+    });
+
 
     after(() => removeSync('test/example/build'));
 });

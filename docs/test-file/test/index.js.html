@@ -43,7 +43,7 @@
 <div class="content" data-ice="content"><h1 data-ice="title">test/index.js</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import {execSync} from &apos;child_process&apos;;
 
-import {removeSync} from &apos;fs-extra&apos;;
+import {readFileSync, removeSync} from &apos;fs-extra&apos;;
 
 
 import {merge, getNPMFile, getNPMIndex, getNPMPackage} from &apos;../libs/utility&apos;;
@@ -101,7 +101,7 @@ describe(&apos;Module parser&apos;,  () =&gt; {
 
     var module;
 
-    before(()  =&gt;  (module = new Module(&apos;index&apos;, &apos;./test/example/&apos;)).load());
+    before(()  =&gt;  (module = new Module(&apos;./index&apos;, &apos;./test/example/&apos;)).load());
 
     /**
      * @test {Module#parseAMD}
@@ -131,7 +131,7 @@ describe(&apos;Module parser&apos;,  () =&gt; {
      */
     it(&apos;Parse all&apos;,  () =&gt; module.parse().should.be.fulfilledWith(`
 
-function index(A, require, exports, module) {/* AMD module */
+function _index(A, require, exports, module) {/* AMD module */
 
     var C = require(&apos;./c&apos;);
 
@@ -145,6 +145,25 @@ function index(A, require, exports, module) {/* AMD module */
     it(&apos;Get paths of the dependency&apos;,  () =&gt; {
 
         module.dependencyPath.should.be.eql( [&apos;./a&apos;, &apos;./c&apos;] );
+    });
+
+
+    it(&apos;Replace a dependency&apos;,  async () =&gt; {
+
+        module = new Module(
+            &apos;./index&apos;,  &apos;./test/example/&apos;,  true,  {test: &apos;jquery&apos;}
+        );
+
+        (await module.parse()).should.be.equal(`
+
+function _index(A, require, exports, module) {/* AMD module */
+
+    var C = require(&apos;./c&apos;);
+
+    return  {a: A, c: C, test: require(&apos;jquery&apos;)};
+}`.trim());
+
+        module.dependencyPath.should.be.containEql(&apos;jquery&apos;);
     });
 });
 
@@ -254,9 +273,29 @@ describe(&apos;Command line&apos;,  () =&gt; {
 
     it(&apos;Write into stdout without printing&apos;,  () =&gt; {
 
-        (execSync(&apos;node index test/example/index test/example/build -s&apos;) + &apos;&apos;)
+        (execSync(&apos;node index test/example/index -s&apos;) + &apos;&apos;)
             .should.be.eql( bundle_code );
     });
+
+
+    it(&apos;Replace a module by the map option&apos;,  () =&gt; {
+        (
+            execSync(
+                &apos;node index test/example/index test/example/build -m test:jquery&apos;
+            ) + &apos;&apos;
+        ).should.be.startWith(`
+&#x2192; Module &quot;test&quot; will be replaced by &quot;jquery&quot;
+&#x221A; Module &quot;./index&quot; has been bundled
+&#x221A; Module &quot;./a&quot; has been bundled
+&#x221A; Module &quot;./c&quot; has been bundled
+&#x221A; Module &quot;./libs/b&quot; has been bundled`.trim()
+        );
+
+        (readFileSync(&apos;test/example/build/index.js&apos;) + &apos;&apos;).should.be.equal(
+            bundle_code.replace(/test([^:(])/g, &apos;jquery$1&apos;)
+        );
+    });
+
 
     after(() =&gt; removeSync(&apos;test/example/build&apos;));
 });

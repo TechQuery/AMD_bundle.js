@@ -37,19 +37,25 @@ window.esdocSearchIndex = [
   ],
   [
     "",
-    "test-file/test/index.js.html#lineNumber198",
+    "test-file/test/index.js.html#lineNumber217",
     "Command line",
     "test"
   ],
   [
     "",
-    "test-file/test/index.js.html#lineNumber200",
+    "test-file/test/index.js.html#lineNumber219",
     "Command line Output to a file",
     "test"
   ],
   [
     "",
-    "test-file/test/index.js.html#lineNumber212",
+    "test-file/test/index.js.html#lineNumber238",
+    "Command line Replace a module by the map option",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/index.js.html#lineNumber231",
     "Command line Write into stdout without printing",
     "test"
   ],
@@ -84,38 +90,44 @@ window.esdocSearchIndex = [
     "test"
   ],
   [
+    "",
+    "test-file/test/index.js.html#lineNumber108",
+    "Module parser Replace a dependency",
+    "test"
+  ],
+  [
     "package libs/package.js~package,package",
-    "test-file/test/index.js.html#lineNumber112",
+    "test-file/test/index.js.html#lineNumber131",
     "Package bundler",
     "test"
   ],
   [
     "package#bundle libs/package.js~package#bundle,package#bundle",
-    "test-file/test/index.js.html#lineNumber189",
+    "test-file/test/index.js.html#lineNumber208",
     "Package bundler Bundle all dependencies",
     "test"
   ],
   [
     "package#bundle libs/package.js~package#bundle,package#bundle",
-    "test-file/test/index.js.html#lineNumber194",
+    "test-file/test/index.js.html#lineNumber213",
     "Package bundler Bundle without NPM packages",
     "test"
   ],
   [
     "package#parse libs/package.js~package#parse,package#parse",
-    "test-file/test/index.js.html#lineNumber135",
+    "test-file/test/index.js.html#lineNumber154",
     "Package bundler Parse package",
     "test"
   ],
   [
     "package#register libs/package.js~package#register,package#register",
-    "test-file/test/index.js.html#lineNumber119",
+    "test-file/test/index.js.html#lineNumber138",
     "Package bundler Register module",
     "test"
   ],
   [
     "package#wrap libs/package.js~package#wrap,package#wrap",
-    "test-file/test/index.js.html#lineNumber149",
+    "test-file/test/index.js.html#lineNumber168",
     "Package bundler UMD wrapper",
     "test"
   ],
@@ -432,6 +444,12 @@ window.esdocSearchIndex = [
     "external"
   ],
   [
+    "libs/.external-nodejs.js~http~clientrequest",
+    "https://nodejs.org/dist/latest/docs/api/http.html#http_class_http_clientrequest",
+    "libs/.external-nodejs.js~http~ClientRequest",
+    "external"
+  ],
+  [
     "libs/module.js",
     "file/libs/Module.js.html",
     "libs/Module.js",
@@ -486,9 +504,15 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
-    "libs/module.js~module#name",
-    "class/libs/Module.js~Module.html#instance-member-name",
-    "libs/Module.js~Module#name",
+    "libs/module.js~module#mapname",
+    "class/libs/Module.js~Module.html#instance-method-mapName",
+    "libs/Module.js~Module#mapName",
+    "method"
+  ],
+  [
+    "libs/module.js~module#namemap",
+    "class/libs/Module.js~Module.html#instance-member-nameMap",
+    "libs/Module.js~Module#nameMap",
     "member"
   ],
   [
@@ -591,6 +615,12 @@ window.esdocSearchIndex = [
     "libs/package.js~package#module",
     "class/libs/Package.js~Package.html#instance-member-module",
     "libs/Package.js~Package#module",
+    "member"
+  ],
+  [
+    "libs/package.js~package#modulemap",
+    "class/libs/Package.js~Package.html#instance-member-moduleMap",
+    "libs/Package.js~Package#moduleMap",
     "member"
   ],
   [

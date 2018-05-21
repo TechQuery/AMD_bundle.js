@@ -1,3 +1,5 @@
+import {EventEmitter} from 'events';
+
 import {dirname, join} from 'path';
 
 import {readFile} from 'fs-extra';
@@ -17,19 +19,20 @@ const AMD_CJS = ['require', 'exports', 'module'];
 /**
  * CommonJS or AMD module
  */
-export default  class Module {
+export default  class Module extends EventEmitter {
     /**
-     * @param {string}  name       - Path of this module
-     * @param {string}  path       - Root path of the package which this module belongs to
-     * @param {boolean} includeAll - Treat NPM modules as CommonJS modules
+     * @param {string}  name               - Path of this module
+     * @param {string}  [path='.']         - Root path of the package which this module belongs to
+     * @param {boolean} [includeAll=false] - Treat NPM modules as CommonJS modules
+     * @param {Object}  [nameMap={}] `     - Map to replace some dependencies to others
      */
-    constructor(name, path, includeAll) {
+    constructor(name,  path = '.',  includeAll = false,  nameMap = { }) {
         /**
          * Path of this module
          *
          * @type {string}
          */
-        this.name = name;
+        super().name = name;
 
         /**
          * Directory path of this module
@@ -56,6 +59,13 @@ export default  class Module {
             runtime:  { },
             outside:  includeAll ? null : { }
         };
+
+        /**
+         * Key for original name of a module & value for module name of the replacement
+         *
+         * @type {Object}
+         */
+        this.nameMap = nameMap;
     }
 
     /**
@@ -117,6 +127,21 @@ export default  class Module {
     }
 
     /**
+     * @protected
+     *
+     * @param {string} module - Name of a module
+     *
+     * @return {string} Module name used finally
+     */
+    mapName(module) {
+
+        if (module in this.nameMap)
+            this.emit('replace',  module,  module = this.nameMap[ module ]);
+
+        return module;
+    }
+
+    /**
      * Add a depended module of this module
      *
      * @protected
@@ -151,10 +176,16 @@ export default  class Module {
 
                 var index = 0;  varName = varName.trim().split( /\s*,\s*/ );
 
-                modName.replace(
+                (modName || '').replace(
                     /(?:'|")(.+?)(?:'|")/g,
-                    (_, name)  =>
-                        this.addChild('compile',  name,  varName[ index ])  ||  index++
+                    (_, name)  =>  {
+
+                        this.addChild(
+                            'compile',  this.mapName( name ),  varName[ index ]
+                        );
+
+                        index++;
+                    }
                 );
 
                 return  body.replace(/^\n([\s\S]+)\n$/, '$1');
@@ -171,9 +202,14 @@ export default  class Module {
      */
     parseCJS() {
 
-        this.source.replace(
-            /(?:(?:var|let|const)\s+[\s\S]+?=\s*)?require\(\s*(?:'|")(.+?)(?:'|")\s*\)/mg,
-            (match, modName)  =>  this.addChild('runtime', modName)  ||  match
+        this.source = this.source.replace(
+            /((?:var|let|const)\s+[\s\S]+?=\s*)?require\(\s*(?:'|")(.+?)(?:'|")\s*\)/mg,
+            (_, assign, modName)  =>  {
+
+                this.addChild('runtime',  modName = this.mapName( modName ));
+
+                return  `${assign || ''}require('${modName}')`;
+            }
         );
 
         return this.dependency.runtime;

@@ -79,7 +79,7 @@
     <h4>Test:</h4>
     <ul>
       
-    <li data-ice="test"><span><a href="test-file/test/index.js.html#lineNumber112">Package bundler</a></span></li>
+    <li data-ice="test"><span><a href="test-file/test/index.js.html#lineNumber131">Package bundler</a></span></li>
 </ul>
   </div>
 
@@ -106,7 +106,7 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/libs/Package.js~Package.html#instance-constructor-constructor">constructor</a></span></span><span class="code" data-ice="signature">(path: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, includeAll: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>, noLog: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>)</span>
+          <span class="code" data-ice="name"><span><a href="class/libs/Package.js~Package.html#instance-constructor-constructor">constructor</a></span></span><span class="code" data-ice="signature">(path: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, includeAll: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>, moduleMap: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>, noLog: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>)</span>
         </p>
       </div>
       <div>
@@ -265,6 +265,35 @@
         
         <div data-ice="description"><p>Reference count of modules in this package
 (key for name &amp; value for count)</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          
+          <span class="code" data-ice="name"><span><a href="class/libs/Package.js~Package.html#instance-member-moduleMap">moduleMap</a></span></span><span class="code" data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Key for original name of a module &amp; value for module name of the replacement</p>
 </div>
       </div>
     </td>
@@ -531,11 +560,11 @@
     
     
     
-    <span class="code" data-ice="name">constructor</span><span class="code" data-ice="signature">(path: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, includeAll: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>, noLog: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>)</span>
+    <span class="code" data-ice="name">constructor</span><span class="code" data-ice="signature">(path: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, includeAll: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>, moduleMap: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>, noLog: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>)</span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/libs/Package.js.html#lineNumber20">source</a></span></span>
+      <span data-ice="source"><span><a href="file/libs/Package.js.html#lineNumber21">source</a></span></span>
     </span>
   </h3>
 
@@ -565,14 +594,24 @@
 <tr data-ice="property" data-depth="0">
       <td data-ice="name" class="code" data-depth="0">includeAll</td>
       <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span></td>
-      <td data-ice="appendix"><ul><li>optional</li></ul></td>
+      <td data-ice="appendix"><ul><li>optional</li>
+<li>default: false</li></ul></td>
       <td data-ice="description"><p>Include NPM modules in the final bundle</p>
+</td>
+    </tr>
+<tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">moduleMap</td>
+      <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></td>
+      <td data-ice="appendix"><ul><li>optional</li>
+<li>default: {}</li></ul></td>
+      <td data-ice="description"><p>Map to replace some dependencies to others</p>
 </td>
     </tr>
 <tr data-ice="property" data-depth="0">
       <td data-ice="name" class="code" data-depth="0">noLog</td>
       <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span></td>
-      <td data-ice="appendix"><ul><li>optional</li></ul></td>
+      <td data-ice="appendix"><ul><li>optional</li>
+<li>default: false</li></ul></td>
       <td data-ice="description"><p>Disable log output</p>
 </td>
     </tr>
@@ -613,7 +652,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/libs/Package.js.html#lineNumber33">source</a></span></span>
+      <span data-ice="source"><span><a href="file/libs/Package.js.html#lineNumber34">source</a></span></span>
     </span>
   </h3>
 
@@ -657,7 +696,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/libs/Package.js.html#lineNumber119">source</a></span></span>
+      <span data-ice="source"><span><a href="file/libs/Package.js.html#lineNumber128">source</a></span></span>
     </span>
   </h3>
 
@@ -701,7 +740,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/libs/Package.js.html#lineNumber40">source</a></span></span>
+      <span data-ice="source"><span><a href="file/libs/Package.js.html#lineNumber41">source</a></span></span>
     </span>
   </h3>
 
@@ -745,7 +784,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/libs/Package.js.html#lineNumber47">source</a></span></span>
+      <span data-ice="source"><span><a href="file/libs/Package.js.html#lineNumber48">source</a></span></span>
     </span>
   </h3>
 
@@ -789,7 +828,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/libs/Package.js.html#lineNumber55">source</a></span></span>
+      <span data-ice="source"><span><a href="file/libs/Package.js.html#lineNumber56">source</a></span></span>
     </span>
   </h3>
 
@@ -798,6 +837,50 @@
   
   <div data-ice="description"><p>Reference count of modules in this package
 (key for name &amp; value for count)</p>
+</div>
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-member-moduleMap">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    
+    <span class="code" data-ice="name">moduleMap</span><span class="code" data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/libs/Package.js.html#lineNumber63">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>Key for original name of a module &amp; value for module name of the replacement</p>
 </div>
 
   
@@ -834,7 +917,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/libs/Package.js.html#lineNumber26">source</a></span></span>
+      <span data-ice="source"><span><a href="file/libs/Package.js.html#lineNumber27">source</a></span></span>
     </span>
   </h3>
 
@@ -878,7 +961,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/libs/Package.js.html#lineNumber147">source</a></span></span>
+      <span data-ice="source"><span><a href="file/libs/Package.js.html#lineNumber163">source</a></span></span>
     </span>
   </h3>
 
@@ -922,7 +1005,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/libs/Package.js.html#lineNumber62">source</a></span></span>
+      <span data-ice="source"><span><a href="file/libs/Package.js.html#lineNumber70">source</a></span></span>
     </span>
   </h3>
 
@@ -969,7 +1052,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/libs/Package.js.html#lineNumber186">source</a></span></span>
+      <span data-ice="source"><span><a href="file/libs/Package.js.html#lineNumber202">source</a></span></span>
     </span>
   </h3>
 
@@ -1012,8 +1095,8 @@
     <h4>Test:</h4>
     <ul>
       
-    <li data-ice="test"><span><a href="test-file/test/index.js.html#lineNumber189">Package bundler Bundle all dependencies</a></span></li>
-<li data-ice="test"><span><a href="test-file/test/index.js.html#lineNumber194">Package bundler Bundle without NPM packages</a></span></li>
+    <li data-ice="test"><span><a href="test-file/test/index.js.html#lineNumber208">Package bundler Bundle all dependencies</a></span></li>
+<li data-ice="test"><span><a href="test-file/test/index.js.html#lineNumber213">Package bundler Bundle without NPM packages</a></span></li>
 </ul>
   </div>
 
@@ -1032,7 +1115,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/libs/Package.js.html#lineNumber70">source</a></span></span>
+      <span data-ice="source"><span><a href="file/libs/Package.js.html#lineNumber78">source</a></span></span>
     </span>
   </h3>
 
@@ -1106,7 +1189,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/libs/Package.js.html#lineNumber126">source</a></span></span>
+      <span data-ice="source"><span><a href="file/libs/Package.js.html#lineNumber135">source</a></span></span>
     </span>
   </h3>
 
@@ -1153,7 +1236,7 @@
     <h4>Test:</h4>
     <ul>
       
-    <li data-ice="test"><span><a href="test-file/test/index.js.html#lineNumber135">Package bundler Parse package</a></span></li>
+    <li data-ice="test"><span><a href="test-file/test/index.js.html#lineNumber154">Package bundler Parse package</a></span></li>
 </ul>
   </div>
 
@@ -1172,7 +1255,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/libs/Package.js.html#lineNumber89">source</a></span></span>
+      <span data-ice="source"><span><a href="file/libs/Package.js.html#lineNumber97">source</a></span></span>
     </span>
   </h3>
 
@@ -1232,7 +1315,7 @@
     <h4>Test:</h4>
     <ul>
       
-    <li data-ice="test"><span><a href="test-file/test/index.js.html#lineNumber119">Package bundler Register module</a></span></li>
+    <li data-ice="test"><span><a href="test-file/test/index.js.html#lineNumber138">Package bundler Register module</a></span></li>
 </ul>
   </div>
 
@@ -1251,7 +1334,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/libs/Package.js.html#lineNumber161">source</a></span></span>
+      <span data-ice="source"><span><a href="file/libs/Package.js.html#lineNumber177">source</a></span></span>
     </span>
   </h3>
 
@@ -1310,7 +1393,7 @@
     <h4>Test:</h4>
     <ul>
       
-    <li data-ice="test"><span><a href="test-file/test/index.js.html#lineNumber149">Package bundler UMD wrapper</a></span></li>
+    <li data-ice="test"><span><a href="test-file/test/index.js.html#lineNumber168">Package bundler UMD wrapper</a></span></li>
 </ul>
   </div>
 
