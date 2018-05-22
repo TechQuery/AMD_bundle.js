@@ -8,7 +8,7 @@
   <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
   <script src="script/prettify/prettify.js"></script>
   <script src="script/manual.js"></script>
-<meta name="description" content="A command-line tool for bundling up AMD modules, which is much easier to use than r.js with Almond or AMDclean"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="amd-bundle"><meta property="twitter:description" content="A command-line tool for bundling up AMD modules, which is much easier to use than r.js with Almond or AMDclean"></head>
+<meta name="description" content="A dual-use tool for bundling up AMD modules, which is much easier to use than r.js with Almond or AMDclean"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="amd-bundle"><meta property="twitter:description" content="A dual-use tool for bundling up AMD modules, which is much easier to use than r.js with Almond or AMDclean"></head>
 <body class="layout-container" data-ice="rootContainer">
 
 <header>
@@ -118,7 +118,7 @@ export default  class Module extends EventEmitter {
      *
      * @return {string}
      */
-    static identifierOf(name) {  return  name.replace(/[./]+/g, &apos;_&apos;);  }
+    static identifierOf(name) {  return  name.replace(/\W+/g, &apos;_&apos;);  }
 
     /**
      * Identifier of this module in JS code
@@ -170,21 +170,6 @@ export default  class Module extends EventEmitter {
     }
 
     /**
-     * @protected
-     *
-     * @param {string} module - Name of a module
-     *
-     * @return {string} Module name used finally
-     */
-    mapName(module) {
-
-        if (module in this.nameMap)
-            this.emit(&apos;replace&apos;,  module,  module = this.nameMap[ module ]);
-
-        return module;
-    }
-
-    /**
      * Add a depended module of this module
      *
      * @protected
@@ -197,13 +182,20 @@ export default  class Module extends EventEmitter {
 
         if ((type === &apos;compile&apos;)  &amp;&amp;  AMD_CJS.includes( name ))  return;
 
-        const NPM = /^\w/.test( name );
+        name = /^\w/.test( name )  ?  name  :  (
+            &apos;./&apos;  +  join(this.base, name).replace(/\\/g, &apos;/&apos;)
+        );
 
-        if (this.dependency.outside &amp;&amp; NPM)  type = &apos;outside&apos;;
+        var newName;
 
-        name = (NPM ? &apos;&apos; : &apos;./&apos;)  +  join(this.base, name).replace(/\\/g, &apos;/&apos;);
+        if (name in this.nameMap)
+            this.emit(&apos;replace&apos;,  name,  newName = name = this.nameMap[ name ]);
+
+        if (this.dependency.outside  &amp;&amp;  (name[0] !== &apos;.&apos;))  type = &apos;outside&apos;;
 
         this.dependency[ type ][ name ] = varName  ||  Module.identifierOf( name );
+
+        return newName;
     }
 
     /**
@@ -223,11 +215,7 @@ export default  class Module extends EventEmitter {
                     /(?:&apos;|&quot;)(.+?)(?:&apos;|&quot;)/g,
                     (_, name)  =&gt;  {
 
-                        this.addChild(
-                            &apos;compile&apos;,  this.mapName( name ),  varName[ index ]
-                        );
-
-                        index++;
+                        this.addChild(&apos;compile&apos;, name, varName[index]),  index++;
                     }
                 );
 
@@ -247,12 +235,10 @@ export default  class Module extends EventEmitter {
 
         this.source = this.source.replace(
             /((?:var|let|const)\s+[\s\S]+?=\s*)?require\(\s*(?:&apos;|&quot;)(.+?)(?:&apos;|&quot;)\s*\)/mg,
-            (_, assign, modName)  =&gt;  {
-
-                this.addChild(&apos;runtime&apos;,  modName = this.mapName( modName ));
-
-                return  `${assign || &apos;&apos;}require(&apos;${modName}&apos;)`;
-            }
+            (_, assign, modName)  =&gt;
+                `${assign || &apos;&apos;}require(&apos;${
+                    this.addChild(&apos;runtime&apos;, modName)  ||  modName
+                }&apos;)`
         );
 
         return this.dependency.runtime;

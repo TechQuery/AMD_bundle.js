@@ -168,6 +168,7 @@ describe('Package bundler',  () => {
     it('UMD wrapper',  () => {
 
         pack.wrap(
+            'example',
             (modName, varName)  =>
                 `function (${varName}) {  ${JSON.stringify( modName )};  }`
         ).should.be.equal(`
@@ -177,11 +178,11 @@ describe('Package bundler',  () => {
 (function (factory) {
 
     if ((typeof define === 'function')  &&  define.amd)
-        define('index', ["test"], factory);
+        define('example', ["test"], factory);
     else if (typeof module === 'object')
         return  module.exports = factory(require('test'));
     else
-        return  this.index = factory(this.test);
+        return  this.example = factory(this.test);
 
 })(function (test) {  ["test"];  });`.trim());
     });
@@ -248,11 +249,13 @@ describe('Command line',  () => {
 √ Module "./libs/b" has been bundled`.trim()
         );
 
-        (readFileSync('test/example/build/index.js') + '').should.be.equal(
-            bundle_code.replace(/test([^:(])/g, 'jquery$1')
+        (readFileSync('test/example/build.js') + '').should.be.equal(
+            bundle_code
+                .replace(/test([^:(])/g, 'jquery$1')
+                .replace(/('|\.)index/g, '$1build')
         );
     });
 
 
-    after(() => removeSync('test/example/build'));
+    after(() => removeSync('test/example/build.js'));
 });

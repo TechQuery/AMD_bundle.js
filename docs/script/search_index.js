@@ -37,25 +37,25 @@ window.esdocSearchIndex = [
   ],
   [
     "",
-    "test-file/test/index.js.html#lineNumber217",
+    "test-file/test/index.js.html#lineNumber218",
     "Command line",
     "test"
   ],
   [
     "",
-    "test-file/test/index.js.html#lineNumber219",
+    "test-file/test/index.js.html#lineNumber220",
     "Command line Output to a file",
     "test"
   ],
   [
     "",
-    "test-file/test/index.js.html#lineNumber238",
+    "test-file/test/index.js.html#lineNumber239",
     "Command line Replace a module by the map option",
     "test"
   ],
   [
     "",
-    "test-file/test/index.js.html#lineNumber231",
+    "test-file/test/index.js.html#lineNumber232",
     "Command line Write into stdout without printing",
     "test"
   ],
@@ -103,13 +103,13 @@ window.esdocSearchIndex = [
   ],
   [
     "package#bundle libs/package.js~package#bundle,package#bundle",
-    "test-file/test/index.js.html#lineNumber208",
+    "test-file/test/index.js.html#lineNumber209",
     "Package bundler Bundle all dependencies",
     "test"
   ],
   [
     "package#bundle libs/package.js~package#bundle,package#bundle",
-    "test-file/test/index.js.html#lineNumber213",
+    "test-file/test/index.js.html#lineNumber214",
     "Package bundler Bundle without NPM packages",
     "test"
   ],
@@ -504,12 +504,6 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
-    "libs/module.js~module#mapname",
-    "class/libs/Module.js~Module.html#instance-method-mapName",
-    "libs/Module.js~Module#mapName",
-    "method"
-  ],
-  [
     "libs/module.js~module#namemap",
     "class/libs/Module.js~Module.html#instance-member-nameMap",
     "libs/Module.js~Module#nameMap",
@@ -624,12 +618,6 @@ window.esdocSearchIndex = [
     "member"
   ],
   [
-    "libs/package.js~package#name",
-    "class/libs/Package.js~Package.html#instance-member-name",
-    "libs/Package.js~Package#name",
-    "member"
-  ],
-  [
     "libs/package.js~package#outdependency",
     "class/libs/Package.js~Package.html#instance-get-outDependency",
     "libs/Package.js~Package#outDependency",
@@ -640,6 +628,12 @@ window.esdocSearchIndex = [
     "class/libs/Package.js~Package.html#instance-method-parse",
     "libs/Package.js~Package#parse",
     "method"
+  ],
+  [
+    "libs/package.js~package#path",
+    "class/libs/Package.js~Package.html#instance-member-path",
+    "libs/Package.js~Package#path",
+    "member"
   ],
   [
     "libs/package.js~package#register",

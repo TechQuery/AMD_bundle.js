@@ -8,7 +8,7 @@
   <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
   <script src="script/prettify/prettify.js"></script>
   <script src="script/manual.js"></script>
-<meta name="description" content="A command-line tool for bundling up AMD modules, which is much easier to use than r.js with Almond or AMDclean"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="amd-bundle"><meta property="twitter:description" content="A command-line tool for bundling up AMD modules, which is much easier to use than r.js with Almond or AMDclean"></head>
+<meta name="description" content="A dual-use tool for bundling up AMD modules, which is much easier to use than r.js with Almond or AMDclean"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="amd-bundle"><meta property="twitter:description" content="A dual-use tool for bundling up AMD modules, which is much easier to use than r.js with Almond or AMDclean"></head>
 <body class="layout-container" data-ice="rootContainer">
 
 <header>
@@ -40,7 +40,7 @@
 </div>
 </nav>
 
-<div class="content" data-ice="content"><div data-ice="index" class="github-markdown"><h1 id="amd-bundle">AMD bundle</h1><p><strong>A command-line tool for bundling up <a href="https://github.com/amdjs/amdjs-api/blob/master/AMD.md">AMD</a> modules</strong>,
+<div class="content" data-ice="content"><div data-ice="index" class="github-markdown"><h1 id="amd-bundle">AMD bundle</h1><p><strong>A dual-use tool for bundling up <a href="https://github.com/amdjs/amdjs-api/blob/master/AMD.md">AMD</a> &amp; <a href="http://wiki.commonjs.org/wiki/Modules">CJS</a> modules</strong>,
 which is much easier to use than <a href="https://github.com/requirejs/r.js"><code>r.js</code></a> with <a href="https://github.com/requirejs/almond">Almond</a> or <a href="https://github.com/gfranko/amdclean">AMDclean</a>.</p>
 <p><a href="https://david-dm.org/TechQuery/AMD_bundle.js"><img src="https://david-dm.org/TechQuery/AMD_bundle.js.svg" alt="NPM Dependency"></a></p>
 <p><a href="https://nodei.co/npm/amd-bundle/"><img src="https://nodei.co/npm/amd-bundle.png?downloads=true&amp;downloadRank=true&amp;stars=true" alt="NPM"></a></p>
@@ -50,33 +50,23 @@ npm install amd-bundle --save-dev
 
 amd-bundle -a \
     path/to/project/source/entry \
-    path/to/project/bundle/folder</code>
+    path/to/project/bundle/file</code>
 </code></pre>
 <p><code>amd-bundle</code> will</p>
 <ol>
 <li><p>start bundling from the entry point <code>path/to/project/source/entry.js</code></p>
 </li>
-<li><p>write into <code>path/to/project/bundle/folder/entry.js</code> with only one <code>define(&apos;entry&apos;, [ ])</code> and <code>global.entry</code> definition, just like <a href="https://github.com/umdjs/umd">UMD</a> style</p>
+<li><p>write into <code>path/to/project/bundle/file.js</code> with only one <code>define(&apos;file&apos;, [ ])</code> and <code>global.file</code> definition, just like <a href="https://github.com/umdjs/umd">UMD</a> style</p>
 </li>
 <li><p>treat <code>${process.cwd()}/node_modules/${module_full_name}</code> as a user&apos;s module to pack in</p>
 </li>
 </ol>
-<h3 id="more-options">More options</h3><p>Option <code>-f</code> accepts a path of CommonJS Module as shown below:</p>
-<pre><code class="lang-JavaScript"><code class="source-code prettyprint">module.exports = function () {
-
-    //  &quot;this&quot; is a instance of Module
-
-    //  Change some code
-
-    if (/pattern_A/.test( this.name ))
-        return  this.source.replace(&apos;xxx&apos;, &apos;yyy&apos;);
-
-    //  Remove a module
-
-    if (this.parent.indexOf(&apos;zzz&apos;) &gt; -1)
-        return &apos;&apos;;
-};</code>
-</code></pre>
+<h3 id="more-options">More options</h3><ul>
+<li><p>Command-line: <code>amd-bundle --help</code></p>
+</li>
+<li><p>JS Module: <a href="https://techquery.github.io/AMD_bundle.js/class/libs/Package.js~Package.html#instance-method-bundle">https://techquery.github.io/AMD_bundle.js/class/libs/Package.js~Package.html#instance-method-bundle</a></p>
+</li>
+</ul>
 <h3 id="advanced">Advanced</h3><p>Build <strong>standalone release files</strong> (Full source code, Minimized code &amp; Source map) by executing a single command (<code>npm run build</code>).</p>
 <h4 id="multiple-bundles-from-one-source">Multiple bundles from one source</h4><ul>
 <li><p>Development dependency: <a href="http://lisperator.net/uglifyjs/">UglifyJS</a></p>

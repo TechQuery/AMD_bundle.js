@@ -9,8 +9,8 @@ require('babel-register');  require('babel-polyfill');
 const  Package = require('./libs/Package').default;
 
 
-Command.version( Config.version ).usage('[options] <file> [dir]')
-    .arguments('<file> [dir]')
+Command.version( Config.version ).usage('[options] <entry file> [bundle file]')
+    .arguments('<entry file> [bundle file]')
     .option(
         '-a, --include-all',
         'Bundle all dependencies (include those in "./node_modules/")'
@@ -32,24 +32,25 @@ const entry_file = Command.args[0], module_map = { };
     (_, oldModule, newModule)  =>  module_map[ oldModule ] = newModule
 );
 
-const bundle_file = Path.join(
-    Command.args[1]  ?  Command.args[1]  :  Path.join(entry_file, '../../'),
-    Path.basename( entry_file ) + '.js'
-);
+const bundle_file = (
+        Command.args[1] ||
+        Path.join(entry_file,  '../../',  Path.basename( entry_file ))
+    ) + '.js',
+    pack = new Package(
+        entry_file,  Command.includeAll,  module_map,  Command.stdOut
+    );
 
 if (! Command.stdOut)  console.time('Package bundle');
 
-new Package(
-    entry_file,  Command.includeAll,  module_map,  Command.stdOut
-).bundle().then(code => {
+pack.bundle( Path.basename( bundle_file ).split('.')[0] ).then(code => {
 
-    if ( Command.stdOut )
-        process.stdout.write( code );
-    else {
-        FS.outputFileSync(bundle_file,  code);
+    if ( Command.stdOut )  return  process.stdout.write( code );
 
-        console.info( '-'.repeat( 30 ) );
+    FS.outputFileSync(bundle_file,  code);
 
-        console.timeEnd('Package bundle');
-    }
+    console.info( '-'.repeat( 30 ) );
+
+    console.timeEnd('Package bundle');
+
+    console.info(`Module count: ${pack.length}`);
 });

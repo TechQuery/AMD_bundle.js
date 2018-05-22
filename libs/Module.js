@@ -75,7 +75,7 @@ export default  class Module extends EventEmitter {
      *
      * @return {string}
      */
-    static identifierOf(name) {  return  name.replace(/[./]+/g, '_');  }
+    static identifierOf(name) {  return  name.replace(/\W+/g, '_');  }
 
     /**
      * Identifier of this module in JS code
@@ -127,21 +127,6 @@ export default  class Module extends EventEmitter {
     }
 
     /**
-     * @protected
-     *
-     * @param {string} module - Name of a module
-     *
-     * @return {string} Module name used finally
-     */
-    mapName(module) {
-
-        if (module in this.nameMap)
-            this.emit('replace',  module,  module = this.nameMap[ module ]);
-
-        return module;
-    }
-
-    /**
      * Add a depended module of this module
      *
      * @protected
@@ -154,13 +139,20 @@ export default  class Module extends EventEmitter {
 
         if ((type === 'compile')  &&  AMD_CJS.includes( name ))  return;
 
-        const NPM = /^\w/.test( name );
+        name = /^\w/.test( name )  ?  name  :  (
+            './'  +  join(this.base, name).replace(/\\/g, '/')
+        );
 
-        if (this.dependency.outside && NPM)  type = 'outside';
+        var newName;
 
-        name = (NPM ? '' : './')  +  join(this.base, name).replace(/\\/g, '/');
+        if (name in this.nameMap)
+            this.emit('replace',  name,  newName = name = this.nameMap[ name ]);
+
+        if (this.dependency.outside  &&  (name[0] !== '.'))  type = 'outside';
 
         this.dependency[ type ][ name ] = varName  ||  Module.identifierOf( name );
+
+        return newName;
     }
 
     /**
@@ -180,11 +172,7 @@ export default  class Module extends EventEmitter {
                     /(?:'|")(.+?)(?:'|")/g,
                     (_, name)  =>  {
 
-                        this.addChild(
-                            'compile',  this.mapName( name ),  varName[ index ]
-                        );
-
-                        index++;
+                        this.addChild('compile', name, varName[index]),  index++;
                     }
                 );
 
@@ -204,12 +192,10 @@ export default  class Module extends EventEmitter {
 
         this.source = this.source.replace(
             /((?:var|let|const)\s+[\s\S]+?=\s*)?require\(\s*(?:'|")(.+?)(?:'|")\s*\)/mg,
-            (_, assign, modName)  =>  {
-
-                this.addChild('runtime',  modName = this.mapName( modName ));
-
-                return  `${assign || ''}require('${modName}')`;
-            }
+            (_, assign, modName)  =>
+                `${assign || ''}require('${
+                    this.addChild('runtime', modName)  ||  modName
+                }')`
         );
 
         return this.dependency.runtime;

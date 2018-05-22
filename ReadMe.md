@@ -1,6 +1,6 @@
 # AMD bundle
 
-**A command-line tool for bundling up [AMD](https://github.com/amdjs/amdjs-api/blob/master/AMD.md) modules**,
+**A dual-use tool for bundling up [AMD](https://github.com/amdjs/amdjs-api/blob/master/AMD.md) & [CJS](http://wiki.commonjs.org/wiki/Modules) modules**,
 which is much easier to use than [`r.js`](https://github.com/requirejs/r.js) with [Almond](https://github.com/requirejs/almond) or [AMDclean](https://github.com/gfranko/amdclean).
 
 [![NPM Dependency](https://david-dm.org/TechQuery/AMD_bundle.js.svg)](https://david-dm.org/TechQuery/AMD_bundle.js)
@@ -21,38 +21,24 @@ npm install amd-bundle --save-dev
 
 amd-bundle -a \
     path/to/project/source/entry \
-    path/to/project/bundle/folder
+    path/to/project/bundle/file
 ```
 
 `amd-bundle` will
 
  1. start bundling from the entry point `path/to/project/source/entry.js`
 
- 2. write into `path/to/project/bundle/folder/entry.js` with only one `define('entry', [ ])` and `global.entry` definition, just like [UMD](https://github.com/umdjs/umd) style
+ 2. write into `path/to/project/bundle/file.js` with only one `define('file', [ ])` and `global.file` definition, just like [UMD](https://github.com/umdjs/umd) style
 
  3. treat `${process.cwd()}/node_modules/${module_full_name}` as a user's module to pack in
 
 
 ### More options
 
-Option `-f` accepts a path of CommonJS Module as shown below:
+ - Command-line: `amd-bundle --help`
 
-```JavaScript
-module.exports = function () {
+ - JS Module: https://techquery.github.io/AMD_bundle.js/class/libs/Package.js~Package.html#instance-method-bundle
 
-    //  "this" is a instance of Module
-
-    //  Change some code
-
-    if (/pattern_A/.test( this.name ))
-        return  this.source.replace('xxx', 'yyy');
-
-    //  Remove a module
-
-    if (this.parent.indexOf('zzz') > -1)
-        return '';
-};
-```
 
 ### Advanced
 

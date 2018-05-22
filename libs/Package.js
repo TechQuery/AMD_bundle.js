@@ -20,11 +20,11 @@ export default  class Package {
      */
     constructor(path,  includeAll = false,  moduleMap = { },  noLog = false) {
         /**
-         * Module name of this bundled package
+         * The entry file path of this package
          *
          * @type {string}
          */
-        this.name = basename( path );
+        this.path = path;
 
         /**
          * The root path of this package (relative to `process.cwd()`)
@@ -112,11 +112,15 @@ export default  class Package {
 
         Array_proto.sort.call(this,  (A, B) => {
 
-            if (B.dependencyPath.includes( A.name ))  return -1;
+            const A_D = A.dependencyPath, B_D = B.dependencyPath;
 
-            if (A.dependencyPath.includes( B.name ))  return 1;
+            if (B_D.includes( A.name ))  return -1;
 
-            return  this.module[ B.name ]  -  this.module[ A.name ];
+            if (A_D.includes( B.name ))  return 1;
+
+            return  (A_D.length - B_D.length)  ||  (
+                this.module[ B.name ]  -  this.module[ A.name ]
+            );
         });
     }
 
@@ -170,15 +174,18 @@ export default  class Package {
     /**
      * @protected
      *
+     * @param {string}                                                 name    - Module name of bundled package
      * @param {function(modName: string[], varName: string[]): string} bundler
      *
      * @return {string} Bundled source with UMD wrapper
      */
-    wrap(bundler) {
+    wrap(name, bundler) {
 
         const outside = this.outDependency;
 
         const modName = Object.keys( outside ), varName = Object.values( outside );
+
+        const dependency = modName[0]  ?  `${JSON.stringify( modName )}, `  :  '';
 
         return `
 //
@@ -187,23 +194,29 @@ export default  class Package {
 (function (factory) {
 
     if ((typeof define === 'function')  &&  define.amd)
-        define('${this.name}', ${JSON.stringify( modName )}, factory);
+        define('${name}', ${dependency}factory);
     else if (typeof module === 'object')
         return  module.exports = factory(${modName.map(name => `require('${name}')`)});
     else
-        return  this.${this.name} = factory(${modName.map(name => `this.${name}`)});
+        return  this.${name} = factory(${modName.map(name => `this.${name}`)});
 
 })(${bundler(modName, varName)});`.trim();
     }
 
     /**
+     * @param {string} [name] - Module name of bundled package
+     *                          (Default: The entry module's name)
      * @return {string} Source code of this package
      */
-    async bundle() {
+    async bundle(name) {
 
-        await this.parse(`./${this.name}`);
+        const entry = basename( this.path );
 
-        return  this.wrap((modName, varName) => `function (${varName}) {
+        await this.parse(`./${entry}`);
+
+        return this.wrap(
+            name || entry,
+            (modName, varName) => `function (${varName}) {
 
     var module = {
         ${Array.from(
