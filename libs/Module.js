@@ -24,9 +24,9 @@ export default  class Module extends EventEmitter {
      * @param {string}  name               - Path of this module
      * @param {string}  [path='.']         - Root path of the package which this module belongs to
      * @param {boolean} [includeAll=false] - Treat NPM modules as CommonJS modules
-     * @param {Object}  [nameMap={}] `     - Map to replace some dependencies to others
+     * @param {Map}     [nameMap]          - Map to replace some dependencies to others
      */
-    constructor(name,  path = '.',  includeAll = false,  nameMap = { }) {
+    constructor(name,  path = '.',  includeAll = false,  nameMap) {
         /**
          * Path of this module
          *
@@ -65,7 +65,7 @@ export default  class Module extends EventEmitter {
          *
          * @type {Object}
          */
-        this.nameMap = nameMap;
+        this.nameMap = nameMap  ||  new Map();
     }
 
     /**
@@ -127,6 +127,28 @@ export default  class Module extends EventEmitter {
     }
 
     /**
+     * @param {string} module - Module name from source code
+     *
+     * @emits {ReplaceEvent}
+     *
+     * @return {?string} New module name if `module` is matched in the name map
+     */
+    mapName(module) {
+
+        for (let [oldName, newName]  of  this.nameMap) {
+
+            let match = (oldName instanceof RegExp)  &&  oldName.exec( module );
+
+            match = (match || [ ]).filter( Boolean );
+
+            if (match[0]  ||  (oldName === module)) {
+
+                this.emit('replace', module, newName);    return newName;
+            }
+        }
+    }
+
+    /**
      * Add a depended module of this module
      *
      * @protected
@@ -143,10 +165,7 @@ export default  class Module extends EventEmitter {
             './'  +  join(this.base, name).replace(/\\/g, '/')
         );
 
-        var newName;
-
-        if (name in this.nameMap)
-            this.emit('replace',  name,  newName = name = this.nameMap[ name ]);
+        const newName = this.mapName( name );  name = newName || name;
 
         if (this.dependency.outside  &&  (name[0] !== '.'))  type = 'outside';
 

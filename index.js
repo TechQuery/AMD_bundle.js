@@ -6,7 +6,7 @@ const  Command = require('commander'),  Config = require('./package.json');
 
 require('babel-register');  require('babel-polyfill');
 
-const  Package = require('./libs/Package').default;
+const  Package = require('./libs/Package').default,  utility = require('./libs/utility');
 
 
 Command.version( Config.version ).usage('[options] <entry file> [bundle file]')
@@ -18,18 +18,19 @@ Command.version( Config.version ).usage('[options] <entry file> [bundle file]')
     .option(
         '-m, --module-map <name pairs>',  [
             'Map to replace some dependencies to others',
-            '(For example:  old_1:new_1,old_2:new_2)'
+            '(For example:  old_1:new_1,/some_/i:new_2)'
         ].join(' ')
     )
     .option('-s, --std-out',  'Write into "stdout" without logs')
     .parse( process.argv );
 
 
-const entry_file = Command.args[0], module_map = { };
+const entry_file = Command.args[0], module_map = new Map();
 
 (Command.moduleMap || '').replace(
     /(.+?):([^,]+)/g,
-    (_, oldModule, newModule)  =>  module_map[ oldModule ] = newModule
+    (_, oldName, newName)  =>
+        module_map.set(utility.toRegExp( oldName ) || oldName,  newName)
 );
 
 const bundle_file = (

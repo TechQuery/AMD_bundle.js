@@ -36,98 +36,104 @@ window.esdocSearchIndex = [
     "function"
   ],
   [
+    "amd-bundle/libs/utility.js~toregexp",
+    "function/index.html#static-function-toRegExp",
+    "<span>toRegExp</span> <span class=\"search-result-import-path\">amd-bundle/libs/utility.js</span>",
+    "function"
+  ],
+  [
     "",
-    "test-file/test/index.js.html#lineNumber218",
+    "test-file/test/index.js.html#lineNumber230",
     "Command line",
     "test"
   ],
   [
     "",
-    "test-file/test/index.js.html#lineNumber220",
+    "test-file/test/index.js.html#lineNumber232",
     "Command line Output to a file",
     "test"
   ],
   [
     "",
-    "test-file/test/index.js.html#lineNumber239",
+    "test-file/test/index.js.html#lineNumber251",
     "Command line Replace a module by the map option",
     "test"
   ],
   [
     "",
-    "test-file/test/index.js.html#lineNumber232",
+    "test-file/test/index.js.html#lineNumber244",
     "Command line Write into stdout without printing",
     "test"
   ],
   [
     "module libs/module.js~module,module",
-    "test-file/test/index.js.html#lineNumber57",
+    "test-file/test/index.js.html#lineNumber67",
     "Module parser",
     "test"
   ],
   [
     "module#dependencypath libs/module.js~module#dependencypath,module#dependencypath",
-    "test-file/test/index.js.html#lineNumber102",
+    "test-file/test/index.js.html#lineNumber112",
     "Module parser Get paths of the dependency",
     "test"
   ],
   [
     "module#parseamd libs/module.js~module#parseamd,module#parseamd",
-    "test-file/test/index.js.html#lineNumber66",
+    "test-file/test/index.js.html#lineNumber76",
     "Module parser Parse AMD",
     "test"
   ],
   [
     "module#parsecjs libs/module.js~module#parsecjs,module#parsecjs",
-    "test-file/test/index.js.html#lineNumber81",
+    "test-file/test/index.js.html#lineNumber91",
     "Module parser Parse CommonJS",
     "test"
   ],
   [
     "module#parse libs/module.js~module#parse,module#parse",
-    "test-file/test/index.js.html#lineNumber89",
+    "test-file/test/index.js.html#lineNumber99",
     "Module parser Parse all",
     "test"
   ],
   [
-    "",
-    "test-file/test/index.js.html#lineNumber108",
+    "module#mapname libs/module.js~module#mapname,module#mapname",
+    "test-file/test/index.js.html#lineNumber120",
     "Module parser Replace a dependency",
     "test"
   ],
   [
     "package libs/package.js~package,package",
-    "test-file/test/index.js.html#lineNumber131",
+    "test-file/test/index.js.html#lineNumber143",
     "Package bundler",
     "test"
   ],
   [
     "package#bundle libs/package.js~package#bundle,package#bundle",
-    "test-file/test/index.js.html#lineNumber209",
+    "test-file/test/index.js.html#lineNumber221",
     "Package bundler Bundle all dependencies",
     "test"
   ],
   [
     "package#bundle libs/package.js~package#bundle,package#bundle",
-    "test-file/test/index.js.html#lineNumber214",
+    "test-file/test/index.js.html#lineNumber226",
     "Package bundler Bundle without NPM packages",
     "test"
   ],
   [
     "package#parse libs/package.js~package#parse,package#parse",
-    "test-file/test/index.js.html#lineNumber154",
+    "test-file/test/index.js.html#lineNumber166",
     "Package bundler Parse package",
     "test"
   ],
   [
     "package#register libs/package.js~package#register,package#register",
-    "test-file/test/index.js.html#lineNumber138",
+    "test-file/test/index.js.html#lineNumber150",
     "Package bundler Register module",
     "test"
   ],
   [
     "package#wrap libs/package.js~package#wrap,package#wrap",
-    "test-file/test/index.js.html#lineNumber168",
+    "test-file/test/index.js.html#lineNumber180",
     "Package bundler UMD wrapper",
     "test"
   ],
@@ -138,26 +144,32 @@ window.esdocSearchIndex = [
     "test"
   ],
   [
+    "toregexp libs/utility.js~toregexp,toregexp",
+    "test-file/test/index.js.html#lineNumber19",
+    "Utility Create RegExp() from a literal string",
+    "test"
+  ],
+  [
     "getnpmindex libs/utility.js~getnpmindex,getnpmindex",
-    "test-file/test/index.js.html#lineNumber35",
+    "test-file/test/index.js.html#lineNumber45",
     "Utility Get \"index.js\" path of a module",
     "test"
   ],
   [
     "getnpmpackage libs/utility.js~getnpmpackage,getnpmpackage",
-    "test-file/test/index.js.html#lineNumber45",
+    "test-file/test/index.js.html#lineNumber55",
     "Utility Get entry file path from \"package.json\" of a module",
     "test"
   ],
   [
     "getnpmfile libs/utility.js~getnpmfile,getnpmfile",
-    "test-file/test/index.js.html#lineNumber27",
+    "test-file/test/index.js.html#lineNumber37",
     "Utility Get path of JS modules",
     "test"
   ],
   [
     "merge libs/utility.js~merge,merge",
-    "test-file/test/index.js.html#lineNumber19",
+    "test-file/test/index.js.html#lineNumber29",
     "Utility Merge module paths",
     "test"
   ],
@@ -504,6 +516,12 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
+    "libs/module.js~module#mapname",
+    "class/libs/Module.js~Module.html#instance-method-mapName",
+    "libs/Module.js~Module#mapName",
+    "method"
+  ],
+  [
     "libs/module.js~module#namemap",
     "class/libs/Module.js~Module.html#instance-member-nameMap",
     "libs/Module.js~Module#nameMap",
@@ -562,6 +580,12 @@ window.esdocSearchIndex = [
     "file/libs/Package.js.html",
     "libs/Package.js",
     "file"
+  ],
+  [
+    "libs/package.js~package#[symbol.iterator]",
+    "class/libs/Package.js~Package.html#instance-method-[Symbol.iterator]",
+    "libs/Package.js~Package#[Symbol.iterator]",
+    "method"
   ],
   [
     "libs/package.js~package#base",

@@ -3,7 +3,7 @@ import {execSync} from 'child_process';
 import {readFileSync, removeSync} from 'fs-extra';
 
 
-import {merge, getNPMFile, getNPMIndex, getNPMPackage} from '../libs/utility';
+import {toRegExp, merge, getNPMFile, getNPMIndex, getNPMPackage} from '../libs/utility';
 
 import Module from '../libs/Module';
 
@@ -13,6 +13,16 @@ var bundle_code;
 
 
 describe('Utility',  () => {
+    /**
+     * @test {toRegExp}
+     */
+    it('Create RegExp() from a literal string',  () => {
+
+        toRegExp('/polyfill|ext\\//ig').should.be.eql( /polyfill|ext\//gi );
+
+        (toRegExp('test') === undefined).should.be.true();
+    });
+
     /**
      * @test {merge}
      */
@@ -104,11 +114,13 @@ function _index(A, require, exports, module) {/* AMD module */
         module.dependencyPath.should.be.eql( ['./a', './c'] );
     });
 
-
+    /**
+     * @test {Module#mapName}
+     */
     it('Replace a dependency',  async () => {
 
         module = new Module(
-            './index',  './test/example/',  true,  {test: 'jquery'}
+            './index',  './test/example/',  true,  new Map([['test', 'jquery']])
         );
 
         (await module.parse()).should.be.equal(`
@@ -239,7 +251,7 @@ describe('Command line',  () => {
     it('Replace a module by the map option',  () => {
         (
             execSync(
-                'node index test/example/index test/example/build -m test:jquery'
+                'node index test/example/index test/example/build -m /T/i:jquery'
             ) + ''
         ).should.be.startWith(`
 → Module "test" will be replaced by "jquery"

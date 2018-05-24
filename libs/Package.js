@@ -4,7 +4,7 @@ import Module from './Module';
 
 import {merge} from './utility';
 
-const Array_proto = Array.prototype;
+const Array_iterator = [ ][Symbol.iterator], Array_proto = Array.prototype;
 
 
 /**
@@ -12,13 +12,13 @@ const Array_proto = Array.prototype;
  */
 export default  class Package {
     /**
-     * @param {string}  path         - The entry file path of this package
-     *                                 (relative to `process.cwd()`)
+     * @param {string}  path               - The entry file path of this package
+     *                                       (relative to `process.cwd()`)
      * @param {boolean} [includeAll=false] - Include NPM modules in the final bundle
-     * @param {Object}  [moduleMap={}]     - Map to replace some dependencies to others
+     * @param {?Map}    [moduleMap]        - Map to replace some dependencies to others
      * @param {boolean} [noLog=false]      - Disable log output
      */
-    constructor(path,  includeAll = false,  moduleMap = { },  noLog = false) {
+    constructor(path,  includeAll = false,  moduleMap,  noLog = false) {
         /**
          * The entry file path of this package
          *
@@ -69,6 +69,8 @@ export default  class Package {
          */
         this.showLog = (! noLog);
     }
+
+    [Symbol.iterator]() {  return  Array_iterator.call( this );  }
 
     /**
      * @param {Module|string} module - Instance or name of a module

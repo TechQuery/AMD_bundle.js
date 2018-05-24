@@ -4,6 +4,19 @@ import {existsSync, readFileSync, statSync} from 'fs';
 
 
 /**
+ * @param {string} raw - RegExp literal string
+ *
+ * @return {?RegExp}
+ */
+export function toRegExp(raw) {
+
+    const match = raw.match( /^\/(.+)\/([a-z]+)?$/ );
+
+    if ( match )  return  new RegExp(match[1], match[2]);
+}
+
+
+/**
  * This will be used in the bundled source
  *
  * @param {string} base - Root path

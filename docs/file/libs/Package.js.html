@@ -35,6 +35,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getNPMIndex">getNPMIndex</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getNPMPackage">getNPMPackage</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-merge">merge</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-toRegExp">toRegExp</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-DependencyMap">DependencyMap</a></span></span></li>
 </ul>
 </div>
@@ -47,7 +48,7 @@ import Module from &apos;./Module&apos;;
 
 import {merge} from &apos;./utility&apos;;
 
-const Array_proto = Array.prototype;
+const Array_iterator = [ ][Symbol.iterator], Array_proto = Array.prototype;
 
 
 /**
@@ -55,13 +56,13 @@ const Array_proto = Array.prototype;
  */
 export default  class Package {
     /**
-     * @param {string}  path         - The entry file path of this package
-     *                                 (relative to `process.cwd()`)
+     * @param {string}  path               - The entry file path of this package
+     *                                       (relative to `process.cwd()`)
      * @param {boolean} [includeAll=false] - Include NPM modules in the final bundle
-     * @param {Object}  [moduleMap={}]     - Map to replace some dependencies to others
+     * @param {?Map}    [moduleMap]        - Map to replace some dependencies to others
      * @param {boolean} [noLog=false]      - Disable log output
      */
-    constructor(path,  includeAll = false,  moduleMap = { },  noLog = false) {
+    constructor(path,  includeAll = false,  moduleMap,  noLog = false) {
         /**
          * The entry file path of this package
          *
@@ -112,6 +113,8 @@ export default  class Package {
          */
         this.showLog = (! noLog);
     }
+
+    [Symbol.iterator]() {  return  Array_iterator.call( this );  }
 
     /**
      * @param {Module|string} module - Instance or name of a module

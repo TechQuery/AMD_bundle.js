@@ -35,6 +35,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getNPMIndex">getNPMIndex</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getNPMPackage">getNPMPackage</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-merge">merge</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-toRegExp">toRegExp</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-DependencyMap">DependencyMap</a></span></span></li>
 </ul>
 </div>
@@ -46,7 +47,7 @@
 import {readFileSync, removeSync} from &apos;fs-extra&apos;;
 
 
-import {merge, getNPMFile, getNPMIndex, getNPMPackage} from &apos;../libs/utility&apos;;
+import {toRegExp, merge, getNPMFile, getNPMIndex, getNPMPackage} from &apos;../libs/utility&apos;;
 
 import Module from &apos;../libs/Module&apos;;
 
@@ -56,6 +57,16 @@ var bundle_code;
 
 
 describe(&apos;Utility&apos;,  () =&gt; {
+    /**
+     * @test {toRegExp}
+     */
+    it(&apos;Create RegExp() from a literal string&apos;,  () =&gt; {
+
+        toRegExp(&apos;/polyfill|ext\\//ig&apos;).should.be.eql( /polyfill|ext\//gi );
+
+        (toRegExp(&apos;test&apos;) === undefined).should.be.true();
+    });
+
     /**
      * @test {merge}
      */
@@ -147,11 +158,13 @@ function _index(A, require, exports, module) {/* AMD module */
         module.dependencyPath.should.be.eql( [&apos;./a&apos;, &apos;./c&apos;] );
     });
 
-
+    /**
+     * @test {Module#mapName}
+     */
     it(&apos;Replace a dependency&apos;,  async () =&gt; {
 
         module = new Module(
-            &apos;./index&apos;,  &apos;./test/example/&apos;,  true,  {test: &apos;jquery&apos;}
+            &apos;./index&apos;,  &apos;./test/example/&apos;,  true,  new Map([[&apos;test&apos;, &apos;jquery&apos;]])
         );
 
         (await module.parse()).should.be.equal(`
@@ -282,7 +295,7 @@ describe(&apos;Command line&apos;,  () =&gt; {
     it(&apos;Replace a module by the map option&apos;,  () =&gt; {
         (
             execSync(
-                &apos;node index test/example/index test/example/build -m test:jquery&apos;
+                &apos;node index test/example/index test/example/build -m /T/i:jquery&apos;
             ) + &apos;&apos;
         ).should.be.startWith(`
 &#x2192; Module &quot;test&quot; will be replaced by &quot;jquery&quot;
