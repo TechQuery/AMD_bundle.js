@@ -29,8 +29,8 @@
 <nav class="navigation" data-ice="nav"><div>
   <ul>
     
-  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/libs/Module.js~Module.html">Module</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/libs/Package.js~Package.html">Package</a></span></span></li>
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/source/Module.js~Module.html">Module</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/source/Package.js~Package.html">Package</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getNPMFile">getNPMFile</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getNPMIndex">getNPMIndex</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getNPMPackage">getNPMPackage</a></span></span></li>
@@ -46,12 +46,13 @@
 
 import {readFileSync, removeSync} from &apos;fs-extra&apos;;
 
+import {
+    toRegExp, merge, getNPMFile, getNPMIndex, getNPMPackage
+} from &apos;../source/utility&apos;;
 
-import {toRegExp, merge, getNPMFile, getNPMIndex, getNPMPackage} from &apos;../libs/utility&apos;;
+import Module from &apos;../source/Module&apos;;
 
-import Module from &apos;../libs/Module&apos;;
-
-import Package from &apos;../libs/Package&apos;;
+import Package from &apos;../source/Package&apos;;
 
 var bundle_code;
 
@@ -301,37 +302,34 @@ describe(&apos;Package bundler&apos;,  () =&gt; {
 
 describe(&apos;Command line&apos;,  () =&gt; {
 
+    const entry = &apos;node source/index test/example/index&apos;;
+
     it(&apos;Output to a file&apos;,  () =&gt; {
 
-        (execSync(&apos;node index test/example/index test/example/build&apos;) + &apos;&apos;)
-            .should.be.startWith(`
-&#x221A; Module &quot;./index&quot; has been bundled
-&#x221A; Module &quot;./a&quot; has been bundled
-&#x221A; Module &quot;./libs/b&quot; has been bundled
-&#x221A; Module &quot;./c&quot; has been bundled`.trim()
-            );
-    });
-
-
-    it(&apos;Write into stdout without printing&apos;,  () =&gt; {
-
-        (execSync(&apos;node index test/example/index -s&apos;) + &apos;&apos;)
-            .should.be.eql( bundle_code );
-    });
-
-
-    it(&apos;Replace a module by the map option&apos;,  () =&gt; {
-        (
-            execSync(
-                &apos;node index test/example/index test/example/build -m /T/i:jquery&apos;
-            ) + &apos;&apos;
-        ).should.be.startWith(`
-&#x2192; Module &quot;test&quot; will be replaced by &quot;jquery&quot;
+        (execSync(`${entry} test/example/build`) + &apos;&apos;).should.be.startWith(`
 &#x221A; Module &quot;./index&quot; has been bundled
 &#x221A; Module &quot;./a&quot; has been bundled
 &#x221A; Module &quot;./libs/b&quot; has been bundled
 &#x221A; Module &quot;./c&quot; has been bundled`.trim()
         );
+    });
+
+    it(
+        &apos;Write into stdout without printing&apos;,
+        ()  =&gt;  (execSync(`${entry} -s`) + &apos;&apos;).should.be.eql( bundle_code )
+    );
+
+
+    it(&apos;Replace a module by the map option&apos;,  () =&gt; {
+
+        (execSync(`${entry} test/example/build -m /T/i:jquery`) + &apos;&apos;)
+            .should.be.startWith(`
+&#x2192; Module &quot;test&quot; will be replaced by &quot;jquery&quot;
+&#x221A; Module &quot;./index&quot; has been bundled
+&#x221A; Module &quot;./a&quot; has been bundled
+&#x221A; Module &quot;./libs/b&quot; has been bundled
+&#x221A; Module &quot;./c&quot; has been bundled`.trim()
+            );
 
         (readFileSync(&apos;test/example/build.js&apos;) + &apos;&apos;).should.be.equal(
             bundle_code

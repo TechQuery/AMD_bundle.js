@@ -2,11 +2,11 @@
 
 const  Path = require('path'),  FS = require('fs-extra');
 
-const  Command = require('commander'),  Config = require('./package.json');
+const  Command = require('commander'),  Config = require('../package.json');
 
 require('babel-register');  require('babel-polyfill');
 
-const  Package = require('./libs/Package').default,  utility = require('./libs/utility');
+const  Package = require('./Package').default,  utility = require('./utility');
 
 
 Command.version( Config.version ).usage('[options] <entry file> [bundle file]')

@@ -1,9 +1,21 @@
 {
-  "coverage": "85.41%",
-  "expectCount": 48,
+  "coverage": "75.92%",
+  "expectCount": 54,
   "actualCount": 41,
   "files": {
-    "libs/Module.js": {
+    "source/index.js": {
+      "expectCount": 6,
+      "actualCount": 0,
+      "undocumentLines": [
+        3,
+        5,
+        9,
+        28,
+        36,
+        46
+      ]
+    },
+    "source/Module.js": {
       "expectCount": 22,
       "actualCount": 20,
       "undocumentLines": [
@@ -11,7 +23,7 @@
         149
       ]
     },
-    "libs/Package.js": {
+    "source/Package.js": {
       "expectCount": 19,
       "actualCount": 16,
       "undocumentLines": [
@@ -20,7 +32,7 @@
         67
       ]
     },
-    "libs/utility.js": {
+    "source/utility.js": {
       "expectCount": 7,
       "actualCount": 5,
       "undocumentLines": [

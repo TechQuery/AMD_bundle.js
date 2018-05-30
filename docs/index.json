@@ -4,9 +4,9 @@
     "kind": "external",
     "name": "Infinity",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Infinity",
-    "memberof": "libs/.external-ecmascript.js",
+    "memberof": "source/.external-ecmascript.js",
     "static": true,
-    "longname": "libs/.external-ecmascript.js~Infinity",
+    "longname": "source/.external-ecmascript.js~Infinity",
     "access": "public",
     "description": "",
     "builtinExternal": true
@@ -16,9 +16,9 @@
     "kind": "external",
     "name": "NaN",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NaN",
-    "memberof": "libs/.external-ecmascript.js",
+    "memberof": "source/.external-ecmascript.js",
     "static": true,
-    "longname": "libs/.external-ecmascript.js~NaN",
+    "longname": "source/.external-ecmascript.js~NaN",
     "access": "public",
     "description": "",
     "builtinExternal": true
@@ -28,9 +28,9 @@
     "kind": "external",
     "name": "undefined",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined",
-    "memberof": "libs/.external-ecmascript.js",
+    "memberof": "source/.external-ecmascript.js",
     "static": true,
-    "longname": "libs/.external-ecmascript.js~undefined",
+    "longname": "source/.external-ecmascript.js~undefined",
     "access": "public",
     "description": "",
     "builtinExternal": true
@@ -40,9 +40,9 @@
     "kind": "external",
     "name": "null",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/null",
-    "memberof": "libs/.external-ecmascript.js",
+    "memberof": "source/.external-ecmascript.js",
     "static": true,
-    "longname": "libs/.external-ecmascript.js~null",
+    "longname": "source/.external-ecmascript.js~null",
     "access": "public",
     "description": "",
     "builtinExternal": true
@@ -52,9 +52,9 @@
     "kind": "external",
     "name": "Object",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object",
-    "memberof": "libs/.external-ecmascript.js",
+    "memberof": "source/.external-ecmascript.js",
     "static": true,
-    "longname": "libs/.external-ecmascript.js~Object",
+    "longname": "source/.external-ecmascript.js~Object",
     "access": "public",
     "description": "",
     "builtinExternal": true
@@ -64,9 +64,9 @@
     "kind": "external",
     "name": "object",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object",
-    "memberof": "libs/.external-ecmascript.js",
+    "memberof": "source/.external-ecmascript.js",
     "static": true,
-    "longname": "libs/.external-ecmascript.js~object",
+    "longname": "source/.external-ecmascript.js~object",
     "access": "public",
     "description": "",
     "builtinExternal": true
@@ -76,9 +76,9 @@
     "kind": "external",
     "name": "Function",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function",
-    "memberof": "libs/.external-ecmascript.js",
+    "memberof": "source/.external-ecmascript.js",
     "static": true,
-    "longname": "libs/.external-ecmascript.js~Function",
+    "longname": "source/.external-ecmascript.js~Function",
     "access": "public",
     "description": "",
     "builtinExternal": true
@@ -88,9 +88,9 @@
     "kind": "external",
     "name": "function",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function",
-    "memberof": "libs/.external-ecmascript.js",
+    "memberof": "source/.external-ecmascript.js",
     "static": true,
-    "longname": "libs/.external-ecmascript.js~function",
+    "longname": "source/.external-ecmascript.js~function",
     "access": "public",
     "description": "",
     "builtinExternal": true
@@ -100,9 +100,9 @@
     "kind": "external",
     "name": "Boolean",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean",
-    "memberof": "libs/.external-ecmascript.js",
+    "memberof": "source/.external-ecmascript.js",
     "static": true,
-    "longname": "libs/.external-ecmascript.js~Boolean",
+    "longname": "source/.external-ecmascript.js~Boolean",
     "access": "public",
     "description": "",
     "builtinExternal": true
@@ -112,9 +112,9 @@
     "kind": "external",
     "name": "boolean",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean",
-    "memberof": "libs/.external-ecmascript.js",
+    "memberof": "source/.external-ecmascript.js",
     "static": true,
-    "longname": "libs/.external-ecmascript.js~boolean",
+    "longname": "source/.external-ecmascript.js~boolean",
     "access": "public",
     "description": "",
     "builtinExternal": true
@@ -124,9 +124,9 @@
     "kind": "external",
     "name": "Symbol",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol",
-    "memberof": "libs/.external-ecmascript.js",
+    "memberof": "source/.external-ecmascript.js",
     "static": true,
-    "longname": "libs/.external-ecmascript.js~Symbol",
+    "longname": "source/.external-ecmascript.js~Symbol",
     "access": "public",
     "description": "",
     "builtinExternal": true
@@ -136,9 +136,9 @@
     "kind": "external",
     "name": "Error",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error",
-    "memberof": "libs/.external-ecmascript.js",
+    "memberof": "source/.external-ecmascript.js",
     "static": true,
-    "longname": "libs/.external-ecmascript.js~Error",
+    "longname": "source/.external-ecmascript.js~Error",
     "access": "public",
     "description": "",
     "builtinExternal": true
@@ -148,9 +148,9 @@
     "kind": "external",
     "name": "EvalError",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/EvalError",
-    "memberof": "libs/.external-ecmascript.js",
+    "memberof": "source/.external-ecmascript.js",
     "static": true,
-    "longname": "libs/.external-ecmascript.js~EvalError",
+    "longname": "source/.external-ecmascript.js~EvalError",
     "access": "public",
     "description": "",
     "builtinExternal": true
@@ -160,9 +160,9 @@
     "kind": "external",
     "name": "InternalError",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/InternalError",
-    "memberof": "libs/.external-ecmascript.js",
+    "memberof": "source/.external-ecmascript.js",
     "static": true,
-    "longname": "libs/.external-ecmascript.js~InternalError",
+    "longname": "source/.external-ecmascript.js~InternalError",
     "access": "public",
     "description": "",
     "builtinExternal": true
@@ -172,9 +172,9 @@
     "kind": "external",
     "name": "RangeError",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RangeError",
-    "memberof": "libs/.external-ecmascript.js",
+    "memberof": "source/.external-ecmascript.js",
     "static": true,
-    "longname": "libs/.external-ecmascript.js~RangeError",
+    "longname": "source/.external-ecmascript.js~RangeError",
     "access": "public",
     "description": "",
     "builtinExternal": true
@@ -184,9 +184,9 @@
     "kind": "external",
     "name": "ReferenceError",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ReferenceError",
-    "memberof": "libs/.external-ecmascript.js",
+    "memberof": "source/.external-ecmascript.js",
     "static": true,
-    "longname": "libs/.external-ecmascript.js~ReferenceError",
+    "longname": "source/.external-ecmascript.js~ReferenceError",
     "access": "public",
     "description": "",
     "builtinExternal": true
@@ -196,9 +196,9 @@
     "kind": "external",
     "name": "SyntaxError",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SyntaxError",
-    "memberof": "libs/.external-ecmascript.js",
+    "memberof": "source/.external-ecmascript.js",
     "static": true,
-    "longname": "libs/.external-ecmascript.js~SyntaxError",
+    "longname": "source/.external-ecmascript.js~SyntaxError",
     "access": "public",
     "description": "",
     "builtinExternal": true
@@ -208,9 +208,9 @@
     "kind": "external",
     "name": "TypeError",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypeError",
-    "memberof": "libs/.external-ecmascript.js",
+    "memberof": "source/.external-ecmascript.js",
     "static": true,
-    "longname": "libs/.external-ecmascript.js~TypeError",
+    "longname": "source/.external-ecmascript.js~TypeError",
     "access": "public",
     "description": "",
     "builtinExternal": true
@@ -220,9 +220,9 @@
     "kind": "external",
     "name": "URIError",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/URIError",
-    "memberof": "libs/.external-ecmascript.js",
+    "memberof": "source/.external-ecmascript.js",
     "static": true,
-    "longname": "libs/.external-ecmascript.js~URIError",
+    "longname": "source/.external-ecmascript.js~URIError",
     "access": "public",
     "description": "",
     "builtinExternal": true
@@ -232,9 +232,9 @@
     "kind": "external",
     "name": "Number",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number",
-    "memberof": "libs/.external-ecmascript.js",
+    "memberof": "source/.external-ecmascript.js",
     "static": true,
-    "longname": "libs/.external-ecmascript.js~Number",
+    "longname": "source/.external-ecmascript.js~Number",
     "access": "public",
     "description": "",
     "builtinExternal": true
@@ -244,9 +244,9 @@
     "kind": "external",
     "name": "number",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number",
-    "memberof": "libs/.external-ecmascript.js",
+    "memberof": "source/.external-ecmascript.js",
     "static": true,
-    "longname": "libs/.external-ecmascript.js~number",
+    "longname": "source/.external-ecmascript.js~number",
     "access": "public",
     "description": "",
     "builtinExternal": true
@@ -256,9 +256,9 @@
     "kind": "external",
     "name": "Date",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date",
-    "memberof": "libs/.external-ecmascript.js",
+    "memberof": "source/.external-ecmascript.js",
     "static": true,
-    "longname": "libs/.external-ecmascript.js~Date",
+    "longname": "source/.external-ecmascript.js~Date",
     "access": "public",
     "description": "",
     "builtinExternal": true
@@ -268,9 +268,9 @@
     "kind": "external",
     "name": "String",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String",
-    "memberof": "libs/.external-ecmascript.js",
+    "memberof": "source/.external-ecmascript.js",
     "static": true,
-    "longname": "libs/.external-ecmascript.js~String",
+    "longname": "source/.external-ecmascript.js~String",
     "access": "public",
     "description": "",
     "builtinExternal": true
@@ -280,9 +280,9 @@
     "kind": "external",
     "name": "string",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String",
-    "memberof": "libs/.external-ecmascript.js",
+    "memberof": "source/.external-ecmascript.js",
     "static": true,
-    "longname": "libs/.external-ecmascript.js~string",
+    "longname": "source/.external-ecmascript.js~string",
     "access": "public",
     "description": "",
     "builtinExternal": true
@@ -292,9 +292,9 @@
     "kind": "external",
     "name": "RegExp",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp",
-    "memberof": "libs/.external-ecmascript.js",
+    "memberof": "source/.external-ecmascript.js",
     "static": true,
-    "longname": "libs/.external-ecmascript.js~RegExp",
+    "longname": "source/.external-ecmascript.js~RegExp",
     "access": "public",
     "description": "",
     "builtinExternal": true
@@ -304,9 +304,9 @@
     "kind": "external",
     "name": "Array",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array",
-    "memberof": "libs/.external-ecmascript.js",
+    "memberof": "source/.external-ecmascript.js",
     "static": true,
-    "longname": "libs/.external-ecmascript.js~Array",
+    "longname": "source/.external-ecmascript.js~Array",
     "access": "public",
     "description": "",
     "builtinExternal": true
@@ -316,9 +316,9 @@
     "kind": "external",
     "name": "Int8Array",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int8Array",
-    "memberof": "libs/.external-ecmascript.js",
+    "memberof": "source/.external-ecmascript.js",
     "static": true,
-    "longname": "libs/.external-ecmascript.js~Int8Array",
+    "longname": "source/.external-ecmascript.js~Int8Array",
     "access": "public",
     "description": "",
     "builtinExternal": true
@@ -328,9 +328,9 @@
     "kind": "external",
     "name": "Uint8Array",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array",
-    "memberof": "libs/.external-ecmascript.js",
+    "memberof": "source/.external-ecmascript.js",
     "static": true,
-    "longname": "libs/.external-ecmascript.js~Uint8Array",
+    "longname": "source/.external-ecmascript.js~Uint8Array",
     "access": "public",
     "description": "",
     "builtinExternal": true
@@ -340,9 +340,9 @@
     "kind": "external",
     "name": "Uint8ClampedArray",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8ClampedArray",
-    "memberof": "libs/.external-ecmascript.js",
+    "memberof": "source/.external-ecmascript.js",
     "static": true,
-    "longname": "libs/.external-ecmascript.js~Uint8ClampedArray",
+    "longname": "source/.external-ecmascript.js~Uint8ClampedArray",
     "access": "public",
     "description": "",
     "builtinExternal": true
@@ -352,9 +352,9 @@
     "kind": "external",
     "name": "Int16Array",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int16Array",
-    "memberof": "libs/.external-ecmascript.js",
+    "memberof": "source/.external-ecmascript.js",
     "static": true,
-    "longname": "libs/.external-ecmascript.js~Int16Array",
+    "longname": "source/.external-ecmascript.js~Int16Array",
     "access": "public",
     "description": "",
     "builtinExternal": true
@@ -364,9 +364,9 @@
     "kind": "external",
     "name": "Uint16Array",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint16Array",
-    "memberof": "libs/.external-ecmascript.js",
+    "memberof": "source/.external-ecmascript.js",
     "static": true,
-    "longname": "libs/.external-ecmascript.js~Uint16Array",
+    "longname": "source/.external-ecmascript.js~Uint16Array",
     "access": "public",
     "description": "",
     "builtinExternal": true
@@ -376,9 +376,9 @@
     "kind": "external",
     "name": "Int32Array",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int32Array",
-    "memberof": "libs/.external-ecmascript.js",
+    "memberof": "source/.external-ecmascript.js",
     "static": true,
-    "longname": "libs/.external-ecmascript.js~Int32Array",
+    "longname": "source/.external-ecmascript.js~Int32Array",
     "access": "public",
     "description": "",
     "builtinExternal": true
@@ -388,9 +388,9 @@
     "kind": "external",
     "name": "Uint32Array",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint32Array",
-    "memberof": "libs/.external-ecmascript.js",
+    "memberof": "source/.external-ecmascript.js",
     "static": true,
-    "longname": "libs/.external-ecmascript.js~Uint32Array",
+    "longname": "source/.external-ecmascript.js~Uint32Array",
     "access": "public",
     "description": "",
     "builtinExternal": true
@@ -400,9 +400,9 @@
     "kind": "external",
     "name": "Float32Array",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Float32Array",
-    "memberof": "libs/.external-ecmascript.js",
+    "memberof": "source/.external-ecmascript.js",
     "static": true,
-    "longname": "libs/.external-ecmascript.js~Float32Array",
+    "longname": "source/.external-ecmascript.js~Float32Array",
     "access": "public",
     "description": "",
     "builtinExternal": true
@@ -412,9 +412,9 @@
     "kind": "external",
     "name": "Float64Array",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Float64Array",
-    "memberof": "libs/.external-ecmascript.js",
+    "memberof": "source/.external-ecmascript.js",
     "static": true,
-    "longname": "libs/.external-ecmascript.js~Float64Array",
+    "longname": "source/.external-ecmascript.js~Float64Array",
     "access": "public",
     "description": "",
     "builtinExternal": true
@@ -424,9 +424,9 @@
     "kind": "external",
     "name": "Map",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map",
-    "memberof": "libs/.external-ecmascript.js",
+    "memberof": "source/.external-ecmascript.js",
     "static": true,
-    "longname": "libs/.external-ecmascript.js~Map",
+    "longname": "source/.external-ecmascript.js~Map",
     "access": "public",
     "description": "",
     "builtinExternal": true
@@ -436,9 +436,9 @@
     "kind": "external",
     "name": "Set",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set",
-    "memberof": "libs/.external-ecmascript.js",
+    "memberof": "source/.external-ecmascript.js",
     "static": true,
-    "longname": "libs/.external-ecmascript.js~Set",
+    "longname": "source/.external-ecmascript.js~Set",
     "access": "public",
     "description": "",
     "builtinExternal": true
@@ -448,9 +448,9 @@
     "kind": "external",
     "name": "WeakMap",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap",
-    "memberof": "libs/.external-ecmascript.js",
+    "memberof": "source/.external-ecmascript.js",
     "static": true,
-    "longname": "libs/.external-ecmascript.js~WeakMap",
+    "longname": "source/.external-ecmascript.js~WeakMap",
     "access": "public",
     "description": "",
     "builtinExternal": true
@@ -460,9 +460,9 @@
     "kind": "external",
     "name": "WeakSet",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakSet",
-    "memberof": "libs/.external-ecmascript.js",
+    "memberof": "source/.external-ecmascript.js",
     "static": true,
-    "longname": "libs/.external-ecmascript.js~WeakSet",
+    "longname": "source/.external-ecmascript.js~WeakSet",
     "access": "public",
     "description": "",
     "builtinExternal": true
@@ -472,9 +472,9 @@
     "kind": "external",
     "name": "ArrayBuffer",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer",
-    "memberof": "libs/.external-ecmascript.js",
+    "memberof": "source/.external-ecmascript.js",
     "static": true,
-    "longname": "libs/.external-ecmascript.js~ArrayBuffer",
+    "longname": "source/.external-ecmascript.js~ArrayBuffer",
     "access": "public",
     "description": "",
     "builtinExternal": true
@@ -484,9 +484,9 @@
     "kind": "external",
     "name": "DataView",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView",
-    "memberof": "libs/.external-ecmascript.js",
+    "memberof": "source/.external-ecmascript.js",
     "static": true,
-    "longname": "libs/.external-ecmascript.js~DataView",
+    "longname": "source/.external-ecmascript.js~DataView",
     "access": "public",
     "description": "",
     "builtinExternal": true
@@ -496,9 +496,9 @@
     "kind": "external",
     "name": "JSON",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON",
-    "memberof": "libs/.external-ecmascript.js",
+    "memberof": "source/.external-ecmascript.js",
     "static": true,
-    "longname": "libs/.external-ecmascript.js~JSON",
+    "longname": "source/.external-ecmascript.js~JSON",
     "access": "public",
     "description": "",
     "builtinExternal": true
@@ -508,9 +508,9 @@
     "kind": "external",
     "name": "Promise",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise",
-    "memberof": "libs/.external-ecmascript.js",
+    "memberof": "source/.external-ecmascript.js",
     "static": true,
-    "longname": "libs/.external-ecmascript.js~Promise",
+    "longname": "source/.external-ecmascript.js~Promise",
     "access": "public",
     "description": "",
     "builtinExternal": true
@@ -520,9 +520,9 @@
     "kind": "external",
     "name": "Generator",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Generator",
-    "memberof": "libs/.external-ecmascript.js",
+    "memberof": "source/.external-ecmascript.js",
     "static": true,
-    "longname": "libs/.external-ecmascript.js~Generator",
+    "longname": "source/.external-ecmascript.js~Generator",
     "access": "public",
     "description": "",
     "builtinExternal": true
@@ -532,9 +532,9 @@
     "kind": "external",
     "name": "GeneratorFunction",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/GeneratorFunction",
-    "memberof": "libs/.external-ecmascript.js",
+    "memberof": "source/.external-ecmascript.js",
     "static": true,
-    "longname": "libs/.external-ecmascript.js~GeneratorFunction",
+    "longname": "source/.external-ecmascript.js~GeneratorFunction",
     "access": "public",
     "description": "",
     "builtinExternal": true
@@ -544,9 +544,9 @@
     "kind": "external",
     "name": "Reflect",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Reflect",
-    "memberof": "libs/.external-ecmascript.js",
+    "memberof": "source/.external-ecmascript.js",
     "static": true,
-    "longname": "libs/.external-ecmascript.js~Reflect",
+    "longname": "source/.external-ecmascript.js~Reflect",
     "access": "public",
     "description": "",
     "builtinExternal": true
@@ -556,9 +556,9 @@
     "kind": "external",
     "name": "Proxy",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy",
-    "memberof": "libs/.external-ecmascript.js",
+    "memberof": "source/.external-ecmascript.js",
     "static": true,
-    "longname": "libs/.external-ecmascript.js~Proxy",
+    "longname": "source/.external-ecmascript.js~Proxy",
     "access": "public",
     "description": "",
     "builtinExternal": true
@@ -568,9 +568,9 @@
     "kind": "external",
     "name": "http~ClientRequest",
     "externalLink": "https://nodejs.org/dist/latest/docs/api/http.html#http_class_http_clientrequest",
-    "memberof": "libs/.external-nodejs.js",
+    "memberof": "source/.external-nodejs.js",
     "static": true,
-    "longname": "libs/.external-nodejs.js~http~ClientRequest",
+    "longname": "source/.external-nodejs.js~http~ClientRequest",
     "access": "public",
     "description": "",
     "builtinExternal": true
@@ -578,10 +578,10 @@
   {
     "__docId__": 50,
     "kind": "file",
-    "name": "libs/Module.js",
-    "content": "import {EventEmitter} from 'events';\n\nimport {dirname, join} from 'path';\n\nimport {readFileSync} from 'fs';\n\nimport * as Utility from './utility';\n\n\nconst AMD_CJS = ['require', 'exports', 'module'];\n\n/**\n * Key for module path & value for local variable\n *\n * @typedef {Object} DependencyMap\n */\n\n\n/**\n * CommonJS or AMD module\n */\nexport default  class Module extends EventEmitter {\n    /**\n     * @param {string}  name               - Path of this module\n     * @param {string}  [path='.']         - Root path of the package which this module belongs to\n     * @param {boolean} [includeAll=false] - Treat NPM modules as CommonJS modules\n     * @param {Map}     [nameMap]          - Map to replace some dependencies to others\n     */\n    constructor(name,  path = '.',  includeAll = false,  nameMap) {\n        /**\n         * Path of this module\n         *\n         * @type {string}\n         */\n        super().name = name;\n\n        /**\n         * Directory path of this module\n         *\n         * @type {string}\n         */\n        this.base = dirname( name ).replace(/\\\\/g, '/');\n\n        /**\n         * Root path of the package which this module belongs to\n         *\n         * @type {string}\n         */\n        this.path = path;\n\n        /**\n         * @type     {Object}\n         * @property {DependencyMap} compile - Compile-time dependency from AMD\n         * @property {DependencyMap} runtime - Runtime dependency from CommonJS\n         * @property {DependencyMap} outside - Outside dependency from NPM\n         */\n        this.dependency = {\n            compile:  { },\n            runtime:  { },\n            outside:  includeAll ? null : { }\n        };\n\n        /**\n         * Key for original name of a module & value for module name of the replacement\n         *\n         * @type {Object}\n         */\n        this.nameMap = nameMap  ||  new Map();\n\n        /**\n         * Count of direct references to this module\n         *\n         * @type {number}\n         */\n        this.referCount = 0;\n\n        /**\n         * Depth of this module on the dependency tree\n         *\n         * @type {number}\n         */\n        this.depth = 0;\n    }\n\n    /**\n     * @protected\n     *\n     * @param {string} name - Name of a module\n     *\n     * @return {string}\n     */\n    static identifierOf(name) {  return  name.replace(/\\W+/g, '_');  }\n\n    /**\n     * Identifier of this module in JS code\n     *\n     * @type {string}\n     */\n    get identifier() {  return  Module.identifierOf( this.name );  }\n\n    /**\n     * Paths of all the dependency needed to be bundled\n     *\n     * @type {string[]}\n     */\n    get dependencyPath() {\n\n        return  Object.keys( this.dependency.compile ).concat(\n            Object.keys( this.dependency.runtime )\n        );\n    }\n\n    /**\n     * @protected\n     *\n     * @param {number} depth - New depth of this module\n     *\n     * @return {Module} This module\n     */\n    countUp(depth) {\n\n        this.referCount++;  this.depth = Math.max(this.depth, depth);\n\n        return this;\n    }\n\n    /**\n     * @protected\n     *\n     * @return {?string} Entry file path of this module in `./node_modules/`\n     */\n    searchNPM() {\n\n        for (let method  of  ['getNPMFile', 'getNPMPackage', 'getNPMIndex']) {\n\n            let path;\n\n            if (path = Utility[method]( this.name ))  return path;\n        }\n    }\n\n    /**\n     * @protected\n     *\n     * @return {string} Original source code of this module\n     */\n    load() {\n\n        this.source = readFileSync(\n            ((! this.dependency.outside)  &&  /^\\w/.test( this.name ))  ?\n                this.searchNPM()  :  join(this.path, `${this.name}.js`)\n        );\n\n        return  this.source = (this.source + '').replace(/\\r\\n/g, '\\n');\n    }\n\n    /**\n     * @param {string} module - Module name from source code\n     *\n     * @emits {ReplaceEvent}\n     *\n     * @return {?string} New module name if `module` is matched in the name map\n     */\n    mapName(module) {\n\n        for (let [oldName, newName]  of  this.nameMap) {\n\n            let match = (oldName instanceof RegExp)  &&  oldName.exec( module );\n\n            match = (match || [ ]).filter( Boolean );\n\n            if (match[0]  ||  (oldName === module)) {\n\n                this.emit('replace', module, newName);    return newName;\n            }\n        }\n    }\n\n    /**\n     * Add a depended module of this module\n     *\n     * @protected\n     *\n     * @param {string} type      - `compile` for AMD & `runtime` for CJS\n     * @param {string} name      - Name of a module\n     * @param {string} [varName] - Variable name of a module in another module\n     */\n    addChild(type, name, varName) {\n\n        if ((type === 'compile')  &&  AMD_CJS.includes( name ))  return;\n\n        name = /^\\w/.test( name )  ?  name  :  (\n            './'  +  join(this.base, name).replace(/\\\\/g, '/')\n        );\n\n        const newName = this.mapName( name );  name = newName || name;\n\n        if (this.dependency.outside  &&  (name[0] !== '.'))  type = 'outside';\n\n        this.dependency[ type ][ name ] = varName  ||  Module.identifierOf( name );\n\n        return newName;\n    }\n\n    /**\n     * @protected\n     *\n     * @return {DependencyMap} Compile-time dependency\n     */\n    parseAMD() {\n\n        this.source = this.source.replace(\n            /define\\((?:\\s*\\[([\\s\\S]*?)\\]\\s*,)?\\s*function\\s*\\(([\\s\\S]*?)\\)\\s*\\{([\\s\\S]+)\\}\\s*\\);?/,\n            (_, modName, varName, body) => {\n\n                var index = 0;  varName = varName.trim().split( /\\s*,\\s*/ );\n\n                (modName || '').replace(\n                    /(?:'|\")(.+?)(?:'|\")/g,\n                    (_, name)  =>  {\n\n                        this.addChild('compile', name, varName[index]),  index++;\n                    }\n                );\n\n                return  body.replace(/^\\n([\\s\\S]+)\\n$/, '$1');\n            }\n        );\n\n        return this.dependency.compile;\n    }\n\n    /**\n     * @protected\n     *\n     * @return {DependencyMap} Runtime dependency\n     */\n    parseCJS() {\n\n        this.source = this.source.replace(\n            /((?:var|let|const)\\s+[\\s\\S]+?=\\s*)?require\\(\\s*(?:'|\")(.+?)(?:'|\")\\s*\\)/mg,\n            (_, assign, modName)  =>\n                `${assign || ''}require('${\n                    this.addChild('runtime', modName)  ||  modName\n                }')`\n        );\n\n        return this.dependency.runtime;\n    }\n\n    /**\n     * @return {string} Factory code of this parsed module\n     */\n    parse() {\n\n        this.load();\n\n        this.parseAMD();\n\n        this.parseCJS();\n\n        return  this.source = `function ${this.identifier}(${\n\n            Object.values( this.dependency.compile ).concat( AMD_CJS ).join(', ')\n        }) {${\n            this.source\n        }}`;\n    }\n\n    /**\n     * @return {string} Factory code of this parsed module\n     */\n    toString() {\n\n        return  ('source' in this)  ?  (this.source + '')  :  '';\n    }\n}\n",
+    "name": "source/index.js",
+    "content": "#! /usr/bin/env node\n\nconst  Path = require('path'),  FS = require('fs-extra');\n\nconst  Command = require('commander'),  Config = require('../package.json');\n\nrequire('babel-register');  require('babel-polyfill');\n\nconst  Package = require('./Package').default,  utility = require('./utility');\n\n\nCommand.version( Config.version ).usage('[options] <entry file> [bundle file]')\n    .arguments('<entry file> [bundle file]')\n    .option(\n        '-a, --include-all',\n        'Bundle all dependencies (include those in \"./node_modules/\")'\n    )\n    .option(\n        '-m, --module-map <name pairs>',  [\n            'Map to replace some dependencies to others',\n            '(For example:  old_1:new_1,/some_/i:new_2)'\n        ].join(' ')\n    )\n    .option('-s, --std-out',  'Write into \"stdout\" without logs')\n    .parse( process.argv );\n\n\nconst entry_file = Command.args[0], module_map = new Map();\n\n(Command.moduleMap || '').replace(\n    /(.+?):([^,]+)/g,\n    (_, oldName, newName)  =>\n        module_map.set(utility.toRegExp( oldName ) || oldName,  newName)\n);\n\nconst bundle_file = (\n        Command.args[1] ||\n        Path.join(entry_file,  '../../',  Path.basename( entry_file ))\n    ) + '.js',\n    pack = new Package(\n        entry_file,  Command.includeAll,  module_map,  Command.stdOut\n    );\n\nif (! Command.stdOut)  console.time('Package bundle');\n\nconst code = pack.bundle( Path.basename( bundle_file ).split('.')[0] );\n\nif ( Command.stdOut )\n    process.stdout.write( code );\nelse {\n    FS.outputFileSync(bundle_file,  code);\n\n    console.info( '-'.repeat( 30 ) );\n\n    console.timeEnd('Package bundle');\n\n    console.info(`Module count: ${pack.length}`);\n}\n",
     "static": true,
-    "longname": "D:/TechQuery/AMD_bundle.js/libs/Module.js",
+    "longname": "D:/TechQuery/AMD_bundle.js/source/index.js",
     "access": "public",
     "description": null,
     "lineNumber": 1
@@ -589,13 +589,150 @@
   {
     "__docId__": 51,
     "kind": "variable",
-    "name": "AMD_CJS",
-    "memberof": "libs/Module.js",
+    "name": "Path",
+    "memberof": "source/index.js",
     "static": true,
-    "longname": "libs/Module.js~AMD_CJS",
+    "longname": "source/index.js~Path",
     "access": "public",
     "export": false,
-    "importPath": "amd-bundle/libs/Module.js",
+    "importPath": "amd-bundle/source/index.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 3,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    },
+    "ignore": true
+  },
+  {
+    "__docId__": 52,
+    "kind": "variable",
+    "name": "Command",
+    "memberof": "source/index.js",
+    "static": true,
+    "longname": "source/index.js~Command",
+    "access": "public",
+    "export": false,
+    "importPath": "amd-bundle/source/index.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 5,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    },
+    "ignore": true
+  },
+  {
+    "__docId__": 53,
+    "kind": "variable",
+    "name": "Package",
+    "memberof": "source/index.js",
+    "static": true,
+    "longname": "source/index.js~Package",
+    "access": "public",
+    "export": false,
+    "importPath": "amd-bundle/source/index.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 9,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    },
+    "ignore": true
+  },
+  {
+    "__docId__": 54,
+    "kind": "variable",
+    "name": "entry_file",
+    "memberof": "source/index.js",
+    "static": true,
+    "longname": "source/index.js~entry_file",
+    "access": "public",
+    "export": false,
+    "importPath": "amd-bundle/source/index.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 28,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    },
+    "ignore": true
+  },
+  {
+    "__docId__": 55,
+    "kind": "variable",
+    "name": "bundle_file",
+    "memberof": "source/index.js",
+    "static": true,
+    "longname": "source/index.js~bundle_file",
+    "access": "public",
+    "export": false,
+    "importPath": "amd-bundle/source/index.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 36,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    },
+    "ignore": true
+  },
+  {
+    "__docId__": 56,
+    "kind": "variable",
+    "name": "code",
+    "memberof": "source/index.js",
+    "static": true,
+    "longname": "source/index.js~code",
+    "access": "public",
+    "export": false,
+    "importPath": "amd-bundle/source/index.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 46,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    },
+    "ignore": true
+  },
+  {
+    "__docId__": 57,
+    "kind": "file",
+    "name": "source/Module.js",
+    "content": "import {EventEmitter} from 'events';\n\nimport {dirname, join} from 'path';\n\nimport {readFileSync} from 'fs';\n\nimport * as Utility from './utility';\n\n\nconst AMD_CJS = ['require', 'exports', 'module'];\n\n/**\n * Key for module path & value for local variable\n *\n * @typedef {Object} DependencyMap\n */\n\n\n/**\n * CommonJS or AMD module\n */\nexport default  class Module extends EventEmitter {\n    /**\n     * @param {string}  name               - Path of this module\n     * @param {string}  [path='.']         - Root path of the package which this module belongs to\n     * @param {boolean} [includeAll=false] - Treat NPM modules as CommonJS modules\n     * @param {Map}     [nameMap]          - Map to replace some dependencies to others\n     */\n    constructor(name,  path = '.',  includeAll = false,  nameMap) {\n        /**\n         * Path of this module\n         *\n         * @type {string}\n         */\n        super().name = name;\n\n        /**\n         * Directory path of this module\n         *\n         * @type {string}\n         */\n        this.base = dirname( name ).replace(/\\\\/g, '/');\n\n        /**\n         * Root path of the package which this module belongs to\n         *\n         * @type {string}\n         */\n        this.path = path;\n\n        /**\n         * @type     {Object}\n         * @property {DependencyMap} compile - Compile-time dependency from AMD\n         * @property {DependencyMap} runtime - Runtime dependency from CommonJS\n         * @property {DependencyMap} outside - Outside dependency from NPM\n         */\n        this.dependency = {\n            compile:  { },\n            runtime:  { },\n            outside:  includeAll ? null : { }\n        };\n\n        /**\n         * Key for original name of a module & value for module name of the replacement\n         *\n         * @type {Object}\n         */\n        this.nameMap = nameMap  ||  new Map();\n\n        /**\n         * Count of direct references to this module\n         *\n         * @type {number}\n         */\n        this.referCount = 0;\n\n        /**\n         * Depth of this module on the dependency tree\n         *\n         * @type {number}\n         */\n        this.depth = 0;\n    }\n\n    /**\n     * @protected\n     *\n     * @param {string} name - Name of a module\n     *\n     * @return {string}\n     */\n    static identifierOf(name) {  return  name.replace(/\\W+/g, '_');  }\n\n    /**\n     * Identifier of this module in JS code\n     *\n     * @type {string}\n     */\n    get identifier() {  return  Module.identifierOf( this.name );  }\n\n    /**\n     * Paths of all the dependency needed to be bundled\n     *\n     * @type {string[]}\n     */\n    get dependencyPath() {\n\n        return  Object.keys( this.dependency.compile ).concat(\n            Object.keys( this.dependency.runtime )\n        );\n    }\n\n    /**\n     * @protected\n     *\n     * @param {number} depth - New depth of this module\n     *\n     * @return {Module} This module\n     */\n    countUp(depth) {\n\n        this.referCount++;  this.depth = Math.max(this.depth, depth);\n\n        return this;\n    }\n\n    /**\n     * @protected\n     *\n     * @return {?string} Entry file path of this module in `./node_modules/`\n     */\n    searchNPM() {\n\n        for (let method  of  ['getNPMFile', 'getNPMPackage', 'getNPMIndex']) {\n\n            let path;\n\n            if (path = Utility[method]( this.name ))  return path;\n        }\n    }\n\n    /**\n     * @protected\n     *\n     * @return {string} Original source code of this module\n     */\n    load() {\n\n        this.source = readFileSync(\n            ((! this.dependency.outside)  &&  /^\\w/.test( this.name ))  ?\n                this.searchNPM()  :  join(this.path, `${this.name}.js`)\n        );\n\n        return  this.source = (this.source + '').replace(/\\r\\n/g, '\\n');\n    }\n\n    /**\n     * @param {string} module - Module name from source code\n     *\n     * @emits {ReplaceEvent}\n     *\n     * @return {?string} New module name if `module` is matched in the name map\n     */\n    mapName(module) {\n\n        for (let [oldName, newName]  of  this.nameMap) {\n\n            let match = (oldName instanceof RegExp)  &&  oldName.exec( module );\n\n            match = (match || [ ]).filter( Boolean );\n\n            if (match[0]  ||  (oldName === module)) {\n\n                this.emit('replace', module, newName);    return newName;\n            }\n        }\n    }\n\n    /**\n     * Add a depended module of this module\n     *\n     * @protected\n     *\n     * @param {string} type      - `compile` for AMD & `runtime` for CJS\n     * @param {string} name      - Name of a module\n     * @param {string} [varName] - Variable name of a module in another module\n     */\n    addChild(type, name, varName) {\n\n        if ((type === 'compile')  &&  AMD_CJS.includes( name ))  return;\n\n        name = /^\\w/.test( name )  ?  name  :  (\n            './'  +  join(this.base, name).replace(/\\\\/g, '/')\n        );\n\n        const newName = this.mapName( name );  name = newName || name;\n\n        if (this.dependency.outside  &&  (name[0] !== '.'))  type = 'outside';\n\n        this.dependency[ type ][ name ] = varName  ||  Module.identifierOf( name );\n\n        return newName;\n    }\n\n    /**\n     * @protected\n     *\n     * @return {DependencyMap} Compile-time dependency\n     */\n    parseAMD() {\n\n        this.source = this.source.replace(\n            /define\\((?:\\s*\\[([\\s\\S]*?)\\]\\s*,)?\\s*function\\s*\\(([\\s\\S]*?)\\)\\s*\\{([\\s\\S]+)\\}\\s*\\);?/,\n            (_, modName, varName, body) => {\n\n                var index = 0;  varName = varName.trim().split( /\\s*,\\s*/ );\n\n                (modName || '').replace(\n                    /(?:'|\")(.+?)(?:'|\")/g,\n                    (_, name)  =>  {\n\n                        this.addChild('compile', name, varName[index]),  index++;\n                    }\n                );\n\n                return  body.replace(/^\\n([\\s\\S]+)\\n$/, '$1');\n            }\n        );\n\n        return this.dependency.compile;\n    }\n\n    /**\n     * @protected\n     *\n     * @return {DependencyMap} Runtime dependency\n     */\n    parseCJS() {\n\n        this.source = this.source.replace(\n            /((?:var|let|const)\\s+[\\s\\S]+?=\\s*)?require\\(\\s*(?:'|\")(.+?)(?:'|\")\\s*\\)/mg,\n            (_, assign, modName)  =>\n                `${assign || ''}require('${\n                    this.addChild('runtime', modName)  ||  modName\n                }')`\n        );\n\n        return this.dependency.runtime;\n    }\n\n    /**\n     * @return {string} Factory code of this parsed module\n     */\n    parse() {\n\n        this.load();\n\n        this.parseAMD();\n\n        this.parseCJS();\n\n        return  this.source = `function ${this.identifier}(${\n\n            Object.values( this.dependency.compile ).concat( AMD_CJS ).join(', ')\n        }) {${\n            this.source\n        }}`;\n    }\n\n    /**\n     * @return {string} Factory code of this parsed module\n     */\n    toString() {\n\n        return  ('source' in this)  ?  (this.source + '')  :  '';\n    }\n}\n",
+    "static": true,
+    "longname": "D:/TechQuery/AMD_bundle.js/source/Module.js",
+    "access": "public",
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 58,
+    "kind": "variable",
+    "name": "AMD_CJS",
+    "memberof": "source/Module.js",
+    "static": true,
+    "longname": "source/Module.js~AMD_CJS",
+    "access": "public",
+    "export": false,
+    "importPath": "amd-bundle/source/Module.js",
     "importStyle": null,
     "description": null,
     "lineNumber": 10,
@@ -608,12 +745,12 @@
     "ignore": true
   },
   {
-    "__docId__": 52,
+    "__docId__": 59,
     "kind": "typedef",
     "name": "DependencyMap",
-    "memberof": "libs/Module.js",
+    "memberof": "source/Module.js",
     "static": true,
-    "longname": "libs/Module.js~DependencyMap",
+    "longname": "source/Module.js~DependencyMap",
     "access": "public",
     "description": "Key for module path & value for local variable",
     "type": {
@@ -625,15 +762,15 @@
     }
   },
   {
-    "__docId__": 53,
+    "__docId__": 60,
     "kind": "class",
     "name": "Module",
-    "memberof": "libs/Module.js",
+    "memberof": "source/Module.js",
     "static": true,
-    "longname": "libs/Module.js~Module",
+    "longname": "source/Module.js~Module",
     "access": "public",
     "export": true,
-    "importPath": "amd-bundle/libs/Module.js",
+    "importPath": "amd-bundle/source/Module.js",
     "importStyle": "Module",
     "description": "CommonJS or AMD module",
     "lineNumber": 22,
@@ -643,14 +780,14 @@
     ]
   },
   {
-    "__docId__": 54,
+    "__docId__": 61,
     "kind": "constructor",
     "name": "constructor",
-    "memberof": "libs/Module.js~Module",
+    "memberof": "source/Module.js~Module",
     "generator": false,
     "async": false,
     "static": false,
-    "longname": "libs/Module.js~Module#constructor",
+    "longname": "source/Module.js~Module#constructor",
     "access": "public",
     "description": "",
     "lineNumber": 29,
@@ -702,12 +839,12 @@
     ]
   },
   {
-    "__docId__": 55,
+    "__docId__": 62,
     "kind": "member",
     "name": "base",
-    "memberof": "libs/Module.js~Module",
+    "memberof": "source/Module.js~Module",
     "static": false,
-    "longname": "libs/Module.js~Module#base",
+    "longname": "source/Module.js~Module#base",
     "access": "public",
     "description": "Directory path of this module",
     "lineNumber": 42,
@@ -721,12 +858,12 @@
     }
   },
   {
-    "__docId__": 56,
+    "__docId__": 63,
     "kind": "member",
     "name": "path",
-    "memberof": "libs/Module.js~Module",
+    "memberof": "source/Module.js~Module",
     "static": false,
-    "longname": "libs/Module.js~Module#path",
+    "longname": "source/Module.js~Module#path",
     "access": "public",
     "description": "Root path of the package which this module belongs to",
     "lineNumber": 49,
@@ -740,12 +877,12 @@
     }
   },
   {
-    "__docId__": 57,
+    "__docId__": 64,
     "kind": "member",
     "name": "dependency",
-    "memberof": "libs/Module.js~Module",
+    "memberof": "source/Module.js~Module",
     "static": false,
-    "longname": "libs/Module.js~Module#dependency",
+    "longname": "source/Module.js~Module#dependency",
     "access": "public",
     "description": "",
     "lineNumber": 57,
@@ -791,12 +928,12 @@
     }
   },
   {
-    "__docId__": 58,
+    "__docId__": 65,
     "kind": "member",
     "name": "nameMap",
-    "memberof": "libs/Module.js~Module",
+    "memberof": "source/Module.js~Module",
     "static": false,
-    "longname": "libs/Module.js~Module#nameMap",
+    "longname": "source/Module.js~Module#nameMap",
     "access": "public",
     "description": "Key for original name of a module & value for module name of the replacement",
     "lineNumber": 68,
@@ -810,12 +947,12 @@
     }
   },
   {
-    "__docId__": 59,
+    "__docId__": 66,
     "kind": "member",
     "name": "referCount",
-    "memberof": "libs/Module.js~Module",
+    "memberof": "source/Module.js~Module",
     "static": false,
-    "longname": "libs/Module.js~Module#referCount",
+    "longname": "source/Module.js~Module#referCount",
     "access": "public",
     "description": "Count of direct references to this module",
     "lineNumber": 75,
@@ -829,12 +966,12 @@
     }
   },
   {
-    "__docId__": 60,
+    "__docId__": 67,
     "kind": "member",
     "name": "depth",
-    "memberof": "libs/Module.js~Module",
+    "memberof": "source/Module.js~Module",
     "static": false,
-    "longname": "libs/Module.js~Module#depth",
+    "longname": "source/Module.js~Module#depth",
     "access": "public",
     "description": "Depth of this module on the dependency tree",
     "lineNumber": 82,
@@ -848,14 +985,14 @@
     }
   },
   {
-    "__docId__": 61,
+    "__docId__": 68,
     "kind": "method",
     "name": "identifierOf",
-    "memberof": "libs/Module.js~Module",
+    "memberof": "source/Module.js~Module",
     "generator": false,
     "async": false,
     "static": true,
-    "longname": "libs/Module.js~Module.identifierOf",
+    "longname": "source/Module.js~Module.identifierOf",
     "access": "protected",
     "description": "",
     "lineNumber": 92,
@@ -881,14 +1018,14 @@
     }
   },
   {
-    "__docId__": 62,
+    "__docId__": 69,
     "kind": "get",
     "name": "identifier",
-    "memberof": "libs/Module.js~Module",
+    "memberof": "source/Module.js~Module",
     "generator": false,
     "async": false,
     "static": false,
-    "longname": "libs/Module.js~Module#identifier",
+    "longname": "source/Module.js~Module#identifier",
     "access": "public",
     "description": "Identifier of this module in JS code",
     "lineNumber": 99,
@@ -902,14 +1039,14 @@
     }
   },
   {
-    "__docId__": 63,
+    "__docId__": 70,
     "kind": "get",
     "name": "dependencyPath",
-    "memberof": "libs/Module.js~Module",
+    "memberof": "source/Module.js~Module",
     "generator": false,
     "async": false,
     "static": false,
-    "longname": "libs/Module.js~Module#dependencyPath",
+    "longname": "source/Module.js~Module#dependencyPath",
     "access": "public",
     "description": "Paths of all the dependency needed to be bundled",
     "lineNumber": 106,
@@ -923,14 +1060,14 @@
     }
   },
   {
-    "__docId__": 64,
+    "__docId__": 71,
     "kind": "method",
     "name": "countUp",
-    "memberof": "libs/Module.js~Module",
+    "memberof": "source/Module.js~Module",
     "generator": false,
     "async": false,
     "static": false,
-    "longname": "libs/Module.js~Module#countUp",
+    "longname": "source/Module.js~Module#countUp",
     "access": "protected",
     "description": "",
     "lineNumber": 120,
@@ -956,14 +1093,14 @@
     }
   },
   {
-    "__docId__": 66,
+    "__docId__": 73,
     "kind": "method",
     "name": "searchNPM",
-    "memberof": "libs/Module.js~Module",
+    "memberof": "source/Module.js~Module",
     "generator": false,
     "async": false,
     "static": false,
-    "longname": "libs/Module.js~Module#searchNPM",
+    "longname": "source/Module.js~Module#searchNPM",
     "access": "protected",
     "description": "",
     "lineNumber": 132,
@@ -978,14 +1115,14 @@
     "params": []
   },
   {
-    "__docId__": 67,
+    "__docId__": 74,
     "kind": "method",
     "name": "load",
-    "memberof": "libs/Module.js~Module",
+    "memberof": "source/Module.js~Module",
     "generator": false,
     "async": false,
     "static": false,
-    "longname": "libs/Module.js~Module#load",
+    "longname": "source/Module.js~Module#load",
     "access": "protected",
     "description": "",
     "lineNumber": 147,
@@ -1000,12 +1137,12 @@
     "params": []
   },
   {
-    "__docId__": 68,
+    "__docId__": 75,
     "kind": "member",
     "name": "source",
-    "memberof": "libs/Module.js~Module",
+    "memberof": "source/Module.js~Module",
     "static": false,
-    "longname": "libs/Module.js~Module#source",
+    "longname": "source/Module.js~Module#source",
     "access": "public",
     "description": null,
     "lineNumber": 149,
@@ -1017,14 +1154,14 @@
     }
   },
   {
-    "__docId__": 69,
+    "__docId__": 76,
     "kind": "method",
     "name": "mapName",
-    "memberof": "libs/Module.js~Module",
+    "memberof": "source/Module.js~Module",
     "generator": false,
     "async": false,
     "static": false,
-    "longname": "libs/Module.js~Module#mapName",
+    "longname": "source/Module.js~Module#mapName",
     "access": "public",
     "description": "",
     "lineNumber": 164,
@@ -1058,14 +1195,14 @@
     ]
   },
   {
-    "__docId__": 70,
+    "__docId__": 77,
     "kind": "method",
     "name": "addChild",
-    "memberof": "libs/Module.js~Module",
+    "memberof": "source/Module.js~Module",
     "generator": false,
     "async": false,
     "static": false,
-    "longname": "libs/Module.js~Module#addChild",
+    "longname": "source/Module.js~Module#addChild",
     "access": "protected",
     "description": "Add a depended module of this module",
     "lineNumber": 188,
@@ -1108,14 +1245,14 @@
     }
   },
   {
-    "__docId__": 71,
+    "__docId__": 78,
     "kind": "method",
     "name": "parseAMD",
-    "memberof": "libs/Module.js~Module",
+    "memberof": "source/Module.js~Module",
     "generator": false,
     "async": false,
     "static": false,
-    "longname": "libs/Module.js~Module#parseAMD",
+    "longname": "source/Module.js~Module#parseAMD",
     "access": "protected",
     "description": "",
     "lineNumber": 210,
@@ -1130,14 +1267,14 @@
     "params": []
   },
   {
-    "__docId__": 73,
+    "__docId__": 80,
     "kind": "method",
     "name": "parseCJS",
-    "memberof": "libs/Module.js~Module",
+    "memberof": "source/Module.js~Module",
     "generator": false,
     "async": false,
     "static": false,
-    "longname": "libs/Module.js~Module#parseCJS",
+    "longname": "source/Module.js~Module#parseCJS",
     "access": "protected",
     "description": "",
     "lineNumber": 238,
@@ -1152,14 +1289,14 @@
     "params": []
   },
   {
-    "__docId__": 75,
+    "__docId__": 82,
     "kind": "method",
     "name": "parse",
-    "memberof": "libs/Module.js~Module",
+    "memberof": "source/Module.js~Module",
     "generator": false,
     "async": false,
     "static": false,
-    "longname": "libs/Module.js~Module#parse",
+    "longname": "source/Module.js~Module#parse",
     "access": "public",
     "description": "",
     "lineNumber": 254,
@@ -1174,14 +1311,14 @@
     "params": []
   },
   {
-    "__docId__": 76,
+    "__docId__": 83,
     "kind": "method",
     "name": "toString",
-    "memberof": "libs/Module.js~Module",
+    "memberof": "source/Module.js~Module",
     "generator": false,
     "async": false,
     "static": false,
-    "longname": "libs/Module.js~Module#toString",
+    "longname": "source/Module.js~Module#toString",
     "access": "public",
     "description": "",
     "lineNumber": 273,
@@ -1196,26 +1333,26 @@
     "params": []
   },
   {
-    "__docId__": 77,
+    "__docId__": 84,
     "kind": "file",
-    "name": "libs/Package.js",
+    "name": "source/Package.js",
     "content": "import {basename, dirname} from 'path';\n\nimport Module from './Module';\n\nimport {merge} from './utility';\n\nconst Array_iterator = [ ][Symbol.iterator], Array_proto = Array.prototype;\n\nvar depth = 0;\n\n\n/**\n * Package to be bundled\n */\nexport default  class Package {\n    /**\n     * @param {string}  path               - The entry file path of this package\n     *                                       (relative to `process.cwd()`)\n     * @param {boolean} [includeAll=false] - Include NPM modules in the final bundle\n     * @param {?Map}    [moduleMap]        - Map to replace some dependencies to others\n     * @param {boolean} [noLog=false]      - Disable log output\n     */\n    constructor(path,  includeAll = false,  moduleMap,  noLog = false) {\n        /**\n         * The entry file path of this package\n         *\n         * @type {string}\n         */\n        this.path = path;\n\n        /**\n         * The root path of this package (relative to `process.cwd()`)\n         *\n         * @type {string}\n         */\n        this.base = dirname( path );\n\n        /**\n         * Whether include NPM modules in the final bundle\n         *\n         * @type {boolean}\n         */\n        this.includeAll = includeAll;\n\n        /**\n         * Module count of this package\n         *\n         * @type {number}\n         */\n        this.length = 0;\n\n        /**\n         * Key for original name of a module & value for module name of the replacement\n         *\n         * @type {Object}\n         */\n        this.moduleMap = moduleMap;\n\n        /**\n         * Whether show logs during the bundle process\n         *\n         * @type {boolean}\n         */\n        this.showLog = (! noLog);\n    }\n\n    [Symbol.iterator]() {  return  Array_iterator.call( this );  }\n\n    /**\n     * @param {Module|string} module - Instance or name of a module\n     *\n     * @return {number}\n     */\n    indexOf(module) {\n\n        for (let i = 0;  this[i];  i++)\n            if (\n                (module instanceof Module)  ?\n                    (module === this[i])  :  (module === this[i].name)\n            )\n                return i;\n\n        return -1;\n    }\n\n    /**\n     * @protected\n     *\n     * @param {string} modName - Path of a module\n     *\n     * @return {?Module} New module\n     */\n    register(modName) {\n\n        const index = this.indexOf( modName );\n\n        if (index < 0) {\n\n            Array_proto.unshift.call(\n                this,\n                new Module(modName, this.base, this.includeAll, this.moduleMap)\n            );\n\n            return  this[0].countUp( depth );\n        } else\n            this[ index ].countUp( depth );\n    }\n\n    /**\n     * Entry module of this package\n     *\n     * @type {Module}\n     */\n    get entry() {  return  this[this.length - 1];  }\n\n    /**\n     * @protected\n     *\n     * @param {string} modName - Path of a module\n     */\n    parse(modName) {\n\n        depth++;\n\n        const module = this.register( modName );\n\n        if (! module)  return;\n\n        if ( this.showLog )\n            module.on('replace',  (oldMod, newMod)  =>\n                console.info(\n                    `→ Module \"${oldMod}\" will be replaced by \"${newMod}\"`\n                )\n            );\n\n        module.parse();\n\n        if ( this.showLog )\n            console.info(`√ Module \"${modName}\" has been bundled`);\n\n        for (let path of module.dependencyPath)  this.parse( path );\n\n        depth--;\n    }\n\n    /**\n     * @protected\n     *\n     * @return {Package} This package sorted by module dependency\n     */\n    sort() {\n\n        return  Array_proto.sort.call(this,  (A, B) => {\n\n            const A_D = A.dependencyPath, B_D = B.dependencyPath;\n\n            if (B_D.includes( A.name ))  return -1;\n\n            if (A_D.includes( B.name ))  return 1;\n\n            return  (B.depth - A.depth)  ||\n                (A_D.length - B_D.length)  ||  (B.referCount - A.referCount);\n        });\n    }\n\n    /**\n     * Outside dependencies of this package\n     *\n     * @type {DependencyMap}\n     */\n    get outDependency() {\n\n        return  this.includeAll  ?  [ ]  :  Object.assign(\n            ... Array.from(this,  module => module.dependency.outside)\n        );\n    }\n\n    /**\n     * @protected\n     *\n     * @param {string}                                                 name    - Module name of bundled package\n     * @param {function(modName: string[], varName: string[]): string} bundler\n     *\n     * @return {string} Bundled source with UMD wrapper\n     */\n    wrap(name, bundler) {\n\n        const outside = this.outDependency;\n\n        const modName = Object.keys( outside ), varName = Object.values( outside );\n\n        const dependency = modName[0]  ?  `${JSON.stringify( modName )}, `  :  '';\n\n        return `\n//\n//  Generated by https://www.npmjs.com/package/amd-bundle\n//\n(function (factory) {\n\n    if ((typeof define === 'function')  &&  define.amd)\n        define('${name}', ${dependency}factory);\n    else if (typeof module === 'object')\n        return  module.exports = factory(${modName.map(name => `require('${name}')`)});\n    else\n        return  this.${name} = factory(${modName.map(name => `this.${name}`)});\n\n})(${bundler(modName, varName)});`.trim();\n    }\n\n    /**\n     * @param {string} [name] - Module name of bundled package\n     *                          (Default: The entry module's name)\n     * @return {string} Source code of this package\n     */\n    bundle(name) {\n\n        const entry = basename( this.path );\n\n        this.parse(`./${entry}`);\n\n        return this.sort().wrap(\n            name || entry,\n            (modName, varName) => `function (${varName}) {\n\n    var module = {\n        ${Array.from(\n        this,  item => `'${item.name}':  {exports: { }}`\n    ).concat(\n        modName.map((name, index)  =>  `'${name}':  {exports: ${varName[index]}}`)\n    ).join(',\\n        ')}\n    };\n\n${merge}\n\n    function _require_(base, path) {\n\n        return module[\n            /^\\\\w/.test( path )  ?  path  :  ('./' + merge(base, path))\n        ].exports;\n    }\n\n    var require = _require_.bind(null, './');\n\n${Array.from(this,  item => item.source).join('\\n\\n')}\n\n    ${Array.from(this,  item => `module['${item.name}'].exports = ${item.identifier}(${\n\n        Object.keys( item.dependency.compile ).map(\n            child => `require('${child}')`\n        ).concat(\n            `_require_.bind(null, '${item.base}')`,\n            `require('${item.name}')`,\n            `module['${item.name}']`\n        ).join(', ')\n\n    }) || require('${item.name}');`).join('\\n\\n    ')}\n\n    return require('${this.entry.name}');\n}`);\n    }\n}\n",
     "static": true,
-    "longname": "D:/TechQuery/AMD_bundle.js/libs/Package.js",
+    "longname": "D:/TechQuery/AMD_bundle.js/source/Package.js",
     "access": "public",
     "description": null,
     "lineNumber": 1
   },
   {
-    "__docId__": 78,
+    "__docId__": 85,
     "kind": "variable",
     "name": "Array_iterator",
-    "memberof": "libs/Package.js",
+    "memberof": "source/Package.js",
     "static": true,
-    "longname": "libs/Package.js~Array_iterator",
+    "longname": "source/Package.js~Array_iterator",
     "access": "public",
     "export": false,
-    "importPath": "amd-bundle",
+    "importPath": "amd-bundle/source/Package.js",
     "importStyle": null,
     "description": null,
     "lineNumber": 7,
@@ -1228,15 +1365,15 @@
     "ignore": true
   },
   {
-    "__docId__": 79,
+    "__docId__": 86,
     "kind": "variable",
     "name": "depth",
-    "memberof": "libs/Package.js",
+    "memberof": "source/Package.js",
     "static": true,
-    "longname": "libs/Package.js~depth",
+    "longname": "source/Package.js~depth",
     "access": "public",
     "export": false,
-    "importPath": "amd-bundle",
+    "importPath": "amd-bundle/source/Package.js",
     "importStyle": null,
     "description": null,
     "lineNumber": 9,
@@ -1249,29 +1386,29 @@
     "ignore": true
   },
   {
-    "__docId__": 80,
+    "__docId__": 87,
     "kind": "class",
     "name": "Package",
-    "memberof": "libs/Package.js",
+    "memberof": "source/Package.js",
     "static": true,
-    "longname": "libs/Package.js~Package",
+    "longname": "source/Package.js~Package",
     "access": "public",
     "export": true,
-    "importPath": "amd-bundle",
+    "importPath": "amd-bundle/source/Package.js",
     "importStyle": "Package",
     "description": "Package to be bundled",
     "lineNumber": 15,
     "interface": false
   },
   {
-    "__docId__": 81,
+    "__docId__": 88,
     "kind": "constructor",
     "name": "constructor",
-    "memberof": "libs/Package.js~Package",
+    "memberof": "source/Package.js~Package",
     "generator": false,
     "async": false,
     "static": false,
-    "longname": "libs/Package.js~Package#constructor",
+    "longname": "source/Package.js~Package#constructor",
     "access": "public",
     "description": "",
     "lineNumber": 23,
@@ -1323,12 +1460,12 @@
     ]
   },
   {
-    "__docId__": 82,
+    "__docId__": 89,
     "kind": "member",
     "name": "path",
-    "memberof": "libs/Package.js~Package",
+    "memberof": "source/Package.js~Package",
     "static": false,
-    "longname": "libs/Package.js~Package#path",
+    "longname": "source/Package.js~Package#path",
     "access": "public",
     "description": "The entry file path of this package",
     "lineNumber": 29,
@@ -1342,12 +1479,12 @@
     }
   },
   {
-    "__docId__": 83,
+    "__docId__": 90,
     "kind": "member",
     "name": "base",
-    "memberof": "libs/Package.js~Package",
+    "memberof": "source/Package.js~Package",
     "static": false,
-    "longname": "libs/Package.js~Package#base",
+    "longname": "source/Package.js~Package#base",
     "access": "public",
     "description": "The root path of this package (relative to `process.cwd()`)",
     "lineNumber": 36,
@@ -1361,12 +1498,12 @@
     }
   },
   {
-    "__docId__": 84,
+    "__docId__": 91,
     "kind": "member",
     "name": "includeAll",
-    "memberof": "libs/Package.js~Package",
+    "memberof": "source/Package.js~Package",
     "static": false,
-    "longname": "libs/Package.js~Package#includeAll",
+    "longname": "source/Package.js~Package#includeAll",
     "access": "public",
     "description": "Whether include NPM modules in the final bundle",
     "lineNumber": 43,
@@ -1380,12 +1517,12 @@
     }
   },
   {
-    "__docId__": 85,
+    "__docId__": 92,
     "kind": "member",
     "name": "length",
-    "memberof": "libs/Package.js~Package",
+    "memberof": "source/Package.js~Package",
     "static": false,
-    "longname": "libs/Package.js~Package#length",
+    "longname": "source/Package.js~Package#length",
     "access": "public",
     "description": "Module count of this package",
     "lineNumber": 50,
@@ -1399,12 +1536,12 @@
     }
   },
   {
-    "__docId__": 86,
+    "__docId__": 93,
     "kind": "member",
     "name": "moduleMap",
-    "memberof": "libs/Package.js~Package",
+    "memberof": "source/Package.js~Package",
     "static": false,
-    "longname": "libs/Package.js~Package#moduleMap",
+    "longname": "source/Package.js~Package#moduleMap",
     "access": "public",
     "description": "Key for original name of a module & value for module name of the replacement",
     "lineNumber": 57,
@@ -1418,12 +1555,12 @@
     }
   },
   {
-    "__docId__": 87,
+    "__docId__": 94,
     "kind": "member",
     "name": "showLog",
-    "memberof": "libs/Package.js~Package",
+    "memberof": "source/Package.js~Package",
     "static": false,
-    "longname": "libs/Package.js~Package#showLog",
+    "longname": "source/Package.js~Package#showLog",
     "access": "public",
     "description": "Whether show logs during the bundle process",
     "lineNumber": 64,
@@ -1437,14 +1574,14 @@
     }
   },
   {
-    "__docId__": 88,
+    "__docId__": 95,
     "kind": "method",
     "name": "[Symbol.iterator]",
-    "memberof": "libs/Package.js~Package",
+    "memberof": "source/Package.js~Package",
     "generator": false,
     "async": false,
     "static": false,
-    "longname": "libs/Package.js~Package#[Symbol.iterator]",
+    "longname": "source/Package.js~Package#[Symbol.iterator]",
     "access": "public",
     "description": null,
     "lineNumber": 67,
@@ -1457,14 +1594,14 @@
     }
   },
   {
-    "__docId__": 89,
+    "__docId__": 96,
     "kind": "method",
     "name": "indexOf",
-    "memberof": "libs/Package.js~Package",
+    "memberof": "source/Package.js~Package",
     "generator": false,
     "async": false,
     "static": false,
-    "longname": "libs/Package.js~Package#indexOf",
+    "longname": "source/Package.js~Package#indexOf",
     "access": "public",
     "description": "",
     "lineNumber": 74,
@@ -1491,14 +1628,14 @@
     }
   },
   {
-    "__docId__": 90,
+    "__docId__": 97,
     "kind": "method",
     "name": "register",
-    "memberof": "libs/Package.js~Package",
+    "memberof": "source/Package.js~Package",
     "generator": false,
     "async": false,
     "static": false,
-    "longname": "libs/Package.js~Package#register",
+    "longname": "source/Package.js~Package#register",
     "access": "protected",
     "description": "",
     "lineNumber": 93,
@@ -1524,14 +1661,14 @@
     }
   },
   {
-    "__docId__": 91,
+    "__docId__": 98,
     "kind": "get",
     "name": "entry",
-    "memberof": "libs/Package.js~Package",
+    "memberof": "source/Package.js~Package",
     "generator": false,
     "async": false,
     "static": false,
-    "longname": "libs/Package.js~Package#entry",
+    "longname": "source/Package.js~Package#entry",
     "access": "public",
     "description": "Entry module of this package",
     "lineNumber": 114,
@@ -1545,14 +1682,14 @@
     }
   },
   {
-    "__docId__": 92,
+    "__docId__": 99,
     "kind": "method",
     "name": "parse",
-    "memberof": "libs/Package.js~Package",
+    "memberof": "source/Package.js~Package",
     "generator": false,
     "async": false,
     "static": false,
-    "longname": "libs/Package.js~Package#parse",
+    "longname": "source/Package.js~Package#parse",
     "access": "protected",
     "description": "",
     "lineNumber": 121,
@@ -1571,14 +1708,14 @@
     "return": null
   },
   {
-    "__docId__": 93,
+    "__docId__": 100,
     "kind": "method",
     "name": "sort",
-    "memberof": "libs/Package.js~Package",
+    "memberof": "source/Package.js~Package",
     "generator": false,
     "async": false,
     "static": false,
-    "longname": "libs/Package.js~Package#sort",
+    "longname": "source/Package.js~Package#sort",
     "access": "protected",
     "description": "",
     "lineNumber": 151,
@@ -1593,14 +1730,14 @@
     "params": []
   },
   {
-    "__docId__": 94,
+    "__docId__": 101,
     "kind": "get",
     "name": "outDependency",
-    "memberof": "libs/Package.js~Package",
+    "memberof": "source/Package.js~Package",
     "generator": false,
     "async": false,
     "static": false,
-    "longname": "libs/Package.js~Package#outDependency",
+    "longname": "source/Package.js~Package#outDependency",
     "access": "public",
     "description": "Outside dependencies of this package",
     "lineNumber": 171,
@@ -1614,14 +1751,14 @@
     }
   },
   {
-    "__docId__": 95,
+    "__docId__": 102,
     "kind": "method",
     "name": "wrap",
-    "memberof": "libs/Package.js~Package",
+    "memberof": "source/Package.js~Package",
     "generator": false,
     "async": false,
     "static": false,
-    "longname": "libs/Package.js~Package#wrap",
+    "longname": "source/Package.js~Package#wrap",
     "access": "protected",
     "description": "",
     "lineNumber": 186,
@@ -1657,14 +1794,14 @@
     }
   },
   {
-    "__docId__": 96,
+    "__docId__": 103,
     "kind": "method",
     "name": "bundle",
-    "memberof": "libs/Package.js~Package",
+    "memberof": "source/Package.js~Package",
     "generator": false,
     "async": false,
     "static": false,
-    "longname": "libs/Package.js~Package#bundle",
+    "longname": "source/Package.js~Package#bundle",
     "access": "public",
     "description": "",
     "lineNumber": 215,
@@ -1690,28 +1827,28 @@
     }
   },
   {
-    "__docId__": 97,
+    "__docId__": 104,
     "kind": "file",
-    "name": "libs/utility.js",
+    "name": "source/utility.js",
     "content": "import {join} from 'path';\n\nimport {existsSync, readFileSync, statSync} from 'fs';\n\n\n/**\n * @param {string} raw - RegExp literal string\n *\n * @return {?RegExp}\n */\nexport function toRegExp(raw) {\n\n    const match = raw.match( /^\\/(.+)\\/([a-z]+)?$/ );\n\n    if ( match )  return  new RegExp(match[1], match[2]);\n}\n\n\n/**\n * This will be used in the bundled source\n *\n * @param {string} base - Root path\n * @param {string} path - Path relative to `base`\n *\n * @return {string} Joined & normalized path\n */\nexport function merge(base, path) {\n\n    return  (base + '/' + path)\n        .replace(/\\/\\//g, '/')\n        .replace(/[^/.]+\\/\\.\\.\\//g, '')\n        .replace(/\\.\\//g,  function (match, index, input) {\n\n            return  (input[index - 1]  ===  '.')  ?  match  :  '';\n        });\n}\n\n\nfunction inNPM(path) {\n\n    if (existsSync(path = join('node_modules', path)))\n        return  path.replace(/\\\\/g, '/');\n}\n\n\nfunction findNPMFile(list) {\n\n    for (let path of list)  if (path = inNPM( path ))  return path;\n}\n\n\n/**\n * @param {string} name - Name of a module\n *\n * @return {?string} Valid `name` in `./node_modules/` is a JS or JSON file\n */\nexport function getNPMFile(name) {\n\n    return  findNPMFile([name, `${name}.js`, `${name}.json`]);\n}\n\n\n/**\n * @param {string} name - Name of a module\n *\n * @return {?string} Valid `name` in `./node_modules/` is `index.js` or `index.json`\n */\nexport function getNPMIndex(name) {\n\n    return  findNPMFile([`${name}/index.js`, `${name}/index.json`]);\n}\n\n\n/**\n * @param {string} name - Name of a module\n *\n * @return {?string} Entry file path of an existing `package.json`\n */\nexport function getNPMPackage(name) {\n\n    var path = inNPM(`${name}/package.json`);\n\n    if (! path)  return;\n\n    const config = JSON.parse( readFileSync( path ) );\n\n    for (let key  of  ['main', 'browser'])\n        if (path = inNPM( join(name, config[key]) ))\n            return  statSync( path ).isFile()  ?  path  :  getNPMIndex( path );\n}\n",
     "static": true,
-    "longname": "D:/TechQuery/AMD_bundle.js/libs/utility.js",
+    "longname": "D:/TechQuery/AMD_bundle.js/source/utility.js",
     "access": "public",
     "description": null,
     "lineNumber": 1
   },
   {
-    "__docId__": 98,
+    "__docId__": 105,
     "kind": "function",
     "name": "toRegExp",
-    "memberof": "libs/utility.js",
+    "memberof": "source/utility.js",
     "generator": false,
     "async": false,
     "static": true,
-    "longname": "libs/utility.js~toRegExp",
+    "longname": "source/utility.js~toRegExp",
     "access": "public",
     "export": true,
-    "importPath": "amd-bundle/libs/utility.js",
+    "importPath": "amd-bundle/source/utility.js",
     "importStyle": "{toRegExp}",
     "description": "",
     "lineNumber": 11,
@@ -1737,17 +1874,17 @@
     }
   },
   {
-    "__docId__": 99,
+    "__docId__": 106,
     "kind": "function",
     "name": "merge",
-    "memberof": "libs/utility.js",
+    "memberof": "source/utility.js",
     "generator": false,
     "async": false,
     "static": true,
-    "longname": "libs/utility.js~merge",
+    "longname": "source/utility.js~merge",
     "access": "public",
     "export": true,
-    "importPath": "amd-bundle/libs/utility.js",
+    "importPath": "amd-bundle/source/utility.js",
     "importStyle": "{merge}",
     "description": "This will be used in the bundled source",
     "lineNumber": 27,
@@ -1783,17 +1920,17 @@
     }
   },
   {
-    "__docId__": 100,
+    "__docId__": 107,
     "kind": "function",
     "name": "inNPM",
-    "memberof": "libs/utility.js",
+    "memberof": "source/utility.js",
     "generator": false,
     "async": false,
     "static": true,
-    "longname": "libs/utility.js~inNPM",
+    "longname": "source/utility.js~inNPM",
     "access": "public",
     "export": false,
-    "importPath": "amd-bundle/libs/utility.js",
+    "importPath": "amd-bundle/source/utility.js",
     "importStyle": null,
     "description": null,
     "lineNumber": 39,
@@ -1814,17 +1951,17 @@
     "ignore": true
   },
   {
-    "__docId__": 101,
+    "__docId__": 108,
     "kind": "function",
     "name": "findNPMFile",
-    "memberof": "libs/utility.js",
+    "memberof": "source/utility.js",
     "generator": false,
     "async": false,
     "static": true,
-    "longname": "libs/utility.js~findNPMFile",
+    "longname": "source/utility.js~findNPMFile",
     "access": "public",
     "export": false,
-    "importPath": "amd-bundle/libs/utility.js",
+    "importPath": "amd-bundle/source/utility.js",
     "importStyle": null,
     "description": null,
     "lineNumber": 46,
@@ -1845,17 +1982,17 @@
     "ignore": true
   },
   {
-    "__docId__": 102,
+    "__docId__": 109,
     "kind": "function",
     "name": "getNPMFile",
-    "memberof": "libs/utility.js",
+    "memberof": "source/utility.js",
     "generator": false,
     "async": false,
     "static": true,
-    "longname": "libs/utility.js~getNPMFile",
+    "longname": "source/utility.js~getNPMFile",
     "access": "public",
     "export": true,
-    "importPath": "amd-bundle/libs/utility.js",
+    "importPath": "amd-bundle/source/utility.js",
     "importStyle": "{getNPMFile}",
     "description": "",
     "lineNumber": 57,
@@ -1881,17 +2018,17 @@
     }
   },
   {
-    "__docId__": 103,
+    "__docId__": 110,
     "kind": "function",
     "name": "getNPMIndex",
-    "memberof": "libs/utility.js",
+    "memberof": "source/utility.js",
     "generator": false,
     "async": false,
     "static": true,
-    "longname": "libs/utility.js~getNPMIndex",
+    "longname": "source/utility.js~getNPMIndex",
     "access": "public",
     "export": true,
-    "importPath": "amd-bundle/libs/utility.js",
+    "importPath": "amd-bundle/source/utility.js",
     "importStyle": "{getNPMIndex}",
     "description": "",
     "lineNumber": 68,
@@ -1917,17 +2054,17 @@
     }
   },
   {
-    "__docId__": 104,
+    "__docId__": 111,
     "kind": "function",
     "name": "getNPMPackage",
-    "memberof": "libs/utility.js",
+    "memberof": "source/utility.js",
     "generator": false,
     "async": false,
     "static": true,
-    "longname": "libs/utility.js~getNPMPackage",
+    "longname": "source/utility.js~getNPMPackage",
     "access": "public",
     "export": true,
-    "importPath": "amd-bundle/libs/utility.js",
+    "importPath": "amd-bundle/source/utility.js",
     "importStyle": "{getNPMPackage}",
     "description": "",
     "lineNumber": 79,
@@ -1954,7 +2091,7 @@
   },
   {
     "kind": "index",
-    "content": "# AMD bundle\r\n\r\n**A dual-use tool for bundling up [AMD](https://github.com/amdjs/amdjs-api/blob/master/AMD.md) & [CJS](http://wiki.commonjs.org/wiki/Modules) modules**,\r\nwhich is much easier to use than [`r.js`](https://github.com/requirejs/r.js) with [Almond](https://github.com/requirejs/almond) or [AMDclean](https://github.com/gfranko/amdclean).\r\n\r\n[![NPM Dependency](https://david-dm.org/TechQuery/AMD_bundle.js.svg)](https://david-dm.org/TechQuery/AMD_bundle.js)\r\n\r\n[![NPM](https://nodei.co/npm/amd-bundle.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/amd-bundle/)\r\n\r\n\r\n\r\n## Recommended Usage\r\n\r\n\r\n### Basic\r\n\r\n```Shell\r\ncd path/to/project/root\r\n\r\nnpm install amd-bundle --save-dev\r\n\r\namd-bundle -a \\\r\n    path/to/project/source/entry \\\r\n    path/to/project/bundle/file\r\n```\r\n\r\n`amd-bundle` will\r\n\r\n 1. start bundling from the entry point `path/to/project/source/entry.js`\r\n\r\n 2. write into `path/to/project/bundle/file.js` with only one `define('file', [ ])` and `global.file` definition, just like [UMD](https://github.com/umdjs/umd) style\r\n\r\n 3. treat `${process.cwd()}/node_modules/${module_full_name}` as a user's module to pack in\r\n\r\n\r\n### More options\r\n\r\n - Command-line: `amd-bundle --help`\r\n\r\n - JS Module: https://techquery.github.io/AMD_bundle.js/class/libs/Package.js~Package.html#instance-method-bundle\r\n\r\n\r\n### Advanced\r\n\r\nBuild **standalone release files** (Full source code, Minimized code & Source map) by executing a single command (`npm run build`).\r\n\r\n#### Multiple bundles from one source\r\n\r\n - Development dependency: [UglifyJS](http://lisperator.net/uglifyjs/)\r\n\r\n - **NPM-scripts** reference: [iQuery.js](https://github.com/TechQuery/iQuery.js/blob/master/package.json#L22)\r\n\r\n#### Bundle ECMAScript 6+ codes\r\n\r\n - Development dependency: [Babel](https://babeljs.io/)\r\n\r\n - **NPM-scripts** reference: [WebCell](https://github.com/EasyWebApp/WebCell/blob/master/package.json#L33)\r\n\r\n\r\n\r\n## Typical Cases\r\n\r\n 1. [iQuery.js](https://github.com/TechQuery/iQuery.js) (where the prototype of `amd-bundle` came from)\r\n\r\n 2. [WebCell](https://github.com/EasyWebApp/WebCell) (where `v1.0` rewritten out)\r\n\r\n 3. [EasyWebUI](https://github.com/TechQuery/EasyWebUI)\r\n",
+    "content": "# AMD bundle\n\n**A dual-use tool for bundling up [AMD](https://github.com/amdjs/amdjs-api/blob/master/AMD.md) & [CJS](http://wiki.commonjs.org/wiki/Modules) modules**,\nwhich is much easier to use than [`r.js`](https://github.com/requirejs/r.js) with [Almond](https://github.com/requirejs/almond) or [AMDclean](https://github.com/gfranko/amdclean).\n\n[![NPM Dependency](https://david-dm.org/TechQuery/AMD_bundle.js.svg)](https://david-dm.org/TechQuery/AMD_bundle.js)\n\n[![NPM](https://nodei.co/npm/amd-bundle.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/amd-bundle/)\n\n\n\n## Recommended Usage\n\n\n### Basic\n\n```Shell\ncd path/to/project/root\n\nnpm install amd-bundle --save-dev\n\namd-bundle -a \\\n    path/to/project/source/entry \\\n    path/to/project/bundle/file\n```\n\n`amd-bundle` will\n\n 1. start bundling from the entry point `path/to/project/source/entry.js`\n\n 2. write into `path/to/project/bundle/file.js` with only one `define('file', [ ])` and `global.file` definition, just like [UMD](https://github.com/umdjs/umd) style\n\n 3. treat `${process.cwd()}/node_modules/${module_full_name}` as a user's module to pack in\n\n\n### More options\n\n - Command-line: `amd-bundle --help`\n\n - JS Module: https://techquery.github.io/AMD_bundle.js/class/source/Package.js~Package.html#instance-method-bundle\n\n\n### Advanced\n\nBuild **standalone release files** (Full source code, Minimized code & Source map) by executing a single command (`npm run build`).\n\n#### Multiple bundles from one source\n\n - Development dependency: [UglifyJS](http://lisperator.net/uglifyjs/)\n\n - **NPM-scripts** reference: [iQuery.js](https://github.com/TechQuery/iQuery.js/blob/master/package.json#L22)\n\n#### Bundle ECMAScript 6+ codes\n\n - Development dependency: [Babel](https://babeljs.io/)\n\n - **NPM-scripts** reference: [WebCell](https://github.com/EasyWebApp/WebCell/blob/master/package.json#L33)\n\n\n\n## Typical Cases\n\n 1. [iQuery.js](https://github.com/TechQuery/iQuery.js) (where the prototype of `amd-bundle` came from)\n\n 2. [WebCell](https://github.com/EasyWebApp/WebCell) (where `v1.0` rewritten out)\n\n 3. [EasyWebUI](https://github.com/TechQuery/EasyWebUI)\n",
     "longname": "D:\\TechQuery\\AMD_bundle.js\\README.md",
     "name": "./README.md",
     "static": true,
@@ -1962,14 +2099,14 @@
   },
   {
     "kind": "packageJSON",
-    "content": "{\n  \"name\": \"amd-bundle\",\n  \"version\": \"1.1.0\",\n  \"description\": \"A dual-use tool for bundling up AMD modules, which is much easier to use than r.js with Almond or AMDclean\",\n  \"main\": \"libs/Package.js\",\n  \"bin\": \"index.js\",\n  \"engines\": {\n    \"node\": \"^6.5.0\"\n  },\n  \"scripts\": {\n    \"lint\": \"eslint index.js libs/ test/\",\n    \"install\": \"echo exports.test = 1;> node_modules/test.js\",\n    \"check\": \"mocha -r babel-register -r babel-polyfill -r should -c --inline-diffs\",\n    \"test\": \"npm run check -- --exit\",\n    \"debug\": \"npm run check -- --inspect-brk\",\n    \"build\": \"esdoc\",\n    \"start\": \"web-server docs/ -o\",\n    \"precommit\": \"npm run lint  &&  npm test\"\n  },\n  \"repository\": {\n    \"type\": \"git\",\n    \"url\": \"git+https://github.com/TechQuery/AMD_bundle.js.git\"\n  },\n  \"keywords\": [\n    \"javascript\",\n    \"amd-loader\",\n    \"bundle\",\n    \"require-js\",\n    \"command-line\"\n  ],\n  \"author\": \"shiy007@qq.com\",\n  \"license\": \"AGPL-3.0\",\n  \"bugs\": {\n    \"url\": \"https://github.com/TechQuery/AMD_bundle.js/issues\"\n  },\n  \"homepage\": \"https://techquery.github.io/AMD_bundle.js/\",\n  \"dependencies\": {\n    \"babel-env\": \"^2.4.1\",\n    \"babel-polyfill\": \"^6.26.0\",\n    \"babel-register\": \"^6.26.0\",\n    \"commander\": \"^2.11.0\",\n    \"fs-extra\": \"^6.0.1\"\n  },\n  \"devDependencies\": {\n    \"esdoc\": \"^1.1.0\",\n    \"esdoc-external-nodejs-plugin\": \"^1.0.0\",\n    \"esdoc-standard-plugin\": \"^1.0.0\",\n    \"eslint\": \"^4.19.1\",\n    \"husky\": \"^0.14.3\",\n    \"koapache\": \"^0.2.3\",\n    \"mocha\": \"^5.2.0\",\n    \"should\": \"^13.2.1\"\n  },\n  \"babel\": {\n    \"presets\": [\n      \"env\"\n    ]\n  }\n}\n",
+    "content": "{\n  \"name\": \"amd-bundle\",\n  \"version\": \"1.1.4\",\n  \"description\": \"A dual-use tool for bundling up AMD modules, which is much easier to use than r.js with Almond or AMDclean\",\n  \"main\": \"build/Package.js\",\n  \"bin\": \"build/index.js\",\n  \"engines\": {\n    \"node\": \"^6.5.0\"\n  },\n  \"scripts\": {\n    \"lint\": \"eslint index.js source/ test/\",\n    \"check\": \"mocha -r babel-register -r babel-polyfill -r should -c --inline-diffs\",\n    \"test\": \"npm run check -- --exit\",\n    \"debug\": \"npm run check -- --inspect-brk\",\n    \"install\": \"node install\",\n    \"prepublishOnly\": \"babel source/ --out-dir build/\",\n    \"build\": \"esdoc  &&  npm run prepublishOnly\",\n    \"start\": \"web-server docs/ -o\",\n    \"precommit\": \"npm run lint  &&  npm test\"\n  },\n  \"repository\": {\n    \"type\": \"git\",\n    \"url\": \"git+https://github.com/TechQuery/AMD_bundle.js.git\"\n  },\n  \"keywords\": [\n    \"javascript\",\n    \"amd-loader\",\n    \"bundle\",\n    \"require-js\",\n    \"command-line\"\n  ],\n  \"author\": \"shiy007@qq.com\",\n  \"license\": \"AGPL-3.0\",\n  \"bugs\": {\n    \"url\": \"https://github.com/TechQuery/AMD_bundle.js/issues\"\n  },\n  \"homepage\": \"https://techquery.github.io/AMD_bundle.js/\",\n  \"dependencies\": {\n    \"babel-polyfill\": \"^6.26.0\",\n    \"babel-runtime\": \"^6.26.0\",\n    \"commander\": \"^2.11.0\",\n    \"fs-extra\": \"^6.0.1\"\n  },\n  \"devDependencies\": {\n    \"babel-cli\": \"^6.26.0\",\n    \"babel-plugin-transform-runtime\": \"^6.23.0\",\n    \"babel-preset-env\": \"^1.7.0\",\n    \"babel-register\": \"^6.26.0\",\n    \"esdoc\": \"^1.1.0\",\n    \"esdoc-external-nodejs-plugin\": \"^1.0.0\",\n    \"esdoc-standard-plugin\": \"^1.0.0\",\n    \"eslint\": \"^4.19.1\",\n    \"husky\": \"^0.14.3\",\n    \"koapache\": \"^0.2.3\",\n    \"mocha\": \"^5.2.0\",\n    \"should\": \"^13.2.1\"\n  },\n  \"babel\": {\n    \"presets\": [\n      \"env\"\n    ],\n    \"plugins\": [\n      \"transform-runtime\"\n    ]\n  }\n}\n",
     "longname": "D:\\TechQuery\\AMD_bundle.js\\package.json",
     "name": "package.json",
     "static": true,
     "access": "public"
   },
   {
-    "__docId__": 105,
+    "__docId__": 112,
     "kind": "testFile",
     "name": "test/example/a.js",
     "content": "require('./libs/b');\n\nmodule.exports = 'This is A';\n",
@@ -1980,7 +2117,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 106,
+    "__docId__": 113,
     "kind": "testFile",
     "name": "test/example/c.js",
     "content": "require('./libs/b');\n\nmodule.exports = 'This is C';\n",
@@ -1991,7 +2128,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 107,
+    "__docId__": 114,
     "kind": "testFile",
     "name": "test/example/index.js",
     "content": "/* AMD module */\ndefine(['./a', 'require', 'exports', 'module'],  function (A, require) {\n\n    var C = require('./c');\n\n    return  {a: A, c: C, test: require('test')};\n});\n",
@@ -2002,7 +2139,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 108,
+    "__docId__": 115,
     "kind": "testFile",
     "name": "test/example/libs/b.js",
     "content": "require('../c');\n\nmodule.exports = 'This is B';\n",
@@ -2013,10 +2150,10 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 109,
+    "__docId__": 116,
     "kind": "testFile",
     "name": "test/index.js",
-    "content": "import {execSync} from 'child_process';\n\nimport {readFileSync, removeSync} from 'fs-extra';\n\n\nimport {toRegExp, merge, getNPMFile, getNPMIndex, getNPMPackage} from '../libs/utility';\n\nimport Module from '../libs/Module';\n\nimport Package from '../libs/Package';\n\nvar bundle_code;\n\n\ndescribe('Utility',  () => {\n    /**\n     * @test {toRegExp}\n     */\n    it('Create RegExp() from a literal string',  () => {\n\n        toRegExp('/polyfill|ext\\\\//ig').should.be.eql( /polyfill|ext\\//gi );\n\n        (toRegExp('test') === undefined).should.be.true();\n    });\n\n    /**\n     * @test {merge}\n     */\n    it('Merge module paths',  () => {\n\n        merge('./../test//../', './example').should.be.equal('../example');\n    });\n\n    /**\n     * @test {getNPMFile}\n     */\n    it('Get path of JS modules',  () => {\n\n        getNPMFile('test').should.be.equal('node_modules/test.js');\n    });\n\n    /**\n     * @test {getNPMIndex}\n     */\n    it('Get \"index.js\" path of a module',  () => {\n\n        getNPMIndex('koapache/source').should.be.equal(\n            'node_modules/koapache/source/index.js'\n        );\n    });\n\n    /**\n     * @test {getNPMPackage}\n     */\n    it('Get entry file path from \"package.json\" of a module',  () => {\n\n        getNPMPackage('koapache').should.be.equal(\n            'node_modules/koapache/source/index.js'\n        );\n    });\n});\n\n\n/**\n * @test {Module}\n */\ndescribe('Module parser',  () => {\n\n    var module;\n\n    before(()  =>  (module = new Module('./index', './test/example/')).load());\n\n    /**\n     * @test {Module#parseAMD}\n     */\n    it('Parse AMD',  () => {\n\n        module.parseAMD().should.be.eql( {'./a': 'A'} );\n\n        (module + '').should.be.equal(`/* AMD module */\n\n    var C = require('./c');\n\n    return  {a: A, c: C, test: require('test')};\n`);\n    });\n\n    /**\n     * @test {Module#parseCJS}\n     */\n    it('Parse CommonJS',  () => {\n\n        module.parseCJS().should.be.eql( {'./c': '_c'} );\n    });\n\n    /**\n     * @test {Module#parse}\n     */\n    it('Parse all',  () => module.parse().should.be.equal(`\n\nfunction _index(A, require, exports, module) {/* AMD module */\n\n    var C = require('./c');\n\n    return  {a: A, c: C, test: require('test')};\n}`.trim())\n    );\n\n    /**\n     * @test {Module#dependencyPath}\n     */\n    it('Get paths of the dependency',  () => {\n\n        module.dependencyPath.should.be.eql( ['./a', './c'] );\n    });\n\n    /**\n     * @test {Module#mapName}\n     */\n    it('Replace a dependency',  () => {\n\n        module = new Module(\n            './index',  './test/example/',  true,  new Map([['test', 'jquery']])\n        );\n\n        module.parse().should.be.equal(`\n\nfunction _index(A, require, exports, module) {/* AMD module */\n\n    var C = require('./c');\n\n    return  {a: A, c: C, test: require('jquery')};\n}`.trim());\n\n        module.dependencyPath.should.be.containEql('jquery');\n    });\n});\n\n\n/**\n * @test {Package}\n */\ndescribe('Package bundler',  () => {\n\n    var pack = new Package('');\n\n    /**\n     * @test {Package#register}\n     */\n    it('Register module',  () => {\n\n        pack.register('a');\n\n        pack.register('b');\n\n        pack.register('c');\n\n        pack.register('b');\n\n        Array.from(pack,  module => module.name).should.be.eql(['c', 'b', 'a']);\n    });\n\n    /**\n     * @test {Package#parse}\n     * @test {Package#sort}\n     */\n    it('Parse package',  () => {\n\n        pack = new Package('./test/example/index', null, null, true);\n\n        pack.parse('./index');\n\n        Array.from(\n            pack.sort(),  module => ({\n                name:        module.name,\n                depth:       module.depth,\n                referCount:  module.referCount\n            })\n        ).should.be.eql([\n            {\n                name:        './c',\n                depth:       4,\n                referCount:  2\n            },\n            {\n                name:        './libs/b',\n                depth:       5,\n                referCount:  2\n            },\n            {\n                name:        './a',\n                depth:       2,\n                referCount:  1\n            },\n            {\n                name:        './index',\n                depth:       1,\n                referCount:  1\n            }\n        ]);\n    });\n\n    /**\n     * @test {Package#wrap}\n     */\n    it('UMD wrapper',  () => {\n\n        pack.wrap(\n            'example',\n            (modName, varName)  =>\n                `function (${varName}) {  ${JSON.stringify( modName )};  }`\n        ).should.be.equal(`\n//\n//  Generated by https://www.npmjs.com/package/amd-bundle\n//\n(function (factory) {\n\n    if ((typeof define === 'function')  &&  define.amd)\n        define('example', [\"test\"], factory);\n    else if (typeof module === 'object')\n        return  module.exports = factory(require('test'));\n    else\n        return  this.example = factory(this.test);\n\n})(function (test) {  [\"test\"];  });`.trim());\n    });\n\n    function testBundle(all) {\n\n        bundle_code = (new Package(\n            './test/example/index', all, null, true\n        )).bundle();\n\n        try {\n            eval( bundle_code ).should.be.eql({\n                a:     'This is A',\n                c:     'This is C',\n                test:  {test: 1}\n            });\n        } catch (error) {\n\n            console.warn( bundle_code );  throw error;\n        }\n    }\n\n    /**\n     * @test {Package#bundle}\n     */\n    it('Bundle all dependencies',  testBundle.bind(null, true));\n\n    /**\n     * @test {Package#bundle}\n     */\n    it('Bundle without NPM packages',  testBundle.bind(null, false));\n});\n\n\ndescribe('Command line',  () => {\n\n    it('Output to a file',  () => {\n\n        (execSync('node index test/example/index test/example/build') + '')\n            .should.be.startWith(`\n√ Module \"./index\" has been bundled\n√ Module \"./a\" has been bundled\n√ Module \"./libs/b\" has been bundled\n√ Module \"./c\" has been bundled`.trim()\n            );\n    });\n\n\n    it('Write into stdout without printing',  () => {\n\n        (execSync('node index test/example/index -s') + '')\n            .should.be.eql( bundle_code );\n    });\n\n\n    it('Replace a module by the map option',  () => {\n        (\n            execSync(\n                'node index test/example/index test/example/build -m /T/i:jquery'\n            ) + ''\n        ).should.be.startWith(`\n→ Module \"test\" will be replaced by \"jquery\"\n√ Module \"./index\" has been bundled\n√ Module \"./a\" has been bundled\n√ Module \"./libs/b\" has been bundled\n√ Module \"./c\" has been bundled`.trim()\n        );\n\n        (readFileSync('test/example/build.js') + '').should.be.equal(\n            bundle_code\n                .replace(/test([^:(])/g, 'jquery$1')\n                .replace(/('|\\.)index/g, '$1build')\n        );\n    });\n\n\n    after(() => removeSync('test/example/build.js'));\n});\n",
+    "content": "import {execSync} from 'child_process';\n\nimport {readFileSync, removeSync} from 'fs-extra';\n\nimport {\n    toRegExp, merge, getNPMFile, getNPMIndex, getNPMPackage\n} from '../source/utility';\n\nimport Module from '../source/Module';\n\nimport Package from '../source/Package';\n\nvar bundle_code;\n\n\ndescribe('Utility',  () => {\n    /**\n     * @test {toRegExp}\n     */\n    it('Create RegExp() from a literal string',  () => {\n\n        toRegExp('/polyfill|ext\\\\//ig').should.be.eql( /polyfill|ext\\//gi );\n\n        (toRegExp('test') === undefined).should.be.true();\n    });\n\n    /**\n     * @test {merge}\n     */\n    it('Merge module paths',  () => {\n\n        merge('./../test//../', './example').should.be.equal('../example');\n    });\n\n    /**\n     * @test {getNPMFile}\n     */\n    it('Get path of JS modules',  () => {\n\n        getNPMFile('test').should.be.equal('node_modules/test.js');\n    });\n\n    /**\n     * @test {getNPMIndex}\n     */\n    it('Get \"index.js\" path of a module',  () => {\n\n        getNPMIndex('koapache/source').should.be.equal(\n            'node_modules/koapache/source/index.js'\n        );\n    });\n\n    /**\n     * @test {getNPMPackage}\n     */\n    it('Get entry file path from \"package.json\" of a module',  () => {\n\n        getNPMPackage('koapache').should.be.equal(\n            'node_modules/koapache/source/index.js'\n        );\n    });\n});\n\n\n/**\n * @test {Module}\n */\ndescribe('Module parser',  () => {\n\n    var module;\n\n    before(()  =>  (module = new Module('./index', './test/example/')).load());\n\n    /**\n     * @test {Module#parseAMD}\n     */\n    it('Parse AMD',  () => {\n\n        module.parseAMD().should.be.eql( {'./a': 'A'} );\n\n        (module + '').should.be.equal(`/* AMD module */\n\n    var C = require('./c');\n\n    return  {a: A, c: C, test: require('test')};\n`);\n    });\n\n    /**\n     * @test {Module#parseCJS}\n     */\n    it('Parse CommonJS',  () => {\n\n        module.parseCJS().should.be.eql( {'./c': '_c'} );\n    });\n\n    /**\n     * @test {Module#parse}\n     */\n    it('Parse all',  () => module.parse().should.be.equal(`\n\nfunction _index(A, require, exports, module) {/* AMD module */\n\n    var C = require('./c');\n\n    return  {a: A, c: C, test: require('test')};\n}`.trim())\n    );\n\n    /**\n     * @test {Module#dependencyPath}\n     */\n    it('Get paths of the dependency',  () => {\n\n        module.dependencyPath.should.be.eql( ['./a', './c'] );\n    });\n\n    /**\n     * @test {Module#mapName}\n     */\n    it('Replace a dependency',  () => {\n\n        module = new Module(\n            './index',  './test/example/',  true,  new Map([['test', 'jquery']])\n        );\n\n        module.parse().should.be.equal(`\n\nfunction _index(A, require, exports, module) {/* AMD module */\n\n    var C = require('./c');\n\n    return  {a: A, c: C, test: require('jquery')};\n}`.trim());\n\n        module.dependencyPath.should.be.containEql('jquery');\n    });\n});\n\n\n/**\n * @test {Package}\n */\ndescribe('Package bundler',  () => {\n\n    var pack = new Package('');\n\n    /**\n     * @test {Package#register}\n     */\n    it('Register module',  () => {\n\n        pack.register('a');\n\n        pack.register('b');\n\n        pack.register('c');\n\n        pack.register('b');\n\n        Array.from(pack,  module => module.name).should.be.eql(['c', 'b', 'a']);\n    });\n\n    /**\n     * @test {Package#parse}\n     * @test {Package#sort}\n     */\n    it('Parse package',  () => {\n\n        pack = new Package('./test/example/index', null, null, true);\n\n        pack.parse('./index');\n\n        Array.from(\n            pack.sort(),  module => ({\n                name:        module.name,\n                depth:       module.depth,\n                referCount:  module.referCount\n            })\n        ).should.be.eql([\n            {\n                name:        './c',\n                depth:       4,\n                referCount:  2\n            },\n            {\n                name:        './libs/b',\n                depth:       5,\n                referCount:  2\n            },\n            {\n                name:        './a',\n                depth:       2,\n                referCount:  1\n            },\n            {\n                name:        './index',\n                depth:       1,\n                referCount:  1\n            }\n        ]);\n    });\n\n    /**\n     * @test {Package#wrap}\n     */\n    it('UMD wrapper',  () => {\n\n        pack.wrap(\n            'example',\n            (modName, varName)  =>\n                `function (${varName}) {  ${JSON.stringify( modName )};  }`\n        ).should.be.equal(`\n//\n//  Generated by https://www.npmjs.com/package/amd-bundle\n//\n(function (factory) {\n\n    if ((typeof define === 'function')  &&  define.amd)\n        define('example', [\"test\"], factory);\n    else if (typeof module === 'object')\n        return  module.exports = factory(require('test'));\n    else\n        return  this.example = factory(this.test);\n\n})(function (test) {  [\"test\"];  });`.trim());\n    });\n\n    function testBundle(all) {\n\n        bundle_code = (new Package(\n            './test/example/index', all, null, true\n        )).bundle();\n\n        try {\n            eval( bundle_code ).should.be.eql({\n                a:     'This is A',\n                c:     'This is C',\n                test:  {test: 1}\n            });\n        } catch (error) {\n\n            console.warn( bundle_code );  throw error;\n        }\n    }\n\n    /**\n     * @test {Package#bundle}\n     */\n    it('Bundle all dependencies',  testBundle.bind(null, true));\n\n    /**\n     * @test {Package#bundle}\n     */\n    it('Bundle without NPM packages',  testBundle.bind(null, false));\n});\n\n\ndescribe('Command line',  () => {\n\n    const entry = 'node source/index test/example/index';\n\n    it('Output to a file',  () => {\n\n        (execSync(`${entry} test/example/build`) + '').should.be.startWith(`\n√ Module \"./index\" has been bundled\n√ Module \"./a\" has been bundled\n√ Module \"./libs/b\" has been bundled\n√ Module \"./c\" has been bundled`.trim()\n        );\n    });\n\n    it(\n        'Write into stdout without printing',\n        ()  =>  (execSync(`${entry} -s`) + '').should.be.eql( bundle_code )\n    );\n\n\n    it('Replace a module by the map option',  () => {\n\n        (execSync(`${entry} test/example/build -m /T/i:jquery`) + '')\n            .should.be.startWith(`\n→ Module \"test\" will be replaced by \"jquery\"\n√ Module \"./index\" has been bundled\n√ Module \"./a\" has been bundled\n√ Module \"./libs/b\" has been bundled\n√ Module \"./c\" has been bundled`.trim()\n            );\n\n        (readFileSync('test/example/build.js') + '').should.be.equal(\n            bundle_code\n                .replace(/test([^:(])/g, 'jquery$1')\n                .replace(/('|\\.)index/g, '$1build')\n        );\n    });\n\n\n    after(() => removeSync('test/example/build.js'));\n});\n",
     "static": true,
     "longname": "D:/TechQuery/AMD_bundle.js/test/index.js",
     "access": null,
@@ -2024,7 +2161,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 110,
+    "__docId__": 117,
     "kind": "test",
     "name": "describe0",
     "testId": 0,
@@ -2034,10 +2171,10 @@
     "longname": "test/index.js~describe0",
     "access": null,
     "description": "Utility",
-    "lineNumber": 15
+    "lineNumber": 16
   },
   {
-    "__docId__": 111,
+    "__docId__": 118,
     "kind": "test",
     "name": "it1",
     "testId": 1,
@@ -2047,13 +2184,13 @@
     "longname": "test/index.js~describe0.it1",
     "access": null,
     "description": "Create RegExp() from a literal string",
-    "lineNumber": 19,
+    "lineNumber": 20,
     "testTargets": [
       "toRegExp"
     ]
   },
   {
-    "__docId__": 112,
+    "__docId__": 119,
     "kind": "test",
     "name": "it2",
     "testId": 2,
@@ -2063,13 +2200,13 @@
     "longname": "test/index.js~describe0.it2",
     "access": null,
     "description": "Merge module paths",
-    "lineNumber": 29,
+    "lineNumber": 30,
     "testTargets": [
       "merge"
     ]
   },
   {
-    "__docId__": 113,
+    "__docId__": 120,
     "kind": "test",
     "name": "it3",
     "testId": 3,
@@ -2079,13 +2216,13 @@
     "longname": "test/index.js~describe0.it3",
     "access": null,
     "description": "Get path of JS modules",
-    "lineNumber": 37,
+    "lineNumber": 38,
     "testTargets": [
       "getNPMFile"
     ]
   },
   {
-    "__docId__": 114,
+    "__docId__": 121,
     "kind": "test",
     "name": "it4",
     "testId": 4,
@@ -2095,13 +2232,13 @@
     "longname": "test/index.js~describe0.it4",
     "access": null,
     "description": "Get \"index.js\" path of a module",
-    "lineNumber": 45,
+    "lineNumber": 46,
     "testTargets": [
       "getNPMIndex"
     ]
   },
   {
-    "__docId__": 115,
+    "__docId__": 122,
     "kind": "test",
     "name": "it5",
     "testId": 5,
@@ -2111,13 +2248,13 @@
     "longname": "test/index.js~describe0.it5",
     "access": null,
     "description": "Get entry file path from \"package.json\" of a module",
-    "lineNumber": 55,
+    "lineNumber": 56,
     "testTargets": [
       "getNPMPackage"
     ]
   },
   {
-    "__docId__": 116,
+    "__docId__": 123,
     "kind": "test",
     "name": "describe6",
     "testId": 6,
@@ -2127,13 +2264,13 @@
     "longname": "test/index.js~describe6",
     "access": null,
     "description": "Module parser",
-    "lineNumber": 67,
+    "lineNumber": 68,
     "testTargets": [
       "Module"
     ]
   },
   {
-    "__docId__": 117,
+    "__docId__": 124,
     "kind": "test",
     "name": "it7",
     "testId": 7,
@@ -2143,13 +2280,13 @@
     "longname": "test/index.js~describe6.it7",
     "access": null,
     "description": "Parse AMD",
-    "lineNumber": 76,
+    "lineNumber": 77,
     "testTargets": [
       "Module#parseAMD"
     ]
   },
   {
-    "__docId__": 118,
+    "__docId__": 125,
     "kind": "test",
     "name": "it8",
     "testId": 8,
@@ -2159,13 +2296,13 @@
     "longname": "test/index.js~describe6.it8",
     "access": null,
     "description": "Parse CommonJS",
-    "lineNumber": 91,
+    "lineNumber": 92,
     "testTargets": [
       "Module#parseCJS"
     ]
   },
   {
-    "__docId__": 119,
+    "__docId__": 126,
     "kind": "test",
     "name": "it9",
     "testId": 9,
@@ -2175,13 +2312,13 @@
     "longname": "test/index.js~describe6.it9",
     "access": null,
     "description": "Parse all",
-    "lineNumber": 99,
+    "lineNumber": 100,
     "testTargets": [
       "Module#parse"
     ]
   },
   {
-    "__docId__": 120,
+    "__docId__": 127,
     "kind": "test",
     "name": "it10",
     "testId": 10,
@@ -2191,13 +2328,13 @@
     "longname": "test/index.js~describe6.it10",
     "access": null,
     "description": "Get paths of the dependency",
-    "lineNumber": 112,
+    "lineNumber": 113,
     "testTargets": [
       "Module#dependencyPath"
     ]
   },
   {
-    "__docId__": 121,
+    "__docId__": 128,
     "kind": "test",
     "name": "it11",
     "testId": 11,
@@ -2207,13 +2344,13 @@
     "longname": "test/index.js~describe6.it11",
     "access": null,
     "description": "Replace a dependency",
-    "lineNumber": 120,
+    "lineNumber": 121,
     "testTargets": [
       "Module#mapName"
     ]
   },
   {
-    "__docId__": 122,
+    "__docId__": 129,
     "kind": "test",
     "name": "describe12",
     "testId": 12,
@@ -2223,13 +2360,13 @@
     "longname": "test/index.js~describe12",
     "access": null,
     "description": "Package bundler",
-    "lineNumber": 143,
+    "lineNumber": 144,
     "testTargets": [
       "Package"
     ]
   },
   {
-    "__docId__": 123,
+    "__docId__": 130,
     "kind": "test",
     "name": "it13",
     "testId": 13,
@@ -2239,13 +2376,13 @@
     "longname": "test/index.js~describe12.it13",
     "access": null,
     "description": "Register module",
-    "lineNumber": 150,
+    "lineNumber": 151,
     "testTargets": [
       "Package#register"
     ]
   },
   {
-    "__docId__": 124,
+    "__docId__": 131,
     "kind": "test",
     "name": "it14",
     "testId": 14,
@@ -2255,14 +2392,14 @@
     "longname": "test/index.js~describe12.it14",
     "access": null,
     "description": "Parse package",
-    "lineNumber": 167,
+    "lineNumber": 168,
     "testTargets": [
       "Package#parse",
       "Package#sort"
     ]
   },
   {
-    "__docId__": 125,
+    "__docId__": 132,
     "kind": "test",
     "name": "it15",
     "testId": 15,
@@ -2272,13 +2409,13 @@
     "longname": "test/index.js~describe12.it15",
     "access": null,
     "description": "UMD wrapper",
-    "lineNumber": 206,
+    "lineNumber": 207,
     "testTargets": [
       "Package#wrap"
     ]
   },
   {
-    "__docId__": 126,
+    "__docId__": 133,
     "kind": "test",
     "name": "it16",
     "testId": 16,
@@ -2288,13 +2425,13 @@
     "longname": "test/index.js~describe12.it16",
     "access": null,
     "description": "Bundle all dependencies",
-    "lineNumber": 249,
+    "lineNumber": 250,
     "testTargets": [
       "Package#bundle"
     ]
   },
   {
-    "__docId__": 127,
+    "__docId__": 134,
     "kind": "test",
     "name": "it17",
     "testId": 17,
@@ -2304,13 +2441,13 @@
     "longname": "test/index.js~describe12.it17",
     "access": null,
     "description": "Bundle without NPM packages",
-    "lineNumber": 254,
+    "lineNumber": 255,
     "testTargets": [
       "Package#bundle"
     ]
   },
   {
-    "__docId__": 128,
+    "__docId__": 135,
     "kind": "test",
     "name": "describe18",
     "testId": 18,
@@ -2320,10 +2457,10 @@
     "longname": "test/index.js~describe18",
     "access": null,
     "description": "Command line",
-    "lineNumber": 258
+    "lineNumber": 259
   },
   {
-    "__docId__": 129,
+    "__docId__": 136,
     "kind": "test",
     "name": "it19",
     "testId": 19,
@@ -2333,10 +2470,10 @@
     "longname": "test/index.js~describe18.it19",
     "access": null,
     "description": "Output to a file",
-    "lineNumber": 260
+    "lineNumber": 263
   },
   {
-    "__docId__": 130,
+    "__docId__": 137,
     "kind": "test",
     "name": "it20",
     "testId": 20,
@@ -2346,10 +2483,10 @@
     "longname": "test/index.js~describe18.it20",
     "access": null,
     "description": "Write into stdout without printing",
-    "lineNumber": 272
+    "lineNumber": 273
   },
   {
-    "__docId__": 131,
+    "__docId__": 138,
     "kind": "test",
     "name": "it21",
     "testId": 21,

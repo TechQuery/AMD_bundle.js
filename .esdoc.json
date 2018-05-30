@@ -1,5 +1,5 @@
 {
-    "source": "./libs",
+    "source": "./source",
     "destination": "./docs",
     "plugins": [
         {

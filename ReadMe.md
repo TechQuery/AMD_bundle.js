@@ -37,7 +37,7 @@ amd-bundle -a \
 
  - Command-line: `amd-bundle --help`
 
- - JS Module: https://techquery.github.io/AMD_bundle.js/class/libs/Package.js~Package.html#instance-method-bundle
+ - JS Module: https://techquery.github.io/AMD_bundle.js/class/source/Package.js~Package.html#instance-method-bundle
 
 
 ### Advanced

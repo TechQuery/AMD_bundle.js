@@ -1,19 +1,20 @@
 {
   "name": "amd-bundle",
-  "version": "1.1.0",
+  "version": "1.1.4",
   "description": "A dual-use tool for bundling up AMD modules, which is much easier to use than r.js with Almond or AMDclean",
-  "main": "libs/Package.js",
-  "bin": "index.js",
+  "main": "build/Package.js",
+  "bin": "build/index.js",
   "engines": {
     "node": "^6.5.0"
   },
   "scripts": {
-    "lint": "eslint index.js libs/ test/",
-    "install": "echo exports.test = 1;> node_modules/test.js",
+    "lint": "eslint index.js source/ test/",
     "check": "mocha -r babel-register -r babel-polyfill -r should -c --inline-diffs",
     "test": "npm run check -- --exit",
     "debug": "npm run check -- --inspect-brk",
-    "build": "esdoc",
+    "install": "node install",
+    "prepublishOnly": "babel source/ --out-dir build/",
+    "build": "esdoc  &&  npm run prepublishOnly",
     "start": "web-server docs/ -o",
     "precommit": "npm run lint  &&  npm test"
   },
@@ -35,13 +36,16 @@
   },
   "homepage": "https://techquery.github.io/AMD_bundle.js/",
   "dependencies": {
-    "babel-env": "^2.4.1",
     "babel-polyfill": "^6.26.0",
-    "babel-register": "^6.26.0",
+    "babel-runtime": "^6.26.0",
     "commander": "^2.11.0",
     "fs-extra": "^6.0.1"
   },
   "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-register": "^6.26.0",
     "esdoc": "^1.1.0",
     "esdoc-external-nodejs-plugin": "^1.0.0",
     "esdoc-standard-plugin": "^1.0.0",
@@ -54,6 +58,9 @@
   "babel": {
     "presets": [
       "env"
+    ],
+    "plugins": [
+      "transform-runtime"
     ]
   }
 }

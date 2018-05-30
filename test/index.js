@@ -2,12 +2,13 @@ import {execSync} from 'child_process';
 
 import {readFileSync, removeSync} from 'fs-extra';
 
+import {
+    toRegExp, merge, getNPMFile, getNPMIndex, getNPMPackage
+} from '../source/utility';
 
-import {toRegExp, merge, getNPMFile, getNPMIndex, getNPMPackage} from '../libs/utility';
+import Module from '../source/Module';
 
-import Module from '../libs/Module';
-
-import Package from '../libs/Package';
+import Package from '../source/Package';
 
 var bundle_code;
 
@@ -257,37 +258,34 @@ describe('Package bundler',  () => {
 
 describe('Command line',  () => {
 
+    const entry = 'node source/index test/example/index';
+
     it('Output to a file',  () => {
 
-        (execSync('node index test/example/index test/example/build') + '')
-            .should.be.startWith(`
-√ Module "./index" has been bundled
-√ Module "./a" has been bundled
-√ Module "./libs/b" has been bundled
-√ Module "./c" has been bundled`.trim()
-            );
-    });
-
-
-    it('Write into stdout without printing',  () => {
-
-        (execSync('node index test/example/index -s') + '')
-            .should.be.eql( bundle_code );
-    });
-
-
-    it('Replace a module by the map option',  () => {
-        (
-            execSync(
-                'node index test/example/index test/example/build -m /T/i:jquery'
-            ) + ''
-        ).should.be.startWith(`
-→ Module "test" will be replaced by "jquery"
+        (execSync(`${entry} test/example/build`) + '').should.be.startWith(`
 √ Module "./index" has been bundled
 √ Module "./a" has been bundled
 √ Module "./libs/b" has been bundled
 √ Module "./c" has been bundled`.trim()
         );
+    });
+
+    it(
+        'Write into stdout without printing',
+        ()  =>  (execSync(`${entry} -s`) + '').should.be.eql( bundle_code )
+    );
+
+
+    it('Replace a module by the map option',  () => {
+
+        (execSync(`${entry} test/example/build -m /T/i:jquery`) + '')
+            .should.be.startWith(`
+→ Module "test" will be replaced by "jquery"
+√ Module "./index" has been bundled
+√ Module "./a" has been bundled
+√ Module "./libs/b" has been bundled
+√ Module "./c" has been bundled`.trim()
+            );
 
         (readFileSync('test/example/build.js') + '').should.be.equal(
             bundle_code
