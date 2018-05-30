@@ -6,6 +6,8 @@ import {merge} from './utility';
 
 const Array_iterator = [ ][Symbol.iterator], Array_proto = Array.prototype;
 
+var depth = 0;
+
 
 /**
  * Package to be bundled
@@ -46,14 +48,6 @@ export default  class Package {
          * @type {number}
          */
         this.length = 0;
-
-        /**
-         * Reference count of modules in this package
-         * (key for name & value for count)
-         *
-         * @type {Object}
-         */
-        this.module = { };
 
         /**
          * Key for original name of a module & value for module name of the replacement
@@ -100,8 +94,6 @@ export default  class Package {
 
         const index = this.indexOf( modName );
 
-        this.module[modName] = (this.module[modName] || 0)  +  1;
-
         if (index < 0) {
 
             Array_proto.unshift.call(
@@ -109,21 +101,9 @@ export default  class Package {
                 new Module(modName, this.base, this.includeAll, this.moduleMap)
             );
 
-            return this[0];
-        }
-
-        Array_proto.sort.call(this,  (A, B) => {
-
-            const A_D = A.dependencyPath, B_D = B.dependencyPath;
-
-            if (B_D.includes( A.name ))  return -1;
-
-            if (A_D.includes( B.name ))  return 1;
-
-            return  (A_D.length - B_D.length)  ||  (
-                this.module[ B.name ]  -  this.module[ A.name ]
-            );
-        });
+            return  this[0].countUp( depth );
+        } else
+            this[ index ].countUp( depth );
     }
 
     /**
@@ -138,7 +118,9 @@ export default  class Package {
      *
      * @param {string} modName - Path of a module
      */
-    async parse(modName) {
+    parse(modName) {
+
+        depth++;
 
         const module = this.register( modName );
 
@@ -151,14 +133,34 @@ export default  class Package {
                 )
             );
 
-        await module.parse();
+        module.parse();
 
         if ( this.showLog )
             console.info(`√ Module "${modName}" has been bundled`);
 
-        await Promise.all(
-            module.dependencyPath.map(path  =>  this.parse( path ))
-        );
+        for (let path of module.dependencyPath)  this.parse( path );
+
+        depth--;
+    }
+
+    /**
+     * @protected
+     *
+     * @return {Package} This package sorted by module dependency
+     */
+    sort() {
+
+        return  Array_proto.sort.call(this,  (A, B) => {
+
+            const A_D = A.dependencyPath, B_D = B.dependencyPath;
+
+            if (B_D.includes( A.name ))  return -1;
+
+            if (A_D.includes( B.name ))  return 1;
+
+            return  (B.depth - A.depth)  ||
+                (A_D.length - B_D.length)  ||  (B.referCount - A.referCount);
+        });
     }
 
     /**
@@ -210,13 +212,13 @@ export default  class Package {
      *                          (Default: The entry module's name)
      * @return {string} Source code of this package
      */
-    async bundle(name) {
+    bundle(name) {
 
         const entry = basename( this.path );
 
-        await this.parse(`./${entry}`);
+        this.parse(`./${entry}`);
 
-        return this.wrap(
+        return this.sort().wrap(
             name || entry,
             (modName, varName) => `function (${varName}) {
 

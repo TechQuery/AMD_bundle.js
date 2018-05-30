@@ -140,7 +140,7 @@ describe(&apos;Module parser&apos;,  () =&gt; {
     /**
      * @test {Module#parse}
      */
-    it(&apos;Parse all&apos;,  () =&gt; module.parse().should.be.fulfilledWith(`
+    it(&apos;Parse all&apos;,  () =&gt; module.parse().should.be.equal(`
 
 function _index(A, require, exports, module) {/* AMD module */
 
@@ -161,13 +161,13 @@ function _index(A, require, exports, module) {/* AMD module */
     /**
      * @test {Module#mapName}
      */
-    it(&apos;Replace a dependency&apos;,  async () =&gt; {
+    it(&apos;Replace a dependency&apos;,  () =&gt; {
 
         module = new Module(
             &apos;./index&apos;,  &apos;./test/example/&apos;,  true,  new Map([[&apos;test&apos;, &apos;jquery&apos;]])
         );
 
-        (await module.parse()).should.be.equal(`
+        module.parse().should.be.equal(`
 
 function _index(A, require, exports, module) {/* AMD module */
 
@@ -201,20 +201,46 @@ describe(&apos;Package bundler&apos;,  () =&gt; {
 
         pack.register(&apos;b&apos;);
 
-        Array.from(pack,  module =&gt; module.name).should.be.eql([&apos;b&apos;, &apos;c&apos;, &apos;a&apos;]);
+        Array.from(pack,  module =&gt; module.name).should.be.eql([&apos;c&apos;, &apos;b&apos;, &apos;a&apos;]);
     });
 
     /**
      * @test {Package#parse}
+     * @test {Package#sort}
      */
-    it(&apos;Parse package&apos;,  async () =&gt; {
+    it(&apos;Parse package&apos;,  () =&gt; {
 
-        pack = new Package(&apos;./test/example/index&apos;);
+        pack = new Package(&apos;./test/example/index&apos;, null, null, true);
 
-        await pack.parse(&apos;./index&apos;);
+        pack.parse(&apos;./index&apos;);
 
-        Array.from(pack,  module =&gt; module.name).should.be.eql([
-            &apos;./libs/b&apos;,  &apos;./c&apos;,  &apos;./a&apos;,  &apos;./index&apos;
+        Array.from(
+            pack.sort(),  module =&gt; ({
+                name:        module.name,
+                depth:       module.depth,
+                referCount:  module.referCount
+            })
+        ).should.be.eql([
+            {
+                name:        &apos;./c&apos;,
+                depth:       4,
+                referCount:  2
+            },
+            {
+                name:        &apos;./libs/b&apos;,
+                depth:       5,
+                referCount:  2
+            },
+            {
+                name:        &apos;./a&apos;,
+                depth:       2,
+                referCount:  1
+            },
+            {
+                name:        &apos;./index&apos;,
+                depth:       1,
+                referCount:  1
+            }
         ]);
     });
 
@@ -243,9 +269,11 @@ describe(&apos;Package bundler&apos;,  () =&gt; {
 })(function (test) {  [&quot;test&quot;];  });`.trim());
     });
 
-    async function testBundle(all) {
+    function testBundle(all) {
 
-        bundle_code = await (new Package(&apos;./test/example/index&apos;, all)).bundle();
+        bundle_code = (new Package(
+            &apos;./test/example/index&apos;, all, null, true
+        )).bundle();
 
         try {
             eval( bundle_code ).should.be.eql({
@@ -279,8 +307,8 @@ describe(&apos;Command line&apos;,  () =&gt; {
             .should.be.startWith(`
 &#x221A; Module &quot;./index&quot; has been bundled
 &#x221A; Module &quot;./a&quot; has been bundled
-&#x221A; Module &quot;./c&quot; has been bundled
-&#x221A; Module &quot;./libs/b&quot; has been bundled`.trim()
+&#x221A; Module &quot;./libs/b&quot; has been bundled
+&#x221A; Module &quot;./c&quot; has been bundled`.trim()
             );
     });
 
@@ -301,8 +329,8 @@ describe(&apos;Command line&apos;,  () =&gt; {
 &#x2192; Module &quot;test&quot; will be replaced by &quot;jquery&quot;
 &#x221A; Module &quot;./index&quot; has been bundled
 &#x221A; Module &quot;./a&quot; has been bundled
-&#x221A; Module &quot;./c&quot; has been bundled
-&#x221A; Module &quot;./libs/b&quot; has been bundled`.trim()
+&#x221A; Module &quot;./libs/b&quot; has been bundled
+&#x221A; Module &quot;./c&quot; has been bundled`.trim()
         );
 
         (readFileSync(&apos;test/example/build.js&apos;) + &apos;&apos;).should.be.equal(

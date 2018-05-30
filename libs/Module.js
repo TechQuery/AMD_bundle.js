@@ -2,7 +2,7 @@ import {EventEmitter} from 'events';
 
 import {dirname, join} from 'path';
 
-import {readFile} from 'fs-extra';
+import {readFileSync} from 'fs';
 
 import * as Utility from './utility';
 
@@ -66,6 +66,20 @@ export default  class Module extends EventEmitter {
          * @type {Object}
          */
         this.nameMap = nameMap  ||  new Map();
+
+        /**
+         * Count of direct references to this module
+         *
+         * @type {number}
+         */
+        this.referCount = 0;
+
+        /**
+         * Depth of this module on the dependency tree
+         *
+         * @type {number}
+         */
+        this.depth = 0;
     }
 
     /**
@@ -99,6 +113,20 @@ export default  class Module extends EventEmitter {
     /**
      * @protected
      *
+     * @param {number} depth - New depth of this module
+     *
+     * @return {Module} This module
+     */
+    countUp(depth) {
+
+        this.referCount++;  this.depth = Math.max(this.depth, depth);
+
+        return this;
+    }
+
+    /**
+     * @protected
+     *
      * @return {?string} Entry file path of this module in `./node_modules/`
      */
     searchNPM() {
@@ -116,9 +144,9 @@ export default  class Module extends EventEmitter {
      *
      * @return {string} Original source code of this module
      */
-    async load() {
+    load() {
 
-        this.source = await readFile(
+        this.source = readFileSync(
             ((! this.dependency.outside)  &&  /^\w/.test( this.name ))  ?
                 this.searchNPM()  :  join(this.path, `${this.name}.js`)
         );
@@ -223,9 +251,9 @@ export default  class Module extends EventEmitter {
     /**
      * @return {string} Factory code of this parsed module
      */
-    async parse() {
+    parse() {
 
-        await this.load();
+        this.load();
 
         this.parseAMD();
 

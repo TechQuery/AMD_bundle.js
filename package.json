@@ -1,6 +1,6 @@
 {
   "name": "amd-bundle",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "A dual-use tool for bundling up AMD modules, which is much easier to use than r.js with Almond or AMDclean",
   "main": "libs/Package.js",
   "bin": "index.js",
@@ -10,8 +10,9 @@
   "scripts": {
     "lint": "eslint index.js libs/ test/",
     "install": "echo exports.test = 1;> node_modules/test.js",
-    "test": "mocha -r babel-register -r babel-polyfill -r should --no-timeouts -c --inline-diffs --exit",
-    "debug": "npm test -- --inspect-brk",
+    "check": "mocha -r babel-register -r babel-polyfill -r should -c --inline-diffs",
+    "test": "npm run check -- --exit",
+    "debug": "npm run check -- --inspect-brk",
     "build": "esdoc",
     "start": "web-server docs/ -o",
     "precommit": "npm run lint  &&  npm test"
@@ -46,8 +47,8 @@
     "esdoc-standard-plugin": "^1.0.0",
     "eslint": "^4.19.1",
     "husky": "^0.14.3",
-    "koapache": "^0.2.2",
-    "mocha": "^5.1.1",
+    "koapache": "^0.2.3",
+    "mocha": "^5.2.0",
     "should": "^13.2.1"
   },
   "babel": {

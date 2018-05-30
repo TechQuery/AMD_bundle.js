@@ -43,10 +43,11 @@ const bundle_file = (
 
 if (! Command.stdOut)  console.time('Package bundle');
 
-pack.bundle( Path.basename( bundle_file ).split('.')[0] ).then(code => {
+const code = pack.bundle( Path.basename( bundle_file ).split('.')[0] );
 
-    if ( Command.stdOut )  return  process.stdout.write( code );
-
+if ( Command.stdOut )
+    process.stdout.write( code );
+else {
     FS.outputFileSync(bundle_file,  code);
 
     console.info( '-'.repeat( 30 ) );
@@ -54,4 +55,4 @@ pack.bundle( Path.basename( bundle_file ).split('.')[0] ).then(code => {
     console.timeEnd('Package bundle');
 
     console.info(`Module count: ${pack.length}`);
-});
+}

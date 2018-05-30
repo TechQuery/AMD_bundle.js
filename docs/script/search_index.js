@@ -43,25 +43,25 @@ window.esdocSearchIndex = [
   ],
   [
     "",
-    "test-file/test/index.js.html#lineNumber230",
+    "test-file/test/index.js.html#lineNumber258",
     "Command line",
     "test"
   ],
   [
     "",
-    "test-file/test/index.js.html#lineNumber232",
+    "test-file/test/index.js.html#lineNumber260",
     "Command line Output to a file",
     "test"
   ],
   [
     "",
-    "test-file/test/index.js.html#lineNumber251",
+    "test-file/test/index.js.html#lineNumber279",
     "Command line Replace a module by the map option",
     "test"
   ],
   [
     "",
-    "test-file/test/index.js.html#lineNumber244",
+    "test-file/test/index.js.html#lineNumber272",
     "Command line Write into stdout without printing",
     "test"
   ],
@@ -109,19 +109,19 @@ window.esdocSearchIndex = [
   ],
   [
     "package#bundle libs/package.js~package#bundle,package#bundle",
-    "test-file/test/index.js.html#lineNumber221",
+    "test-file/test/index.js.html#lineNumber249",
     "Package bundler Bundle all dependencies",
     "test"
   ],
   [
     "package#bundle libs/package.js~package#bundle,package#bundle",
-    "test-file/test/index.js.html#lineNumber226",
+    "test-file/test/index.js.html#lineNumber254",
     "Package bundler Bundle without NPM packages",
     "test"
   ],
   [
-    "package#parse libs/package.js~package#parse,package#parse",
-    "test-file/test/index.js.html#lineNumber166",
+    "package#parse package#sort libs/package.js~package#parse,package#parse libs/package.js~package#sort,package#sort",
+    "test-file/test/index.js.html#lineNumber167",
     "Package bundler Parse package",
     "test"
   ],
@@ -133,7 +133,7 @@ window.esdocSearchIndex = [
   ],
   [
     "package#wrap libs/package.js~package#wrap,package#wrap",
-    "test-file/test/index.js.html#lineNumber180",
+    "test-file/test/index.js.html#lineNumber206",
     "Package bundler UMD wrapper",
     "test"
   ],
@@ -492,6 +492,12 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
+    "libs/module.js~module#countup",
+    "class/libs/Module.js~Module.html#instance-method-countUp",
+    "libs/Module.js~Module#countUp",
+    "method"
+  ],
+  [
     "libs/module.js~module#dependency",
     "class/libs/Module.js~Module.html#instance-member-dependency",
     "libs/Module.js~Module#dependency",
@@ -501,6 +507,12 @@ window.esdocSearchIndex = [
     "libs/module.js~module#dependencypath",
     "class/libs/Module.js~Module.html#instance-get-dependencyPath",
     "libs/Module.js~Module#dependencyPath",
+    "member"
+  ],
+  [
+    "libs/module.js~module#depth",
+    "class/libs/Module.js~Module.html#instance-member-depth",
+    "libs/Module.js~Module#depth",
     "member"
   ],
   [
@@ -549,6 +561,12 @@ window.esdocSearchIndex = [
     "libs/module.js~module#path",
     "class/libs/Module.js~Module.html#instance-member-path",
     "libs/Module.js~Module#path",
+    "member"
+  ],
+  [
+    "libs/module.js~module#refercount",
+    "class/libs/Module.js~Module.html#instance-member-referCount",
+    "libs/Module.js~Module#referCount",
     "member"
   ],
   [
@@ -630,12 +648,6 @@ window.esdocSearchIndex = [
     "member"
   ],
   [
-    "libs/package.js~package#module",
-    "class/libs/Package.js~Package.html#instance-member-module",
-    "libs/Package.js~Package#module",
-    "member"
-  ],
-  [
     "libs/package.js~package#modulemap",
     "class/libs/Package.js~Package.html#instance-member-moduleMap",
     "libs/Package.js~Package#moduleMap",
@@ -670,6 +682,12 @@ window.esdocSearchIndex = [
     "class/libs/Package.js~Package.html#instance-member-showLog",
     "libs/Package.js~Package#showLog",
     "member"
+  ],
+  [
+    "libs/package.js~package#sort",
+    "class/libs/Package.js~Package.html#instance-method-sort",
+    "libs/Package.js~Package#sort",
+    "method"
   ],
   [
     "libs/package.js~package#wrap",

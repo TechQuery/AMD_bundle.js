@@ -96,7 +96,7 @@ describe('Module parser',  () => {
     /**
      * @test {Module#parse}
      */
-    it('Parse all',  () => module.parse().should.be.fulfilledWith(`
+    it('Parse all',  () => module.parse().should.be.equal(`
 
 function _index(A, require, exports, module) {/* AMD module */
 
@@ -117,13 +117,13 @@ function _index(A, require, exports, module) {/* AMD module */
     /**
      * @test {Module#mapName}
      */
-    it('Replace a dependency',  async () => {
+    it('Replace a dependency',  () => {
 
         module = new Module(
             './index',  './test/example/',  true,  new Map([['test', 'jquery']])
         );
 
-        (await module.parse()).should.be.equal(`
+        module.parse().should.be.equal(`
 
 function _index(A, require, exports, module) {/* AMD module */
 
@@ -157,20 +157,46 @@ describe('Package bundler',  () => {
 
         pack.register('b');
 
-        Array.from(pack,  module => module.name).should.be.eql(['b', 'c', 'a']);
+        Array.from(pack,  module => module.name).should.be.eql(['c', 'b', 'a']);
     });
 
     /**
      * @test {Package#parse}
+     * @test {Package#sort}
      */
-    it('Parse package',  async () => {
+    it('Parse package',  () => {
 
-        pack = new Package('./test/example/index');
+        pack = new Package('./test/example/index', null, null, true);
 
-        await pack.parse('./index');
+        pack.parse('./index');
 
-        Array.from(pack,  module => module.name).should.be.eql([
-            './libs/b',  './c',  './a',  './index'
+        Array.from(
+            pack.sort(),  module => ({
+                name:        module.name,
+                depth:       module.depth,
+                referCount:  module.referCount
+            })
+        ).should.be.eql([
+            {
+                name:        './c',
+                depth:       4,
+                referCount:  2
+            },
+            {
+                name:        './libs/b',
+                depth:       5,
+                referCount:  2
+            },
+            {
+                name:        './a',
+                depth:       2,
+                referCount:  1
+            },
+            {
+                name:        './index',
+                depth:       1,
+                referCount:  1
+            }
         ]);
     });
 
@@ -199,9 +225,11 @@ describe('Package bundler',  () => {
 })(function (test) {  ["test"];  });`.trim());
     });
 
-    async function testBundle(all) {
+    function testBundle(all) {
 
-        bundle_code = await (new Package('./test/example/index', all)).bundle();
+        bundle_code = (new Package(
+            './test/example/index', all, null, true
+        )).bundle();
 
         try {
             eval( bundle_code ).should.be.eql({
@@ -235,8 +263,8 @@ describe('Command line',  () => {
             .should.be.startWith(`
 √ Module "./index" has been bundled
 √ Module "./a" has been bundled
-√ Module "./c" has been bundled
-√ Module "./libs/b" has been bundled`.trim()
+√ Module "./libs/b" has been bundled
+√ Module "./c" has been bundled`.trim()
             );
     });
 
@@ -257,8 +285,8 @@ describe('Command line',  () => {
 → Module "test" will be replaced by "jquery"
 √ Module "./index" has been bundled
 √ Module "./a" has been bundled
-√ Module "./c" has been bundled
-√ Module "./libs/b" has been bundled`.trim()
+√ Module "./libs/b" has been bundled
+√ Module "./c" has been bundled`.trim()
         );
 
         (readFileSync('test/example/build.js') + '').should.be.equal(
