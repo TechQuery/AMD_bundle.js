@@ -1,3 +1,5 @@
+import {transform} from 'babel-core';
+
 import {join} from 'path';
 
 import {existsSync, readFileSync, statSync} from 'fs';
@@ -13,6 +15,27 @@ export function toRegExp(raw) {
     const match = raw.match( /^\/(.+)\/([a-z]+)?$/ );
 
     if ( match )  return  new RegExp(match[1], match[2]);
+}
+
+
+/**
+ * @param {string}  code         - ES 6+ source code
+ * @param {boolean} [onlyModule] - Only transform ES 6 module to CommonJS
+ *
+ * @return {string} ES 5 source code
+ */
+export function toES_5(code, onlyModule) {
+
+    const option = {
+        plugins:  ['transform-es2015-modules-commonjs'],
+        ast:      false
+    };
+
+    if (! onlyModule)  option.presets = ['env'];
+
+    return  transform(code, option).code.replace(
+        /^(?:'|")use strict(?:'|");\n+/,  ''
+    );
 }
 
 

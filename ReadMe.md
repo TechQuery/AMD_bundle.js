@@ -1,6 +1,6 @@
 # AMD bundle
 
-**A dual-use tool for bundling up [AMD](https://github.com/amdjs/amdjs-api/blob/master/AMD.md) & [CJS](http://wiki.commonjs.org/wiki/Modules) modules**,
+**A multiple-use tool for bundling up [AMD](https://github.com/amdjs/amdjs-api/blob/master/AMD.md), [CJS](http://wiki.commonjs.org/wiki/Modules) & ES 6 modules**,
 which is much easier to use than [`r.js`](https://github.com/requirejs/r.js) with [Almond](https://github.com/requirejs/almond) or [AMDclean](https://github.com/gfranko/amdclean).
 
 [![NPM Dependency](https://david-dm.org/TechQuery/AMD_bundle.js.svg)](https://david-dm.org/TechQuery/AMD_bundle.js)
@@ -54,7 +54,7 @@ Build **standalone release files** (Full source code, Minimized code & Source ma
 
  - Development dependency: [Babel](https://babeljs.io/)
 
- - **NPM-scripts** reference: [WebCell](https://github.com/EasyWebApp/WebCell/blob/master/package.json#L33)
+ - **NPM-scripts** reference: [WebCell](https://github.com/EasyWebApp/WebCell/blob/master/package.json#L29)
 
 
 

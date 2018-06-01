@@ -12,6 +12,12 @@ window.esdocSearchIndex = [
     "class"
   ],
   [
+    "amd-bundle/source/umd.js~generate",
+    "function/index.html#static-function-generate",
+    "<span>generate</span> <span class=\"search-result-import-path\">amd-bundle/source/UMD.js</span>",
+    "function"
+  ],
+  [
     "amd-bundle/source/utility.js~getnpmfile",
     "function/index.html#static-function-getNPMFile",
     "<span>getNPMFile</span> <span class=\"search-result-import-path\">amd-bundle/source/utility.js</span>",
@@ -36,6 +42,12 @@ window.esdocSearchIndex = [
     "function"
   ],
   [
+    "amd-bundle/source/utility.js~toes_5",
+    "function/index.html#static-function-toES_5",
+    "<span>toES_5</span> <span class=\"search-result-import-path\">amd-bundle/source/utility.js</span>",
+    "function"
+  ],
+  [
     "amd-bundle/source/utility.js~toregexp",
     "function/index.html#static-function-toRegExp",
     "<span>toRegExp</span> <span class=\"search-result-import-path\">amd-bundle/source/utility.js</span>",
@@ -43,25 +55,25 @@ window.esdocSearchIndex = [
   ],
   [
     "",
-    "test-file/test/Package.js.html#lineNumber142",
+    "test-file/test/Package.js.html#lineNumber78",
     "Command line",
     "test"
   ],
   [
     "",
-    "test-file/test/Package.js.html#lineNumber146",
+    "test-file/test/Package.js.html#lineNumber82",
     "Command line Output to a file",
     "test"
   ],
   [
     "",
-    "test-file/test/Package.js.html#lineNumber162",
+    "test-file/test/Package.js.html#lineNumber98",
     "Command line Replace a module by the map option",
     "test"
   ],
   [
     "",
-    "test-file/test/Package.js.html#lineNumber156",
+    "test-file/test/Package.js.html#lineNumber92",
     "Command line Write into stdout without printing",
     "test"
   ],
@@ -73,8 +85,14 @@ window.esdocSearchIndex = [
   ],
   [
     "module#dependencypath source/module.js~module#dependencypath,module#dependencypath",
-    "test-file/test/Module.js.html#lineNumber52",
+    "test-file/test/Module.js.html#lineNumber49",
     "Module parser Get paths of the dependency",
+    "test"
+  ],
+  [
+    "module#load source/module.js~module#load,module#load",
+    "test-file/test/Module.js.html#lineNumber57",
+    "Module parser Load ES 6 module",
     "test"
   ],
   [
@@ -91,13 +109,13 @@ window.esdocSearchIndex = [
   ],
   [
     "module#parse source/module.js~module#parse,module#parse",
-    "test-file/test/Module.js.html#lineNumber39",
+    "test-file/test/Module.js.html#lineNumber36",
     "Module parser Parse all",
     "test"
   ],
   [
     "module#mapname source/module.js~module#mapname,module#mapname",
-    "test-file/test/Module.js.html#lineNumber60",
+    "test-file/test/Module.js.html#lineNumber72",
     "Module parser Replace a dependency",
     "test"
   ],
@@ -108,21 +126,15 @@ window.esdocSearchIndex = [
     "test"
   ],
   [
-    "package#bundle source/package.js~package#bundle,package#bundle",
-    "test-file/test/Package.js.html#lineNumber133",
+    "generate source/umd.js~generate,generate",
+    "test-file/test/Package.js.html#lineNumber69",
     "Package bundler Bundle all dependencies",
     "test"
   ],
   [
     "package#bundle source/package.js~package#bundle,package#bundle",
-    "test-file/test/Package.js.html#lineNumber138",
+    "test-file/test/Package.js.html#lineNumber74",
     "Package bundler Bundle without NPM packages",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/Package.js.html#lineNumber73",
-    "Package bundler Link sources of all modules",
     "test"
   ],
   [
@@ -135,12 +147,6 @@ window.esdocSearchIndex = [
     "package#register source/package.js~package#register,package#register",
     "test-file/test/Package.js.html#lineNumber20",
     "Package bundler Register module",
-    "test"
-  ],
-  [
-    "package#wrap source/package.js~package#wrap,package#wrap",
-    "test-file/test/Package.js.html#lineNumber50",
-    "Package bundler UMD wrapper",
     "test"
   ],
   [
@@ -636,12 +642,6 @@ window.esdocSearchIndex = [
     "member"
   ],
   [
-    "source/package.js~package#link",
-    "class/source/Package.js~Package.html#instance-method-link",
-    "source/Package.js~Package#link",
-    "method"
-  ],
-  [
     "source/package.js~package#modulemap",
     "class/source/Package.js~Package.html#instance-member-moduleMap",
     "source/Package.js~Package#moduleMap",
@@ -678,10 +678,10 @@ window.esdocSearchIndex = [
     "member"
   ],
   [
-    "source/package.js~package#wrap",
-    "class/source/Package.js~Package.html#instance-method-wrap",
-    "source/Package.js~Package#wrap",
-    "method"
+    "source/umd.js",
+    "file/source/UMD.js.html",
+    "source/UMD.js",
+    "file"
   ],
   [
     "source/index.js",

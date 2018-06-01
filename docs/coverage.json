@@ -24,19 +24,24 @@
       ]
     },
     "source/Package.js": {
-      "expectCount": 18,
-      "actualCount": 16,
+      "expectCount": 16,
+      "actualCount": 14,
       "undocumentLines": [
         7,
         65
       ]
     },
+    "source/UMD.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
     "source/utility.js": {
-      "expectCount": 7,
-      "actualCount": 5,
+      "expectCount": 8,
+      "actualCount": 6,
       "undocumentLines": [
-        39,
-        46
+        62,
+        69
       ]
     }
   }

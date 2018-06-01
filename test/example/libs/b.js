@@ -1,3 +1,3 @@
-require('../c');
+import '../c';
 
-module.exports = 'This is B';
+export default 'This is B';

@@ -121,9 +121,12 @@ export default  class Module extends EventEmitter {
         this.source = readFileSync(
             ((! this.dependency.outside)  &&  /^\w/.test( this.name ))  ?
                 this.searchNPM()  :  join(this.path, `${this.name}.js`)
-        );
+        ) + '';
 
-        return  this.source = (this.source + '').replace(/\r\n/g, '\n');
+        if (/^(import|export) /m.test( this.source ))
+            this.source = Utility.toES_5(this.source, true);
+
+        return  this.source = this.source.replace(/\r\n/g, '\n');
     }
 
     /**

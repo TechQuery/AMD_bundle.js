@@ -28,10 +28,7 @@ describe('Module parser',  () => {
     /**
      * @test {Module#parseCJS}
      */
-    it('Parse CommonJS',  () => {
-
-        module.parseCJS().should.be.eql( {'./c': '_c'} );
-    });
+    it('Parse CommonJS',  ()  =>  module.parseCJS().should.be.eql({'./c': '_c'}));
 
     /**
      * @test {Module#parse}
@@ -49,10 +46,25 @@ function (A, require, exports, module) {/* AMD module */
     /**
      * @test {Module#dependencyPath}
      */
-    it('Get paths of the dependency',  () => {
+    it(
+        'Get paths of the dependency',
+        ()  =>  module.dependencyPath.should.be.eql(['./a', './c'])
+    );
 
-        module.dependencyPath.should.be.eql( ['./a', './c'] );
-    });
+    /**
+     * @test {Module#load}
+     */
+    it(
+        'Load ES 6 module',
+        ()  =>  (new Module('./b', './test/example/libs/')).load().should.be.eql(`
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+require('../c');
+
+exports.default = 'This is B';`.trim())
+    );
 
     /**
      * @test {Module#mapName}
