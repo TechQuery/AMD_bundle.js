@@ -66,20 +66,6 @@ export default  class Module extends EventEmitter {
          * @type {Object}
          */
         this.nameMap = nameMap  ||  new Map();
-
-        /**
-         * Count of direct references to this module
-         *
-         * @type {number}
-         */
-        this.referCount = 0;
-
-        /**
-         * Depth of this module on the dependency tree
-         *
-         * @type {number}
-         */
-        this.depth = 0;
     }
 
     /**
@@ -108,20 +94,6 @@ export default  class Module extends EventEmitter {
         return  Object.keys( this.dependency.compile ).concat(
             Object.keys( this.dependency.runtime )
         );
-    }
-
-    /**
-     * @protected
-     *
-     * @param {number} depth - New depth of this module
-     *
-     * @return {Module} This module
-     */
-    countUp(depth) {
-
-        this.referCount++;  this.depth = Math.max(this.depth, depth);
-
-        return this;
     }
 
     /**
@@ -259,7 +231,7 @@ export default  class Module extends EventEmitter {
 
         this.parseCJS();
 
-        return  this.source = `function ${this.identifier}(${
+        return  this.source = `function (${
 
             Object.values( this.dependency.compile ).concat( AMD_CJS ).join(', ')
         }) {${

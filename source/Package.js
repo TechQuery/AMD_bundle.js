@@ -6,8 +6,6 @@ import {merge} from './utility';
 
 const Array_iterator = [ ][Symbol.iterator], Array_proto = Array.prototype;
 
-var depth = 0;
-
 
 /**
  * Package to be bundled
@@ -94,16 +92,13 @@ export default  class Package {
 
         const index = this.indexOf( modName );
 
-        if (index < 0) {
+        if (index > -1)  return;
 
-            Array_proto.unshift.call(
-                this,
-                new Module(modName, this.base, this.includeAll, this.moduleMap)
-            );
+        Array_proto.unshift.call(
+            this,  new Module(modName, this.base, this.includeAll, this.moduleMap)
+        );
 
-            return  this[0].countUp( depth );
-        } else
-            this[ index ].countUp( depth );
+        return this[0];
     }
 
     /**
@@ -119,8 +114,6 @@ export default  class Package {
      * @param {string} modName - Path of a module
      */
     parse(modName) {
-
-        depth++;
 
         const module = this.register( modName );
 
@@ -139,28 +132,6 @@ export default  class Package {
             console.info(`√ Module "${modName}" has been bundled`);
 
         for (let path of module.dependencyPath)  this.parse( path );
-
-        depth--;
-    }
-
-    /**
-     * @protected
-     *
-     * @return {Package} This package sorted by module dependency
-     */
-    sort() {
-
-        return  Array_proto.sort.call(this,  (A, B) => {
-
-            const A_D = A.dependencyPath, B_D = B.dependencyPath;
-
-            if (B_D.includes( A.name ))  return -1;
-
-            if (A_D.includes( B.name ))  return 1;
-
-            return  (B.depth - A.depth)  ||
-                (A_D.length - B_D.length)  ||  (B.referCount - A.referCount);
-        });
     }
 
     /**
@@ -208,6 +179,26 @@ export default  class Package {
     }
 
     /**
+     * @protected
+     *
+     * @param {string[]} [modName=[]] - Names of outside modules
+     * @param {string[]} [varName=[]] - Variable of outside modules
+     *
+     * @return {string} Source code of linked modules in this package
+     */
+    link(modName = [ ],  varName = [ ]) {
+
+        return Array.from(this,  item => `
+        '${item.name}':  {
+            base:        '${item.base}',
+            dependency:  ${JSON.stringify( Object.keys( item.dependency.compile ) )},
+            factory:     ${item.source}
+        }`.slice(1)).concat(
+            modName.map((name, index)  =>  `'${name}':  {exports: ${varName[index]}}`)
+        ).join(',\n');
+    }
+
+    /**
      * @param {string} [name] - Module name of bundled package
      *                          (Default: The entry module's name)
      * @return {string} Source code of this package
@@ -218,42 +209,47 @@ export default  class Package {
 
         this.parse(`./${entry}`);
 
-        return this.sort().wrap(
+        return this.wrap(
             name || entry,
             (modName, varName) => `function (${varName}) {
 
-    var module = {
-        ${Array.from(
-        this,  item => `'${item.name}':  {exports: { }}`
-    ).concat(
-        modName.map((name, index)  =>  `'${name}':  {exports: ${varName[index]}}`)
-    ).join(',\n        ')}
-    };
-
 ${merge}
-
-    function _require_(base, path) {
-
-        return module[
-            /^\\w/.test( path )  ?  path  :  ('./' + merge(base, path))
-        ].exports;
-    }
 
     var require = _require_.bind(null, './');
 
-${Array.from(this,  item => item.source).join('\n\n')}
+    function _require_(base, path) {
 
-    ${Array.from(this,  item => `module['${item.name}'].exports = ${item.identifier}(${
+        var module = _module_[
+                /^\\w/.test( path )  ?  path  :  ('./' + merge(base, path))
+            ],
+            exports;
 
-        Object.keys( item.dependency.compile ).map(
-            child => `require('${child}')`
-        ).concat(
-            `_require_.bind(null, '${item.base}')`,
-            `require('${item.name}')`,
-            `module['${item.name}']`
-        ).join(', ')
+        if (! module.exports) {
 
-    }) || require('${item.name}');`).join('\n\n    ')}
+            module.exports = { };
+
+            var dependency = module.dependency;
+
+            for (var i = 0;  dependency[i];  i++)
+                module.dependency[i] = require( dependency[i] );
+
+            exports = module.factory.apply(
+                null,  module.dependency.concat(
+                    _require_.bind(null, module.base),  module.exports,  module
+                )
+            );
+
+            if (exports != null)  module.exports = exports;
+
+            delete module.dependency;  delete module.factory;
+        }
+
+        return module.exports;
+    }
+
+    var _module_ = {
+        ${this.link(modName, varName)}
+    };
 
     return require('${this.entry.name}');
 }`);
