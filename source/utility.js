@@ -28,7 +28,8 @@ export function toES_5(code, onlyModule) {
 
     const option = {
         plugins:  ['transform-es2015-modules-commonjs'],
-        ast:      false
+        ast:      false,
+        babelrc:  false
     };
 
     if (! onlyModule)  option.presets = ['env'];

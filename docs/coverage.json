@@ -10,9 +10,9 @@
         3,
         5,
         9,
-        28,
-        36,
-        46
+        29,
+        37,
+        47
       ]
     },
     "source/Module.js": {
@@ -40,8 +40,8 @@
       "expectCount": 8,
       "actualCount": 6,
       "undocumentLines": [
-        62,
-        69
+        63,
+        70
       ]
     }
   }

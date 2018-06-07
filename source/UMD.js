@@ -26,7 +26,7 @@ export function generate(pack, name, entry, outside) {
     else if (typeof module === 'object')
         return  module.exports = factory(${modName.map(name => `require('${name}')`)});
     else
-        return  this.${name} = factory(${modName.map(name => `this.${name}`)});
+        return  this['${name}'] = factory(${modName.map(name => `this['${name}']`)});
 
 })(function (${varName}) {
 

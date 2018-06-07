@@ -67,6 +67,7 @@ Command.version( Config.version ).usage(&apos;[options] &lt;entry file&gt; [bund
             &apos;(For example:  old_1:new_1,/some_/i:new_2)&apos;
         ].join(&apos; &apos;)
     )
+    .option(&apos;-c, --command-line&apos;,  &apos;Bundle as a command script&apos;)
     .option(&apos;-s, --std-out&apos;,  &apos;Write into &quot;stdout&quot; without logs&apos;)
     .parse( process.argv );
 
@@ -89,7 +90,9 @@ const bundle_file = (
 
 if (! Command.stdOut)  console.time(&apos;Package bundle&apos;);
 
-const code = pack.bundle( Path.basename( bundle_file ).split(&apos;.&apos;)[0] );
+var code = pack.bundle( Path.basename( bundle_file ).split(&apos;.&apos;)[0] );
+
+if ( Command.commandLine )  code = &apos;#! /usr/bin/env node\n\n&apos; + code;
 
 if ( Command.stdOut )
     process.stdout.write( code );

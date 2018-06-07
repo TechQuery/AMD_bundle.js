@@ -72,7 +72,7 @@ export function generate(pack, name, entry, outside) {
     else if (typeof module === &apos;object&apos;)
         return  module.exports = factory(${modName.map(name =&gt; `require(&apos;${name}&apos;)`)});
     else
-        return  this.${name} = factory(${modName.map(name =&gt; `this.${name}`)});
+        return  this[&apos;${name}&apos;] = factory(${modName.map(name =&gt; `this[&apos;${name}&apos;]`)});
 
 })(function (${varName}) {
 

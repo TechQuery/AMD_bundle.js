@@ -48,13 +48,13 @@ Build **standalone release files** (Full source code, Minimized code & Source ma
 
  - Development dependency: [UglifyJS](http://lisperator.net/uglifyjs/)
 
- - **NPM-scripts** reference: [iQuery.js](https://github.com/TechQuery/iQuery.js/blob/master/package.json#L22)
+ - **NPM-scripts** reference: [iQuery.js](https://github.com/TechQuery/iQuery.js/blob/master/package.json#L39)
 
 #### Bundle ECMAScript 6+ codes
 
  - Development dependency: [Babel](https://babeljs.io/)
 
- - **NPM-scripts** reference: [WebCell](https://github.com/EasyWebApp/WebCell/blob/master/package.json#L29)
+ - **NPM-scripts** reference: [WebCell](https://github.com/EasyWebApp/WebCell/blob/master/package.json#L30)
 
 
 
