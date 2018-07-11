@@ -60,6 +60,15 @@ export function merge(base, path) {
 }
 
 
+/**
+ * @param {string} name - Name of a module
+ *
+ * @return {boolean} Whether `name` is a dependency out of this package
+ */
+export function outPackage(name) {  return /^[^./]/.test( name );  }
+
+
+
 function inNPM(path) {
 
     if (existsSync(path = join('node_modules', path)))

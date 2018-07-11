@@ -36,6 +36,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getNPMIndex">getNPMIndex</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getNPMPackage">getNPMPackage</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-merge">merge</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-outPackage">outPackage</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-toES_5">toES_5</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-toRegExp">toRegExp</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-DependencyMap">DependencyMap</a></span></span></li>
@@ -104,6 +105,15 @@ export function merge(base, path) {
             return  (input[index - 1]  ===  &apos;.&apos;)  ?  match  :  &apos;&apos;;
         });
 }
+
+
+/**
+ * @param {string} name - Name of a module
+ *
+ * @return {boolean} Whether `name` is a dependency out of this package
+ */
+export function outPackage(name) {  return /^[^./]/.test( name );  }
+
 
 
 function inNPM(path) {

@@ -35,9 +35,24 @@ amd-bundle -a \
 
 ### More options
 
- - Command-line: `amd-bundle --help`
+#### Command-line
 
- - JS Module: https://techquery.github.io/AMD_bundle.js/class/source/Package.js~Package.html#instance-method-bundle
+ `amd-bundle --help`
+
+    Usage: index [options] <entry file> [bundle file]
+
+    Options:
+
+      -V, --version                  output the version number
+      -a, --include-all              Bundle all dependencies (include those in "./node_modules/")
+      -m, --module-map <name pairs>  Map to replace some dependencies to others (For example:  old_1:new_1,/some_/i:new_2)
+      -c, --command-line             Bundle as a command script
+      -s, --std-out                  Write into "stdout" without logs
+      -h, --help                     output usage information
+
+#### JS Module
+
+https://techquery.github.io/AMD_bundle.js/class/source/Package.js~Package.html#instance-method-bundle
 
 
 ### Advanced

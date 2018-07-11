@@ -1,4 +1,4 @@
-import {toES_5, merge} from './utility';
+import { toES_5, merge, outPackage} from './utility';
 
 
 /**
@@ -32,12 +32,14 @@ export function generate(pack, name, entry, outside) {
 
 ${merge}
 
+${outPackage}
+
     var require = _require_.bind(null, './');
 
     function _require_(base, path) {
 
         var module = _module_[
-                /^\\w/.test( path )  ?  path  :  ('./' + merge(base, path))
+                outPackage( path )  ?  path  :  ('./' + merge(base, path))
             ],
             exports;
 

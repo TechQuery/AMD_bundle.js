@@ -36,6 +36,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getNPMIndex">getNPMIndex</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getNPMPackage">getNPMPackage</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-merge">merge</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-outPackage">outPackage</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-toES_5">toES_5</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-toRegExp">toRegExp</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-DependencyMap">DependencyMap</a></span></span></li>
@@ -64,12 +65,18 @@ amd-bundle -a \
 <li><p>treat <code>${process.cwd()}/node_modules/${module_full_name}</code> as a user&apos;s module to pack in</p>
 </li>
 </ol>
-<h3 id="more-options">More options</h3><ul>
-<li><p>Command-line: <code>amd-bundle --help</code></p>
-</li>
-<li><p>JS Module: <a href="https://techquery.github.io/AMD_bundle.js/class/source/Package.js~Package.html#instance-method-bundle">https://techquery.github.io/AMD_bundle.js/class/source/Package.js~Package.html#instance-method-bundle</a></p>
-</li>
-</ul>
+<h3 id="more-options">More options</h3><h4 id="command-line">Command-line</h4><p> <code>amd-bundle --help</code></p>
+<pre><code><code class="source-code prettyprint">Usage: index [options] &lt;entry file&gt; [bundle file]
+
+Options:
+
+  -V, --version                  output the version number
+  -a, --include-all              Bundle all dependencies (include those in &quot;./node_modules/&quot;)
+  -m, --module-map &lt;name pairs&gt;  Map to replace some dependencies to others (For example:  old_1:new_1,/some_/i:new_2)
+  -c, --command-line             Bundle as a command script
+  -s, --std-out                  Write into &quot;stdout&quot; without logs
+  -h, --help                     output usage information</code>
+</code></pre><h4 id="js-module">JS Module</h4><p><a href="https://techquery.github.io/AMD_bundle.js/class/source/Package.js~Package.html#instance-method-bundle">https://techquery.github.io/AMD_bundle.js/class/source/Package.js~Package.html#instance-method-bundle</a></p>
 <h3 id="advanced">Advanced</h3><p>Build <strong>standalone release files</strong> (Full source code, Minimized code &amp; Source map) by executing a single command (<code>npm run build</code>).</p>
 <h4 id="multiple-bundles-from-one-source">Multiple bundles from one source</h4><ul>
 <li><p>Development dependency: <a href="http://lisperator.net/uglifyjs/">UglifyJS</a></p>

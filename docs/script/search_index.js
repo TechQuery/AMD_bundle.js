@@ -42,6 +42,12 @@ window.esdocSearchIndex = [
     "function"
   ],
   [
+    "amd-bundle/source/utility.js~outpackage",
+    "function/index.html#static-function-outPackage",
+    "<span>outPackage</span> <span class=\"search-result-import-path\">amd-bundle/source/utility.js</span>",
+    "function"
+  ],
+  [
     "amd-bundle/source/utility.js~toes_5",
     "function/index.html#static-function-toES_5",
     "<span>toES_5</span> <span class=\"search-result-import-path\">amd-bundle/source/utility.js</span>",
@@ -162,27 +168,39 @@ window.esdocSearchIndex = [
     "test"
   ],
   [
+    "outpackage source/utility.js~outpackage,outpackage",
+    "test-file/test/utility.js.html#lineNumber46",
+    "Utility Determine package type by name",
+    "test"
+  ],
+  [
     "getnpmindex source/utility.js~getnpmindex,getnpmindex",
-    "test-file/test/utility.js.html#lineNumber37",
+    "test-file/test/utility.js.html#lineNumber70",
     "Utility Get \"index.js\" path of a module",
     "test"
   ],
   [
     "getnpmpackage source/utility.js~getnpmpackage,getnpmpackage",
-    "test-file/test/utility.js.html#lineNumber47",
+    "test-file/test/utility.js.html#lineNumber80",
     "Utility Get entry file path from \"package.json\" of a module",
     "test"
   ],
   [
     "getnpmfile source/utility.js~getnpmfile,getnpmfile",
-    "test-file/test/utility.js.html#lineNumber29",
+    "test-file/test/utility.js.html#lineNumber62",
     "Utility Get path of JS modules",
     "test"
   ],
   [
     "merge source/utility.js~merge,merge",
-    "test-file/test/utility.js.html#lineNumber21",
+    "test-file/test/utility.js.html#lineNumber38",
     "Utility Merge module paths",
+    "test"
+  ],
+  [
+    "toes_5 source/utility.js~toes_5,toes_5",
+    "test-file/test/utility.js.html#lineNumber21",
+    "Utility Transform ES 6+ module",
     "test"
   ],
   [

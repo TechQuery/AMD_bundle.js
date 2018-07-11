@@ -36,6 +36,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getNPMIndex">getNPMIndex</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getNPMPackage">getNPMPackage</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-merge">merge</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-outPackage">outPackage</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-toES_5">toES_5</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-toRegExp">toRegExp</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-DependencyMap">DependencyMap</a></span></span></li>
@@ -115,8 +116,6 @@ export default  class Module extends EventEmitter {
     }
 
     /**
-     * @protected
-     *
      * @param {string} name - Name of a module
      *
      * @return {string}
@@ -165,7 +164,7 @@ export default  class Module extends EventEmitter {
     load() {
 
         this.source = readFileSync(
-            ((! this.dependency.outside)  &amp;&amp;  /^\w/.test( this.name ))  ?
+            ((! this.dependency.outside)  &amp;&amp;  Utility.outPackage( this.name ))  ?
                 this.searchNPM()  :  join(this.path, `${this.name}.js`)
         ) + &apos;&apos;;
 
@@ -210,7 +209,7 @@ export default  class Module extends EventEmitter {
 
         if ((type === &apos;compile&apos;)  &amp;&amp;  AMD_CJS.includes( name ))  return;
 
-        name = /^\w/.test( name )  ?  name  :  (
+        name = Utility.outPackage( name )  ?  name  :  (
             &apos;./&apos;  +  join(this.base, name).replace(/\\/g, &apos;/&apos;)
         );
 

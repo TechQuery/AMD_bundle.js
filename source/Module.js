@@ -69,8 +69,6 @@ export default  class Module extends EventEmitter {
     }
 
     /**
-     * @protected
-     *
      * @param {string} name - Name of a module
      *
      * @return {string}
@@ -119,7 +117,7 @@ export default  class Module extends EventEmitter {
     load() {
 
         this.source = readFileSync(
-            ((! this.dependency.outside)  &&  /^\w/.test( this.name ))  ?
+            ((! this.dependency.outside)  &&  Utility.outPackage( this.name ))  ?
                 this.searchNPM()  :  join(this.path, `${this.name}.js`)
         ) + '';
 
@@ -164,7 +162,7 @@ export default  class Module extends EventEmitter {
 
         if ((type === 'compile')  &&  AMD_CJS.includes( name ))  return;
 
-        name = /^\w/.test( name )  ?  name  :  (
+        name = Utility.outPackage( name )  ?  name  :  (
             './'  +  join(this.base, name).replace(/\\/g, '/')
         );
 

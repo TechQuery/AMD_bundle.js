@@ -36,6 +36,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getNPMIndex">getNPMIndex</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getNPMPackage">getNPMPackage</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-merge">merge</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-outPackage">outPackage</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-toES_5">toES_5</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-toRegExp">toRegExp</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-DependencyMap">DependencyMap</a></span></span></li>
@@ -45,7 +46,7 @@
 
 <div class="content" data-ice="content"><h1 data-ice="title">test/utility.js</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import {
-    toRegExp, merge, getNPMFile, getNPMIndex, getNPMPackage
+    toRegExp, toES_5, merge, outPackage, getNPMFile, getNPMIndex, getNPMPackage
 } from &apos;../source/utility&apos;;
 
 
@@ -62,12 +63,45 @@ describe(&apos;Utility&apos;,  () =&gt; {
     });
 
     /**
+     * @test {toES_5}
+     */
+    it(&apos;Transform ES 6+ module&apos;,  () =&gt; {
+
+        toES_5(`
+import &apos;babel-polyfill&apos;;
+
+async function test() { }
+
+`, true).should.be.equal(`
+
+require(&apos;babel-polyfill&apos;);
+
+async function test() {}`.trim());
+    });
+
+    /**
      * @test {merge}
      */
     it(
         &apos;Merge module paths&apos;,
         ()  =&gt;  merge(&apos;./../test//../&apos;, &apos;./example&apos;).should.be.equal(&apos;../example&apos;)
     );
+
+    /**
+     * @test {outPackage}
+     */
+    it(&apos;Determine package type by name&apos;,  () =&gt; {
+
+        outPackage(&apos;./test&apos;).should.be.false();
+
+        outPackage(&apos;../test&apos;).should.be.false();
+
+        outPackage(&apos;/test&apos;).should.be.false();
+
+        outPackage(&apos;test&apos;).should.be.true();
+
+        outPackage(&apos;@example/test&apos;).should.be.true();
+    });
 
     /**
      * @test {getNPMFile}
