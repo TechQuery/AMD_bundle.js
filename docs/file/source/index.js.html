@@ -37,9 +37,8 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getNPMPackage">getNPMPackage</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-merge">merge</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-outPackage">outPackage</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-toES_5">toES_5</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-toRegExp">toRegExp</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-DependencyMap">DependencyMap</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-NameMap">NameMap</a></span></span></li>
 </ul>
 </div>
 </nav>
@@ -47,46 +46,49 @@
 <div class="content" data-ice="content"><h1 data-ice="title">source/index.js</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">#! /usr/bin/env node
 
-const  Path = require(&apos;path&apos;),  FS = require(&apos;fs-extra&apos;);
+import Path from &apos;path&apos;;
 
-const  Command = require(&apos;commander&apos;),  Config = require(&apos;../package.json&apos;);
+import FS from &apos;fs-extra&apos;;
 
-require(&apos;babel-register&apos;);  require(&apos;babel-polyfill&apos;);
+import Command from &apos;commander&apos;;
 
-const  Package = require(&apos;./Package&apos;).default,  utility = require(&apos;./utility&apos;);
+import &apos;@babel/polyfill&apos;;
+
+import Package from &apos;./Package&apos;;
+
+import {
+    packageOf, currentModulePath, configOf, patternOf
+} from &apos;@tech_query/node-toolkit&apos;;
 
 
-Command.version( Config.version ).usage(&apos;[options] &lt;entry file&gt; [bundle file]&apos;)
+const meta = packageOf( currentModulePath() ).meta;
+
+Command
+    .version( meta.version )
+    .description( meta.description )
+    .usage(&apos;[options] &lt;entry file&gt; [bundle file]&apos;)
     .arguments(&apos;&lt;entry file&gt; [bundle file]&apos;)
     .option(
         &apos;-a, --include-all&apos;,
         &apos;Bundle all dependencies (include those in &quot;./node_modules/&quot;)&apos;
-    )
-    .option(
-        &apos;-m, --module-map &lt;name pairs&gt;&apos;,  [
-            &apos;Map to replace some dependencies to others&apos;,
-            &apos;(For example:  old_1:new_1,/some_/i:new_2)&apos;
-        ].join(&apos; &apos;)
     )
     .option(&apos;-c, --command-line&apos;,  &apos;Bundle as a command script&apos;)
     .option(&apos;-s, --std-out&apos;,  &apos;Write into &quot;stdout&quot; without logs&apos;)
     .parse( process.argv );
 
 
-const entry_file = Command.args[0], module_map = new Map();
-
-(Command.moduleMap || &apos;&apos;).replace(
-    /(.+?):([^,]+)/g,
-    (_, oldName, newName)  =&gt;
-        module_map.set(utility.toRegExp( oldName ) || oldName,  newName)
-);
+const entry_file = Command.args[0],
+    module_map = (configOf( meta.name ) || &apos;&apos;).moduleMap;
 
 const bundle_file = (
         Command.args[1] ||
         Path.join(entry_file,  &apos;../../&apos;,  Path.basename( entry_file ))
     ) + &apos;.js&apos;,
     pack = new Package(
-        entry_file,  Command.includeAll,  module_map,  Command.stdOut
+        entry_file,
+        Command.includeAll,
+        module_map  &amp;&amp;  patternOf(module_map),
+        Command.stdOut
     );
 
 if (! Command.stdOut)  console.time(&apos;Package bundle&apos;);

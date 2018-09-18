@@ -48,18 +48,6 @@ window.esdocSearchIndex = [
     "function"
   ],
   [
-    "amd-bundle/source/utility.js~toes_5",
-    "function/index.html#static-function-toES_5",
-    "<span>toES_5</span> <span class=\"search-result-import-path\">amd-bundle/source/utility.js</span>",
-    "function"
-  ],
-  [
-    "amd-bundle/source/utility.js~toregexp",
-    "function/index.html#static-function-toRegExp",
-    "<span>toRegExp</span> <span class=\"search-result-import-path\">amd-bundle/source/utility.js</span>",
-    "function"
-  ],
-  [
     "",
     "test-file/test/Package.js.html#lineNumber78",
     "Command line",
@@ -121,7 +109,7 @@ window.esdocSearchIndex = [
   ],
   [
     "module#mapname source/module.js~module#mapname,module#mapname",
-    "test-file/test/Module.js.html#lineNumber72",
+    "test-file/test/Module.js.html#lineNumber74",
     "Module parser Replace a dependency",
     "test"
   ],
@@ -162,45 +150,33 @@ window.esdocSearchIndex = [
     "test"
   ],
   [
-    "toregexp source/utility.js~toregexp,toregexp",
-    "test-file/test/utility.js.html#lineNumber11",
-    "Utility Create RegExp() from a literal string",
-    "test"
-  ],
-  [
     "outpackage source/utility.js~outpackage,outpackage",
-    "test-file/test/utility.js.html#lineNumber46",
+    "test-file/test/utility.js.html#lineNumber19",
     "Utility Determine package type by name",
     "test"
   ],
   [
     "getnpmindex source/utility.js~getnpmindex,getnpmindex",
-    "test-file/test/utility.js.html#lineNumber70",
+    "test-file/test/utility.js.html#lineNumber43",
     "Utility Get \"index.js\" path of a module",
     "test"
   ],
   [
     "getnpmpackage source/utility.js~getnpmpackage,getnpmpackage",
-    "test-file/test/utility.js.html#lineNumber80",
+    "test-file/test/utility.js.html#lineNumber53",
     "Utility Get entry file path from \"package.json\" of a module",
     "test"
   ],
   [
     "getnpmfile source/utility.js~getnpmfile,getnpmfile",
-    "test-file/test/utility.js.html#lineNumber62",
+    "test-file/test/utility.js.html#lineNumber35",
     "Utility Get path of JS modules",
     "test"
   ],
   [
     "merge source/utility.js~merge,merge",
-    "test-file/test/utility.js.html#lineNumber38",
+    "test-file/test/utility.js.html#lineNumber11",
     "Utility Merge module paths",
-    "test"
-  ],
-  [
-    "toes_5 source/utility.js~toes_5,toes_5",
-    "test-file/test/utility.js.html#lineNumber21",
-    "Utility Transform ES 6+ module",
     "test"
   ],
   [
@@ -534,6 +510,12 @@ window.esdocSearchIndex = [
     "member"
   ],
   [
+    "source/module.js~module#filename",
+    "class/source/Module.js~Module.html#instance-member-fileName",
+    "source/Module.js~Module#fileName",
+    "member"
+  ],
+  [
     "source/module.js~module#identifier",
     "class/source/Module.js~Module.html#instance-get-identifier",
     "source/Module.js~Module#identifier",
@@ -576,12 +558,6 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
-    "source/module.js~module#path",
-    "class/source/Module.js~Module.html#instance-member-path",
-    "source/Module.js~Module#path",
-    "member"
-  ],
-  [
     "source/module.js~module#searchnpm",
     "class/source/Module.js~Module.html#instance-method-searchNPM",
     "source/Module.js~Module#searchNPM",
@@ -604,6 +580,12 @@ window.esdocSearchIndex = [
     "class/source/Module.js~Module.html#static-method-identifierOf",
     "source/Module.js~Module.identifierOf",
     "method"
+  ],
+  [
+    "source/module.js~namemap",
+    "typedef/index.html#static-typedef-NameMap",
+    "source/Module.js~NameMap",
+    "typedef"
   ],
   [
     "source/package.js",

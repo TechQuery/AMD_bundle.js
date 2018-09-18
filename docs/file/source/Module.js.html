@@ -37,9 +37,8 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getNPMPackage">getNPMPackage</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-merge">merge</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-outPackage">outPackage</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-toES_5">toES_5</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-toRegExp">toRegExp</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-DependencyMap">DependencyMap</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-NameMap">NameMap</a></span></span></li>
 </ul>
 </div>
 </nav>
@@ -53,8 +52,16 @@ import {readFileSync} from &apos;fs&apos;;
 
 import * as Utility from &apos;./utility&apos;;
 
+import { toES_5 } from &apos;@tech_query/node-toolkit&apos;;
+
 
 const AMD_CJS = [&apos;require&apos;, &apos;exports&apos;, &apos;module&apos;];
+
+/**
+ * Key for the replacement of a module name, and value for a {@link RegExp}
+ *
+ * @typedef {Object} NameMap
+ */
 
 /**
  * Key for module path &amp; value for local variable
@@ -71,7 +78,7 @@ export default  class Module extends EventEmitter {
      * @param {string}  name               - Path of this module
      * @param {string}  [path=&apos;.&apos;]         - Root path of the package which this module belongs to
      * @param {boolean} [includeAll=false] - Treat NPM modules as CommonJS modules
-     * @param {Map}     [nameMap]          - Map to replace some dependencies to others
+     * @param {NameMap} [nameMap]          - Map to replace some dependencies to others
      */
     constructor(name,  path = &apos;.&apos;,  includeAll = false,  nameMap) {
         /**
@@ -79,21 +86,21 @@ export default  class Module extends EventEmitter {
          *
          * @type {string}
          */
-        super().name = name;
+        super().name = name.replace(/\\/g, &apos;/&apos;);
 
         /**
          * Directory path of this module
          *
          * @type {string}
          */
-        this.base = dirname( name ).replace(/\\/g, &apos;/&apos;);
+        this.base = dirname( this.name );
 
         /**
-         * Root path of the package which this module belongs to
+         * Full name of this module file
          *
          * @type {string}
          */
-        this.path = path;
+        this.fileName = join(path, `${this.name}.js`);
 
         /**
          * @type     {Object}
@@ -108,11 +115,9 @@ export default  class Module extends EventEmitter {
         };
 
         /**
-         * Key for original name of a module &amp; value for module name of the replacement
-         *
-         * @type {Object}
+         * @type {NameMap}
          */
-        this.nameMap = nameMap  ||  new Map();
+        this.nameMap = nameMap  ||  { };
     }
 
     /**
@@ -165,11 +170,11 @@ export default  class Module extends EventEmitter {
 
         this.source = readFileSync(
             ((! this.dependency.outside)  &amp;&amp;  Utility.outPackage( this.name ))  ?
-                this.searchNPM()  :  join(this.path, `${this.name}.js`)
+                this.searchNPM() : this.fileName
         ) + &apos;&apos;;
 
         if (/^(import|export) /m.test( this.source ))
-            this.source = Utility.toES_5(this.source, true);
+            this.source = toES_5(this.source, this.fileName, true);
 
         return  this.source = this.source.replace(/\r\n/g, &apos;\n&apos;);
     }
@@ -183,15 +188,13 @@ export default  class Module extends EventEmitter {
      */
     mapName(module) {
 
-        for (let [oldName, newName]  of  this.nameMap) {
+        for (let name in this.nameMap) {
 
-            let match = (oldName instanceof RegExp)  &amp;&amp;  oldName.exec( module );
+            let result = module.replace(this.nameMap[ name ],  name);
 
-            match = (match || [ ]).filter( Boolean );
+            if (result !== module) {
 
-            if (match[0]  ||  (oldName === module)) {
-
-                this.emit(&apos;replace&apos;, module, newName);    return newName;
+                this.emit(&apos;replace&apos;, module, result);  return result;
             }
         }
     }
@@ -258,7 +261,7 @@ export default  class Module extends EventEmitter {
     parseCJS() {
 
         this.source = this.source.replace(
-            /((?:var|let|const)\s+[\s\S]+?=\s*)?require\(\s*(?:&apos;|&quot;)(.+?)(?:&apos;|&quot;)\s*\)/mg,
+            /((?:var|let|const)\s+\w+?\s*=.*?)?require\(\s*(?:&apos;|&quot;)(.+?)(?:&apos;|&quot;)\s*\)/mg,
             (_, assign, modName)  =&gt;
                 `${assign || &apos;&apos;}require(&apos;${
                     this.addChild(&apos;runtime&apos;, modName)  ||  modName

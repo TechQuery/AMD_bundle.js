@@ -6,8 +6,16 @@ import {readFileSync} from 'fs';
 
 import * as Utility from './utility';
 
+import { toES_5 } from '@tech_query/node-toolkit';
+
 
 const AMD_CJS = ['require', 'exports', 'module'];
+
+/**
+ * Key for the replacement of a module name, and value for a {@link RegExp}
+ *
+ * @typedef {Object} NameMap
+ */
 
 /**
  * Key for module path & value for local variable
@@ -24,7 +32,7 @@ export default  class Module extends EventEmitter {
      * @param {string}  name               - Path of this module
      * @param {string}  [path='.']         - Root path of the package which this module belongs to
      * @param {boolean} [includeAll=false] - Treat NPM modules as CommonJS modules
-     * @param {Map}     [nameMap]          - Map to replace some dependencies to others
+     * @param {NameMap} [nameMap]          - Map to replace some dependencies to others
      */
     constructor(name,  path = '.',  includeAll = false,  nameMap) {
         /**
@@ -32,21 +40,21 @@ export default  class Module extends EventEmitter {
          *
          * @type {string}
          */
-        super().name = name;
+        super().name = name.replace(/\\/g, '/');
 
         /**
          * Directory path of this module
          *
          * @type {string}
          */
-        this.base = dirname( name ).replace(/\\/g, '/');
+        this.base = dirname( this.name );
 
         /**
-         * Root path of the package which this module belongs to
+         * Full name of this module file
          *
          * @type {string}
          */
-        this.path = path;
+        this.fileName = join(path, `${this.name}.js`);
 
         /**
          * @type     {Object}
@@ -61,11 +69,9 @@ export default  class Module extends EventEmitter {
         };
 
         /**
-         * Key for original name of a module & value for module name of the replacement
-         *
-         * @type {Object}
+         * @type {NameMap}
          */
-        this.nameMap = nameMap  ||  new Map();
+        this.nameMap = nameMap  ||  { };
     }
 
     /**
@@ -118,11 +124,11 @@ export default  class Module extends EventEmitter {
 
         this.source = readFileSync(
             ((! this.dependency.outside)  &&  Utility.outPackage( this.name ))  ?
-                this.searchNPM()  :  join(this.path, `${this.name}.js`)
+                this.searchNPM() : this.fileName
         ) + '';
 
         if (/^(import|export) /m.test( this.source ))
-            this.source = Utility.toES_5(this.source, true);
+            this.source = toES_5(this.source, this.fileName, true);
 
         return  this.source = this.source.replace(/\r\n/g, '\n');
     }
@@ -136,15 +142,13 @@ export default  class Module extends EventEmitter {
      */
     mapName(module) {
 
-        for (let [oldName, newName]  of  this.nameMap) {
+        for (let name in this.nameMap) {
 
-            let match = (oldName instanceof RegExp)  &&  oldName.exec( module );
+            let result = module.replace(this.nameMap[ name ],  name);
 
-            match = (match || [ ]).filter( Boolean );
+            if (result !== module) {
 
-            if (match[0]  ||  (oldName === module)) {
-
-                this.emit('replace', module, newName);    return newName;
+                this.emit('replace', module, result);  return result;
             }
         }
     }
@@ -211,7 +215,7 @@ export default  class Module extends EventEmitter {
     parseCJS() {
 
         this.source = this.source.replace(
-            /((?:var|let|const)\s+[\s\S]+?=\s*)?require\(\s*(?:'|")(.+?)(?:'|")\s*\)/mg,
+            /((?:var|let|const)\s+\w+?\s*=.*?)?require\(\s*(?:'|")(.+?)(?:'|")\s*\)/mg,
             (_, assign, modName)  =>
                 `${assign || ''}require('${
                     this.addChild('runtime', modName)  ||  modName

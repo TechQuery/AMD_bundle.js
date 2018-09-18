@@ -37,9 +37,8 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getNPMPackage">getNPMPackage</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-merge">merge</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-outPackage">outPackage</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-toES_5">toES_5</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-toRegExp">toRegExp</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-DependencyMap">DependencyMap</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-NameMap">NameMap</a></span></span></li>
 </ul>
 </div>
 </nav>
@@ -107,10 +106,12 @@ function (A, require, exports, module) {/* AMD module */
 Object.defineProperty(exports, &quot;__esModule&quot;, {
   value: true
 });
+exports.default = void 0;
 
-require(&apos;../c&apos;);
+require(&quot;../c&quot;);
 
-exports.default = &apos;This is B&apos;;`.trim())
+var _default = &apos;This is B&apos;;
+exports.default = _default;`.trim())
     );
 
     /**
@@ -119,7 +120,7 @@ exports.default = &apos;This is B&apos;;`.trim())
     it(&apos;Replace a dependency&apos;,  () =&gt; {
 
         module = new Module(
-            &apos;./index&apos;,  &apos;./test/example/&apos;,  true,  new Map([[&apos;test&apos;, &apos;jquery&apos;]])
+            &apos;./index&apos;,  &apos;./test/example/&apos;,  true,  {jquery: /^test$/}
         );
 
         module.parse().should.be.equal(`

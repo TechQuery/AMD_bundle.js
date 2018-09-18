@@ -1,37 +1,10 @@
 import {
-    toRegExp, toES_5, merge, outPackage, getNPMFile, getNPMIndex, getNPMPackage
+    merge, outPackage, getNPMFile, getNPMIndex, getNPMPackage
 } from '../source/utility';
 
 
 
 describe('Utility',  () => {
-    /**
-     * @test {toRegExp}
-     */
-    it('Create RegExp() from a literal string',  () => {
-
-        toRegExp('/polyfill|ext\\//ig').should.be.eql( /polyfill|ext\//gi );
-
-        (toRegExp('test') === undefined).should.be.true();
-    });
-
-    /**
-     * @test {toES_5}
-     */
-    it('Transform ES 6+ module',  () => {
-
-        toES_5(`
-import 'babel-polyfill';
-
-async function test() { }
-
-`, true).should.be.equal(`
-
-require('babel-polyfill');
-
-async function test() {}`.trim());
-    });
-
     /**
      * @test {merge}
      */
@@ -69,8 +42,8 @@ async function test() {}`.trim());
      */
     it(
         'Get "index.js" path of a module',
-        () => getNPMIndex('koapache/source').should.be.equal(
-            'node_modules/koapache/source/index.js'
+        () => getNPMIndex('commander').should.be.equal(
+            'node_modules/commander/index.js'
         )
     );
 
@@ -80,7 +53,7 @@ async function test() {}`.trim());
     it(
         'Get entry file path from "package.json" of a module',
         () => getNPMPackage('koapache').should.be.equal(
-            'node_modules/koapache/source/index.js'
+            'node_modules/koapache/dist/koapache.js'
         )
     );
 });

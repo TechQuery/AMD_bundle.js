@@ -37,9 +37,8 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getNPMPackage">getNPMPackage</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-merge">merge</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-outPackage">outPackage</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-toES_5">toES_5</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-toRegExp">toRegExp</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-DependencyMap">DependencyMap</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-NameMap">NameMap</a></span></span></li>
 </ul>
 </div>
 </nav>
@@ -124,7 +123,7 @@ describe(&apos;Package bundler&apos;,  () =&gt; {
 
 describe(&apos;Command line&apos;,  () =&gt; {
 
-    const entry = &apos;node source/index test/example/index&apos;;
+    const entry = &apos;node build/index test/example/index&apos;;
 
     it(&apos;Output to a file&apos;,  () =&gt; {
 
@@ -144,9 +143,9 @@ describe(&apos;Command line&apos;,  () =&gt; {
 
     it(&apos;Replace a module by the map option&apos;,  () =&gt; {
 
-        (execSync(`${entry} test/example/build -m /T/i:jquery`) + &apos;&apos;)
+        (execSync(`cross-env NODE_ENV=test  ${entry} test/example/build`) + &apos;&apos;)
             .should.be.startWith(`
-&#x2192; Module &quot;test&quot; will be replaced by &quot;jquery&quot;
+&#x2192; Module &quot;test&quot; will be replaced by &quot;test4sample&quot;
 &#x221A; Module &quot;./index&quot; has been bundled
 &#x221A; Module &quot;./a&quot; has been bundled
 &#x221A; Module &quot;./libs/b&quot; has been bundled
@@ -155,7 +154,7 @@ describe(&apos;Command line&apos;,  () =&gt; {
 
         (readFileSync(&apos;test/example/build.js&apos;) + &apos;&apos;).should.be.equal(
             bundle_code
-                .replace(/test([^:(])/g, &apos;jquery$1&apos;)
+                .replace(/test([^:(])/g, &apos;test4sample$1&apos;)
                 .replace(/(&apos;|\.)index/g, &apos;$1build&apos;)
         );
     });

@@ -1,5 +1,28 @@
-import { toES_5, merge, outPackage} from './utility';
+import { toES_5 } from '@tech_query/node-toolkit';
 
+import { merge, outPackage } from './utility';
+
+
+function concatModule(pack, name, modName, varName) {  /* eslint-disable */
+
+    return toES_5(`
+    var _module_ = {
+        ${
+    Array.from(pack,  item => `
+        '${item.name}':  {
+            base:        '${item.base}',
+            dependency:  ${JSON.stringify( Object.keys( item.dependency.compile ) )},
+            factory:     ${item.source}
+        }`.slice(1)
+    ).concat(
+        modName.map((name, index)  =>  `'${name}':  {exports: ${varName[index]}}`)
+    ).join(',\n')}
+    };
+`,
+        false,
+        name
+    );
+}
 
 /**
  * @param {Package}       pack
@@ -66,20 +89,7 @@ ${outPackage}
         return module.exports;
     }
 
-${toES_5(`
-    var _module_ = {
-        ${
-    Array.from(pack,  item => `
-        '${item.name}':  {
-            base:        '${item.base}',
-            dependency:  ${JSON.stringify( Object.keys( item.dependency.compile ) )},
-            factory:     ${item.source}
-        }`.slice(1)
-    ).concat(
-        modName.map((name, index)  =>  `'${name}':  {exports: ${varName[index]}}`)
-    ).join(',\n')}
-    };
-`)}
+${concatModule(pack, name, modName, varName)}
 
     return require('${entry}');
 });`.trim();

@@ -1,43 +1,6 @@
-import {transform} from 'babel-core';
-
 import {join} from 'path';
 
 import {existsSync, readFileSync, statSync} from 'fs';
-
-
-/**
- * @param {string} raw - RegExp literal string
- *
- * @return {?RegExp}
- */
-export function toRegExp(raw) {
-
-    const match = raw.match( /^\/(.+)\/([a-z]+)?$/ );
-
-    if ( match )  return  new RegExp(match[1], match[2]);
-}
-
-
-/**
- * @param {string}  code         - ES 6+ source code
- * @param {boolean} [onlyModule] - Only transform ES 6 module to CommonJS
- *
- * @return {string} ES 5 source code
- */
-export function toES_5(code, onlyModule) {
-
-    const option = {
-        plugins:  ['transform-es2015-modules-commonjs'],
-        ast:      false,
-        babelrc:  false
-    };
-
-    if (! onlyModule)  option.presets = ['env'];
-
-    return  transform(code, option).code.replace(
-        /^(?:'|")use strict(?:'|");\n+/,  ''
-    );
-}
 
 
 /**
@@ -69,16 +32,18 @@ export function outPackage(name) {  return /^[^./]/.test( name );  }
 
 
 
-function inNPM(path) {
+function fileInNPM(path) {
 
-    if (existsSync(path = join('node_modules', path)))
+    path = join('node_modules', path);
+
+    if (existsSync( path )  &&  statSync( path ).isFile())
         return  path.replace(/\\/g, '/');
 }
 
 
 function findNPMFile(list) {
 
-    for (let path of list)  if (path = inNPM( path ))  return path;
+    for (let path of list)  if (path = fileInNPM( path ))  return path;
 }
 
 
@@ -111,13 +76,13 @@ export function getNPMIndex(name) {
  */
 export function getNPMPackage(name) {
 
-    var path = inNPM(`${name}/package.json`);
+    var path = fileInNPM(`${name}/package.json`);
 
     if (! path)  return;
 
     const config = JSON.parse( readFileSync( path ) );
 
     for (let key  of  ['main', 'browser'])
-        if (path = inNPM( join(name, config[key]) ))
+        if (path = fileInNPM( join(name, config[key]) ))
             return  statSync( path ).isFile()  ?  path  :  getNPMIndex( path );
 }

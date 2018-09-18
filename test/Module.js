@@ -60,10 +60,12 @@ function (A, require, exports, module) {/* AMD module */
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.default = void 0;
 
-require('../c');
+require("../c");
 
-exports.default = 'This is B';`.trim())
+var _default = 'This is B';
+exports.default = _default;`.trim())
     );
 
     /**
@@ -72,7 +74,7 @@ exports.default = 'This is B';`.trim())
     it('Replace a dependency',  () => {
 
         module = new Module(
-            './index',  './test/example/',  true,  new Map([['test', 'jquery']])
+            './index',  './test/example/',  true,  {jquery: /^test$/}
         );
 
         module.parse().should.be.equal(`

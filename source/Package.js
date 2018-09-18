@@ -12,11 +12,11 @@ const Array_iterator = [ ][Symbol.iterator], Array_proto = Array.prototype;
  */
 export default  class Package {
     /**
-     * @param {string}  path               - The entry file path of this package
+     * @param {string}   path               - The entry file path of this package
      *                                       (relative to `process.cwd()`)
-     * @param {boolean} [includeAll=false] - Include NPM modules in the final bundle
-     * @param {?Map}    [moduleMap]        - Map to replace some dependencies to others
-     * @param {boolean} [noLog=false]      - Disable log output
+     * @param {boolean}  [includeAll=false] - Include NPM modules in the final bundle
+     * @param {?NameMap} moduleMap          - Map to replace some dependencies to others
+     * @param {boolean}  [noLog=false]      - Disable log output
      */
     constructor(path,  includeAll = false,  moduleMap,  noLog = false) {
         /**
@@ -48,9 +48,7 @@ export default  class Package {
         this.length = 0;
 
         /**
-         * Key for original name of a module & value for module name of the replacement
-         *
-         * @type {Object}
+         * @type {NameMap}
          */
         this.moduleMap = moduleMap;
 

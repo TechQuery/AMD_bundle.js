@@ -37,54 +37,16 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getNPMPackage">getNPMPackage</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-merge">merge</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-outPackage">outPackage</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-toES_5">toES_5</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-toRegExp">toRegExp</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-DependencyMap">DependencyMap</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-NameMap">NameMap</a></span></span></li>
 </ul>
 </div>
 </nav>
 
 <div class="content" data-ice="content"><h1 data-ice="title">source/utility.js</h1>
-<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import {transform} from &apos;babel-core&apos;;
-
-import {join} from &apos;path&apos;;
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import {join} from &apos;path&apos;;
 
 import {existsSync, readFileSync, statSync} from &apos;fs&apos;;
-
-
-/**
- * @param {string} raw - RegExp literal string
- *
- * @return {?RegExp}
- */
-export function toRegExp(raw) {
-
-    const match = raw.match( /^\/(.+)\/([a-z]+)?$/ );
-
-    if ( match )  return  new RegExp(match[1], match[2]);
-}
-
-
-/**
- * @param {string}  code         - ES 6+ source code
- * @param {boolean} [onlyModule] - Only transform ES 6 module to CommonJS
- *
- * @return {string} ES 5 source code
- */
-export function toES_5(code, onlyModule) {
-
-    const option = {
-        plugins:  [&apos;transform-es2015-modules-commonjs&apos;],
-        ast:      false,
-        babelrc:  false
-    };
-
-    if (! onlyModule)  option.presets = [&apos;env&apos;];
-
-    return  transform(code, option).code.replace(
-        /^(?:&apos;|&quot;)use strict(?:&apos;|&quot;);\n+/,  &apos;&apos;
-    );
-}
 
 
 /**
@@ -116,16 +78,18 @@ export function outPackage(name) {  return /^[^./]/.test( name );  }
 
 
 
-function inNPM(path) {
+function fileInNPM(path) {
 
-    if (existsSync(path = join(&apos;node_modules&apos;, path)))
+    path = join(&apos;node_modules&apos;, path);
+
+    if (existsSync( path )  &amp;&amp;  statSync( path ).isFile())
         return  path.replace(/\\/g, &apos;/&apos;);
 }
 
 
 function findNPMFile(list) {
 
-    for (let path of list)  if (path = inNPM( path ))  return path;
+    for (let path of list)  if (path = fileInNPM( path ))  return path;
 }
 
 
@@ -158,14 +122,14 @@ export function getNPMIndex(name) {
  */
 export function getNPMPackage(name) {
 
-    var path = inNPM(`${name}/package.json`);
+    var path = fileInNPM(`${name}/package.json`);
 
     if (! path)  return;
 
     const config = JSON.parse( readFileSync( path ) );
 
     for (let key  of  [&apos;main&apos;, &apos;browser&apos;])
-        if (path = inNPM( join(name, config[key]) ))
+        if (path = fileInNPM( join(name, config[key]) ))
             return  statSync( path ).isFile()  ?  path  :  getNPMIndex( path );
 }
 </code></pre>

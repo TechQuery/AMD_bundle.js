@@ -37,21 +37,20 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getNPMPackage">getNPMPackage</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-merge">merge</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-outPackage">outPackage</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-toES_5">toES_5</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-toRegExp">toRegExp</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-DependencyMap">DependencyMap</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-NameMap">NameMap</a></span></span></li>
 </ul>
 </div>
 </nav>
 
 <div class="content" data-ice="content"><div class="header-notice">
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import Module from &apos;<span><a href="file/source/Module.js.html#lineNumber22">amd-bundle/source/Module.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import Module from &apos;<span><a href="file/source/Module.js.html#lineNumber30">amd-bundle/source/Module.js</a></span>&apos;</code></pre></div>
   <span data-ice="access">public</span>
   <span data-ice="kind">class</span>
   
   
   
-  <span data-ice="source">| <span><a href="file/source/Module.js.html#lineNumber22">source</a></span></span>
+  <span data-ice="source">| <span><a href="file/source/Module.js.html#lineNumber30">source</a></span></span>
 </div>
 
 <div class="self-detail detail">
@@ -144,7 +143,7 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/source/Module.js~Module.html#instance-constructor-constructor">constructor</a></span></span><span class="code" data-ice="signature">(name: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, path: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, includeAll: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>, nameMap: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map">Map</a></span>)</span>
+          <span class="code" data-ice="name"><span><a href="class/source/Module.js~Module.html#instance-constructor-constructor">constructor</a></span></span><span class="code" data-ice="signature">(name: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, path: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, includeAll: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>, nameMap: <span><a href="typedef/index.html#static-typedef-NameMap">NameMap</a></span>)</span>
         </p>
       </div>
       <div>
@@ -255,6 +254,35 @@
     <td>
       <span class="access" data-ice="access">public</span>
       
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          
+          <span class="code" data-ice="name"><span><a href="class/source/Module.js~Module.html#instance-member-fileName">fileName</a></span></span><span class="code" data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Full name of this module file</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
       <span class="kind" data-ice="kind">get</span>
       
       <span class="override" data-ice="override"></span>
@@ -294,43 +322,13 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/source/Module.js~Module.html#instance-member-nameMap">nameMap</a></span></span><span class="code" data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></span>
+          <span class="code" data-ice="name"><span><a href="class/source/Module.js~Module.html#instance-member-nameMap">nameMap</a></span></span><span class="code" data-ice="signature">: <span><a href="typedef/index.html#static-typedef-NameMap">NameMap</a></span></span>
         </p>
       </div>
       <div>
         
         
-        <div data-ice="description"><p>Key for original name of a module &amp; value for module name of the replacement</p>
-</div>
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      
-      
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-          
-          
-          
-          <span class="code" data-ice="name"><span><a href="class/source/Module.js~Module.html#instance-member-path">path</a></span></span><span class="code" data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></span>
-        </p>
-      </div>
-      <div>
         
-        
-        <div data-ice="description"><p>Root path of the package which this module belongs to</p>
-</div>
       </div>
     </td>
     <td>
@@ -625,7 +623,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/source/Module.js.html#lineNumber76">source</a></span></span>
+      <span data-ice="source"><span><a href="file/source/Module.js.html#lineNumber82">source</a></span></span>
     </span>
   </h3>
 
@@ -696,11 +694,11 @@
     
     
     
-    <span class="code" data-ice="name">constructor</span><span class="code" data-ice="signature">(name: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, path: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, includeAll: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>, nameMap: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map">Map</a></span>)</span>
+    <span class="code" data-ice="name">constructor</span><span class="code" data-ice="signature">(name: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, path: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, includeAll: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>, nameMap: <span><a href="typedef/index.html#static-typedef-NameMap">NameMap</a></span>)</span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/source/Module.js.html#lineNumber29">source</a></span></span>
+      <span data-ice="source"><span><a href="file/source/Module.js.html#lineNumber37">source</a></span></span>
     </span>
   </h3>
 
@@ -744,7 +742,7 @@
     </tr>
 <tr data-ice="property" data-depth="0">
       <td data-ice="name" class="code" data-depth="0">nameMap</td>
-      <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map">Map</a></span></td>
+      <td data-ice="type" class="code"><span><a href="typedef/index.html#static-typedef-NameMap">NameMap</a></span></td>
       <td data-ice="appendix"><ul><li>optional</li></ul></td>
       <td data-ice="description"><p>Map to replace some dependencies to others</p>
 </td>
@@ -786,7 +784,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/source/Module.js.html#lineNumber42">source</a></span></span>
+      <span data-ice="source"><span><a href="file/source/Module.js.html#lineNumber50">source</a></span></span>
     </span>
   </h3>
 
@@ -830,7 +828,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/source/Module.js.html#lineNumber57">source</a></span></span>
+      <span data-ice="source"><span><a href="file/source/Module.js.html#lineNumber65">source</a></span></span>
     </span>
   </h3>
 
@@ -904,7 +902,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/source/Module.js.html#lineNumber90">source</a></span></span>
+      <span data-ice="source"><span><a href="file/source/Module.js.html#lineNumber96">source</a></span></span>
     </span>
   </h3>
 
@@ -943,6 +941,50 @@
   
 </div>
 <div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-member-fileName">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    
+    <span class="code" data-ice="name">fileName</span><span class="code" data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/source/Module.js.html#lineNumber57">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>Full name of this module file</p>
+</div>
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
   <h3 data-ice="anchor" id="instance-get-identifier">
     <span class="access" data-ice="access">public</span>
     
@@ -954,7 +996,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/source/Module.js.html#lineNumber83">source</a></span></span>
+      <span data-ice="source"><span><a href="file/source/Module.js.html#lineNumber89">source</a></span></span>
     </span>
   </h3>
 
@@ -994,63 +1036,18 @@
     
     
     
-    <span class="code" data-ice="name">nameMap</span><span class="code" data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></span>
+    <span class="code" data-ice="name">nameMap</span><span class="code" data-ice="signature">: <span><a href="typedef/index.html#static-typedef-NameMap">NameMap</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/source/Module.js.html#lineNumber68">source</a></span></span>
+      <span data-ice="source"><span><a href="file/source/Module.js.html#lineNumber74">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  <div data-ice="description"><p>Key for original name of a module &amp; value for module name of the replacement</p>
-</div>
-
   
-
-  <div data-ice="properties">
-</div>
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-  
-</div>
-<div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-member-path">
-    <span class="access" data-ice="access">public</span>
-    
-    
-    
-    
-    
-    <span class="code" data-ice="name">path</span><span class="code" data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></span>
-    <span class="right-info">
-      
-      
-      <span data-ice="source"><span><a href="file/source/Module.js.html#lineNumber49">source</a></span></span>
-    </span>
-  </h3>
-
-  
-  
-  
-  <div data-ice="description"><p>Root path of the package which this module belongs to</p>
-</div>
 
   
 
@@ -1086,7 +1083,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/source/Module.js.html#lineNumber119">source</a></span></span>
+      <span data-ice="source"><span><a href="file/source/Module.js.html#lineNumber125">source</a></span></span>
     </span>
   </h3>
 
@@ -1132,7 +1129,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/source/Module.js.html#lineNumber137">source</a></span></span>
+      <span data-ice="source"><span><a href="file/source/Module.js.html#lineNumber143">source</a></span></span>
     </span>
   </h3>
 
@@ -1203,7 +1200,7 @@
     <h4>Test:</h4>
     <ul>
       
-    <li data-ice="test"><span><a href="test-file/test/Module.js.html#lineNumber72">Module parser Replace a dependency</a></span></li>
+    <li data-ice="test"><span><a href="test-file/test/Module.js.html#lineNumber74">Module parser Replace a dependency</a></span></li>
 </ul>
   </div>
 
@@ -1222,7 +1219,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/source/Module.js.html#lineNumber227">source</a></span></span>
+      <span data-ice="source"><span><a href="file/source/Module.js.html#lineNumber231">source</a></span></span>
     </span>
   </h3>
 
@@ -1284,7 +1281,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/source/Module.js.html#lineNumber246">source</a></span></span>
+      <span data-ice="source"><span><a href="file/source/Module.js.html#lineNumber250">source</a></span></span>
     </span>
   </h3>
 
@@ -1342,7 +1339,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/source/Module.js.html#lineNumber161">source</a></span></span>
+      <span data-ice="source"><span><a href="file/source/Module.js.html#lineNumber165">source</a></span></span>
     </span>
   </h3>
 
@@ -1429,7 +1426,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/source/Module.js.html#lineNumber117">source</a></span></span>
+      <span data-ice="source"><span><a href="file/source/Module.js.html#lineNumber123">source</a></span></span>
     </span>
   </h3>
 
@@ -1491,7 +1488,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/source/Module.js.html#lineNumber183">source</a></span></span>
+      <span data-ice="source"><span><a href="file/source/Module.js.html#lineNumber187">source</a></span></span>
     </span>
   </h3>
 
@@ -1553,7 +1550,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/source/Module.js.html#lineNumber211">source</a></span></span>
+      <span data-ice="source"><span><a href="file/source/Module.js.html#lineNumber215">source</a></span></span>
     </span>
   </h3>
 
@@ -1615,7 +1612,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/source/Module.js.html#lineNumber102">source</a></span></span>
+      <span data-ice="source"><span><a href="file/source/Module.js.html#lineNumber108">source</a></span></span>
     </span>
   </h3>
 

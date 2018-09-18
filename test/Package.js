@@ -77,7 +77,7 @@ describe('Package bundler',  () => {
 
 describe('Command line',  () => {
 
-    const entry = 'node source/index test/example/index';
+    const entry = 'node build/index test/example/index';
 
     it('Output to a file',  () => {
 
@@ -97,9 +97,9 @@ describe('Command line',  () => {
 
     it('Replace a module by the map option',  () => {
 
-        (execSync(`${entry} test/example/build -m /T/i:jquery`) + '')
+        (execSync(`cross-env NODE_ENV=test  ${entry} test/example/build`) + '')
             .should.be.startWith(`
-→ Module "test" will be replaced by "jquery"
+→ Module "test" will be replaced by "test4sample"
 √ Module "./index" has been bundled
 √ Module "./a" has been bundled
 √ Module "./libs/b" has been bundled
@@ -108,7 +108,7 @@ describe('Command line',  () => {
 
         (readFileSync('test/example/build.js') + '').should.be.equal(
             bundle_code
-                .replace(/test([^:(])/g, 'jquery$1')
+                .replace(/test([^:(])/g, 'test4sample$1')
                 .replace(/('|\.)index/g, '$1build')
         );
     });

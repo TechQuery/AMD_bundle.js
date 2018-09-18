@@ -37,48 +37,20 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getNPMPackage">getNPMPackage</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-merge">merge</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-outPackage">outPackage</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-toES_5">toES_5</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-toRegExp">toRegExp</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-DependencyMap">DependencyMap</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-NameMap">NameMap</a></span></span></li>
 </ul>
 </div>
 </nav>
 
 <div class="content" data-ice="content"><h1 data-ice="title">test/utility.js</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import {
-    toRegExp, toES_5, merge, outPackage, getNPMFile, getNPMIndex, getNPMPackage
+    merge, outPackage, getNPMFile, getNPMIndex, getNPMPackage
 } from &apos;../source/utility&apos;;
 
 
 
 describe(&apos;Utility&apos;,  () =&gt; {
-    /**
-     * @test {toRegExp}
-     */
-    it(&apos;Create RegExp() from a literal string&apos;,  () =&gt; {
-
-        toRegExp(&apos;/polyfill|ext\\//ig&apos;).should.be.eql( /polyfill|ext\//gi );
-
-        (toRegExp(&apos;test&apos;) === undefined).should.be.true();
-    });
-
-    /**
-     * @test {toES_5}
-     */
-    it(&apos;Transform ES 6+ module&apos;,  () =&gt; {
-
-        toES_5(`
-import &apos;babel-polyfill&apos;;
-
-async function test() { }
-
-`, true).should.be.equal(`
-
-require(&apos;babel-polyfill&apos;);
-
-async function test() {}`.trim());
-    });
-
     /**
      * @test {merge}
      */
@@ -116,8 +88,8 @@ async function test() {}`.trim());
      */
     it(
         &apos;Get &quot;index.js&quot; path of a module&apos;,
-        () =&gt; getNPMIndex(&apos;koapache/source&apos;).should.be.equal(
-            &apos;node_modules/koapache/source/index.js&apos;
+        () =&gt; getNPMIndex(&apos;commander&apos;).should.be.equal(
+            &apos;node_modules/commander/index.js&apos;
         )
     );
 
@@ -127,7 +99,7 @@ async function test() {}`.trim());
     it(
         &apos;Get entry file path from &quot;package.json&quot; of a module&apos;,
         () =&gt; getNPMPackage(&apos;koapache&apos;).should.be.equal(
-            &apos;node_modules/koapache/source/index.js&apos;
+            &apos;node_modules/koapache/dist/koapache.js&apos;
         )
     );
 });

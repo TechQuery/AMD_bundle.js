@@ -37,9 +37,8 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getNPMPackage">getNPMPackage</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-merge">merge</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-outPackage">outPackage</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-toES_5">toES_5</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-toRegExp">toRegExp</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-DependencyMap">DependencyMap</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-NameMap">NameMap</a></span></span></li>
 </ul>
 </div>
 </nav>
@@ -59,11 +58,11 @@ const Array_iterator = [ ][Symbol.iterator], Array_proto = Array.prototype;
  */
 export default  class Package {
     /**
-     * @param {string}  path               - The entry file path of this package
+     * @param {string}   path               - The entry file path of this package
      *                                       (relative to `process.cwd()`)
-     * @param {boolean} [includeAll=false] - Include NPM modules in the final bundle
-     * @param {?Map}    [moduleMap]        - Map to replace some dependencies to others
-     * @param {boolean} [noLog=false]      - Disable log output
+     * @param {boolean}  [includeAll=false] - Include NPM modules in the final bundle
+     * @param {?NameMap} moduleMap          - Map to replace some dependencies to others
+     * @param {boolean}  [noLog=false]      - Disable log output
      */
     constructor(path,  includeAll = false,  moduleMap,  noLog = false) {
         /**
@@ -95,9 +94,7 @@ export default  class Package {
         this.length = 0;
 
         /**
-         * Key for original name of a module &amp; value for module name of the replacement
-         *
-         * @type {Object}
+         * @type {NameMap}
          */
         this.moduleMap = moduleMap;
 
