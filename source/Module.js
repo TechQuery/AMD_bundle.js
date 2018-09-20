@@ -69,6 +69,13 @@ export default  class Module extends EventEmitter {
         };
 
         /**
+         * CLI engine (Hash bang)
+         *
+         * @type {String}
+         */
+        this.CLI = '';
+
+        /**
          * @type {NameMap}
          */
         this.nameMap = nameMap  ||  { };
@@ -126,6 +133,10 @@ export default  class Module extends EventEmitter {
             ((! this.dependency.outside)  &&  Utility.outPackage( this.name ))  ?
                 this.searchNPM() : this.fileName
         ) + '';
+
+        this.source = this.source.replace(
+            /^#!.+[\r\n]+/,  engine => (this.CLI = engine.trim()) && ''
+        );
 
         if (/^(import|export) /m.test( this.source ))
             this.source = toES_5(this.source, this.fileName, true);

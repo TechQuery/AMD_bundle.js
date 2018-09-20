@@ -1,6 +1,6 @@
 {
   "name": "amd-bundle",
-  "version": "1.5.0",
+  "version": "1.6.0",
   "description": "A dual-use tool for bundling up AMD modules, which is much easier to use than r.js with Almond or AMDclean",
   "main": "build/Package.js",
   "bin": "build/index.js",
@@ -43,7 +43,7 @@
     "@babel/preset-env": "^7.1.0",
     "@babel/register": "^7.0.0",
     "@babel/runtime": "^7.0.0",
-    "@tech_query/node-toolkit": "^0.5.0",
+    "@tech_query/node-toolkit": "^0.6.0",
     "commander": "^2.18.0",
     "fs-extra": "^7.0.0"
   },

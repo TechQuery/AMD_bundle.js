@@ -48,7 +48,7 @@
 
 import {execSync} from &apos;child_process&apos;;
 
-import {readFileSync, removeSync} from &apos;fs-extra&apos;;
+import {readFileSync, outputFileSync, removeSync} from &apos;fs-extra&apos;;
 
 var bundle_code;
 
@@ -123,11 +123,12 @@ describe(&apos;Package bundler&apos;,  () =&gt; {
 
 describe(&apos;Command line&apos;,  () =&gt; {
 
-    const entry = &apos;node build/index test/example/index&apos;;
+    const entry = &apos;node build/index test/example/&apos;,
+        output = &apos;test/example/build&apos;;
 
     it(&apos;Output to a file&apos;,  () =&gt; {
 
-        (execSync(`${entry} test/example/build`) + &apos;&apos;).should.be.startWith(`
+        (execSync(`${entry}index ${output}`) + &apos;&apos;).should.be.startWith(`
 &#x221A; Module &quot;./index&quot; has been bundled
 &#x221A; Module &quot;./a&quot; has been bundled
 &#x221A; Module &quot;./libs/b&quot; has been bundled
@@ -136,14 +137,14 @@ describe(&apos;Command line&apos;,  () =&gt; {
     });
 
     it(
-        &apos;Write into stdout without printing&apos;,
-        ()  =&gt;  (execSync(`${entry} -s`) + &apos;&apos;).should.be.eql( bundle_code )
+        &apos;Write into `stdout` without printing&apos;,
+        ()  =&gt;  (execSync(`${entry}index -s`) + &apos;&apos;).should.be.eql( bundle_code )
     );
 
 
     it(&apos;Replace a module by the map option&apos;,  () =&gt; {
 
-        (execSync(`cross-env NODE_ENV=test  ${entry} test/example/build`) + &apos;&apos;)
+        (execSync(`cross-env NODE_ENV=test  ${entry}index ${output}`) + &apos;&apos;)
             .should.be.startWith(`
 &#x2192; Module &quot;test&quot; will be replaced by &quot;test4sample&quot;
 &#x221A; Module &quot;./index&quot; has been bundled
@@ -152,13 +153,28 @@ describe(&apos;Command line&apos;,  () =&gt; {
 &#x221A; Module &quot;./c&quot; has been bundled`.trim()
             );
 
-        (readFileSync(&apos;test/example/build.js&apos;) + &apos;&apos;).should.be.equal(
+        (readFileSync(`${output}.js`) + &apos;&apos;).should.be.equal(
             bundle_code
                 .replace(/test([^:(])/g, &apos;test4sample$1&apos;)
                 .replace(/(&apos;|\.)index/g, &apos;$1build&apos;)
         );
     });
 
+
+    it(&apos;Handle &quot;Hash bang&quot; automatically&apos;,  () =&gt; {
+
+        const code = execSync(`${entry}command -s`) + &apos;&apos;;
+
+        code.match( /#! \/usr\/bin\/env node/g ).should.have.length( 1 );
+
+        outputFileSync(`${output}.js`, code);
+
+        JSON.parse( execSync(`node ${output}`) ).should.be.eql({
+            a:     &apos;This is A&apos;,
+            c:     &apos;This is C&apos;,
+            test:  {test: 1}
+        });
+    });
 
     after(() =&gt; removeSync(&apos;test/example/build.js&apos;));
 });

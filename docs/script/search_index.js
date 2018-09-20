@@ -55,20 +55,26 @@ window.esdocSearchIndex = [
   ],
   [
     "",
-    "test-file/test/Package.js.html#lineNumber82",
+    "test-file/test/Package.js.html#lineNumber118",
+    "Command line Handle \"Hash bang\" automatically",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/Package.js.html#lineNumber83",
     "Command line Output to a file",
     "test"
   ],
   [
     "",
-    "test-file/test/Package.js.html#lineNumber98",
+    "test-file/test/Package.js.html#lineNumber99",
     "Command line Replace a module by the map option",
     "test"
   ],
   [
     "",
-    "test-file/test/Package.js.html#lineNumber92",
-    "Command line Write into stdout without printing",
+    "test-file/test/Package.js.html#lineNumber93",
+    "Command line Write into `stdout` without printing",
     "test"
   ],
   [
@@ -480,6 +486,12 @@ window.esdocSearchIndex = [
     "typedef"
   ],
   [
+    "source/module.js~module#cli",
+    "class/source/Module.js~Module.html#instance-member-CLI",
+    "source/Module.js~Module#CLI",
+    "member"
+  ],
+  [
     "source/module.js~module#addchild",
     "class/source/Module.js~Module.html#instance-method-addChild",
     "source/Module.js~Module#addChild",
@@ -717,6 +729,12 @@ window.esdocSearchIndex = [
     "test/example/c.js",
     "test-file/test/example/c.js.html",
     "test/example/c.js",
+    "testFile"
+  ],
+  [
+    "test/example/command.js",
+    "test-file/test/example/command.js.html",
+    "test/example/command.js",
     "testFile"
   ],
   [

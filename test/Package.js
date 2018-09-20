@@ -2,7 +2,7 @@ import Package from '../source/Package';
 
 import {execSync} from 'child_process';
 
-import {readFileSync, removeSync} from 'fs-extra';
+import {readFileSync, outputFileSync, removeSync} from 'fs-extra';
 
 var bundle_code;
 
@@ -77,11 +77,12 @@ describe('Package bundler',  () => {
 
 describe('Command line',  () => {
 
-    const entry = 'node build/index test/example/index';
+    const entry = 'node build/index test/example/',
+        output = 'test/example/build';
 
     it('Output to a file',  () => {
 
-        (execSync(`${entry} test/example/build`) + '').should.be.startWith(`
+        (execSync(`${entry}index ${output}`) + '').should.be.startWith(`
 √ Module "./index" has been bundled
 √ Module "./a" has been bundled
 √ Module "./libs/b" has been bundled
@@ -90,14 +91,14 @@ describe('Command line',  () => {
     });
 
     it(
-        'Write into stdout without printing',
-        ()  =>  (execSync(`${entry} -s`) + '').should.be.eql( bundle_code )
+        'Write into `stdout` without printing',
+        ()  =>  (execSync(`${entry}index -s`) + '').should.be.eql( bundle_code )
     );
 
 
     it('Replace a module by the map option',  () => {
 
-        (execSync(`cross-env NODE_ENV=test  ${entry} test/example/build`) + '')
+        (execSync(`cross-env NODE_ENV=test  ${entry}index ${output}`) + '')
             .should.be.startWith(`
 → Module "test" will be replaced by "test4sample"
 √ Module "./index" has been bundled
@@ -106,13 +107,28 @@ describe('Command line',  () => {
 √ Module "./c" has been bundled`.trim()
             );
 
-        (readFileSync('test/example/build.js') + '').should.be.equal(
+        (readFileSync(`${output}.js`) + '').should.be.equal(
             bundle_code
                 .replace(/test([^:(])/g, 'test4sample$1')
                 .replace(/('|\.)index/g, '$1build')
         );
     });
 
+
+    it('Handle "Hash bang" automatically',  () => {
+
+        const code = execSync(`${entry}command -s`) + '';
+
+        code.match( /#! \/usr\/bin\/env node/g ).should.have.length( 1 );
+
+        outputFileSync(`${output}.js`, code);
+
+        JSON.parse( execSync(`node ${output}`) ).should.be.eql({
+            a:     'This is A',
+            c:     'This is C',
+            test:  {test: 1}
+        });
+    });
 
     after(() => removeSync('test/example/build.js'));
 });

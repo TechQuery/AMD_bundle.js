@@ -46,13 +46,13 @@
 <div class="content" data-ice="content"><h1 data-ice="title">source/index.js</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">#! /usr/bin/env node
 
-import Path from &apos;path&apos;;
+import &apos;@babel/polyfill&apos;;
 
-import FS from &apos;fs-extra&apos;;
+import { join, basename } from &apos;path&apos;;
+
+import { outputFileSync } from &apos;fs-extra&apos;;
 
 import Command from &apos;commander&apos;;
-
-import &apos;@babel/polyfill&apos;;
 
 import Package from &apos;./Package&apos;;
 
@@ -72,9 +72,15 @@ Command
         &apos;-a, --include-all&apos;,
         &apos;Bundle all dependencies (include those in &quot;./node_modules/&quot;)&apos;
     )
-    .option(&apos;-c, --command-line&apos;,  &apos;Bundle as a command script&apos;)
     .option(&apos;-s, --std-out&apos;,  &apos;Write into &quot;stdout&quot; without logs&apos;)
     .parse( process.argv );
+
+if (! (process.argv[2] || &apos;&apos;).trim()) {
+
+    Command.outputHelp();
+
+    process.exit(1);
+}
 
 
 const entry_file = Command.args[0],
@@ -82,7 +88,7 @@ const entry_file = Command.args[0],
 
 const bundle_file = (
         Command.args[1] ||
-        Path.join(entry_file,  &apos;../../&apos;,  Path.basename( entry_file ))
+        join(entry_file,  &apos;../../&apos;,  basename( entry_file ))
     ) + &apos;.js&apos;,
     pack = new Package(
         entry_file,
@@ -93,14 +99,14 @@ const bundle_file = (
 
 if (! Command.stdOut)  console.time(&apos;Package bundle&apos;);
 
-var code = pack.bundle( Path.basename( bundle_file ).split(&apos;.&apos;)[0] );
+var code = pack.bundle( basename( bundle_file ).split(&apos;.&apos;)[0] );
 
-if ( Command.commandLine )  code = &apos;#! /usr/bin/env node\n\n&apos; + code;
+if ( pack.entry.CLI )  code = `${pack.entry.CLI}\n\n${code}`;
 
 if ( Command.stdOut )
     process.stdout.write( code );
 else {
-    FS.outputFileSync(bundle_file,  code);
+    outputFileSync(bundle_file,  code);
 
     console.info( &apos;-&apos;.repeat( 30 ) );
 

@@ -19,7 +19,6 @@ function concatModule(pack, name, modName, varName) {  /* eslint-disable */
     ).join(',\n')}
     };
 `,
-        false,
         name
     );
 }

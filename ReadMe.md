@@ -37,17 +37,16 @@ amd-bundle -a \
 
 #### Command-line
 
- `amd-bundle --help`
+`amd-bundle --help`
 
-    Usage: index [options] <entry file> [bundle file]
+    Usage: amd-bundle [options] <entry file> [bundle file]
 
     Options:
 
-        -V, --version       output the version number
-        -a, --include-all   Bundle all dependencies (include those in "./node_modules/")
-        -c, --command-line  Bundle as a command script
-        -s, --std-out       Write into "stdout" without logs
-        -h, --help          output usage information
+        -V, --version      output the version number
+        -a, --include-all  Bundle all dependencies (include those in "./node_modules/")
+        -s, --std-out      Write into "stdout" without logs
+        -h, --help         output usage information
 
 #### Configuration
 
@@ -68,13 +67,13 @@ Build **standalone release files** (Full source code, Minimized code & Source ma
 
  - Development dependency: [UglifyJS](http://lisperator.net/uglifyjs/)
 
- - **NPM-scripts** reference: [iQuery.js](https://github.com/TechQuery/iQuery.js/blob/master/package.json#L39)
+ - **NPM-scripts** reference: [iQuery.js](https://github.com/TechQuery/iQuery.js/blob/master/package.json#L40)
 
 #### Bundle ECMAScript 6+ codes
 
  - Development dependency: [Babel](https://babeljs.io/)
 
- - **NPM-scripts** reference: [WebCell](https://github.com/EasyWebApp/WebCell/blob/master/package.json#L30)
+ - **NPM-scripts** reference: [WebCell](https://github.com/EasyWebApp/WebCell/blob/master/package.json#L31)
 
 
 

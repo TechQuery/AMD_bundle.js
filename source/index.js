@@ -1,12 +1,12 @@
 #! /usr/bin/env node
 
-import Path from 'path';
+import '@babel/polyfill';
 
-import FS from 'fs-extra';
+import { join, basename } from 'path';
+
+import { outputFileSync } from 'fs-extra';
 
 import Command from 'commander';
-
-import '@babel/polyfill';
 
 import Package from './Package';
 
@@ -26,9 +26,15 @@ Command
         '-a, --include-all',
         'Bundle all dependencies (include those in "./node_modules/")'
     )
-    .option('-c, --command-line',  'Bundle as a command script')
     .option('-s, --std-out',  'Write into "stdout" without logs')
     .parse( process.argv );
+
+if (! (process.argv[2] || '').trim()) {
+
+    Command.outputHelp();
+
+    process.exit(1);
+}
 
 
 const entry_file = Command.args[0],
@@ -36,7 +42,7 @@ const entry_file = Command.args[0],
 
 const bundle_file = (
         Command.args[1] ||
-        Path.join(entry_file,  '../../',  Path.basename( entry_file ))
+        join(entry_file,  '../../',  basename( entry_file ))
     ) + '.js',
     pack = new Package(
         entry_file,
@@ -47,14 +53,14 @@ const bundle_file = (
 
 if (! Command.stdOut)  console.time('Package bundle');
 
-var code = pack.bundle( Path.basename( bundle_file ).split('.')[0] );
+var code = pack.bundle( basename( bundle_file ).split('.')[0] );
 
-if ( Command.commandLine )  code = '#! /usr/bin/env node\n\n' + code;
+if ( pack.entry.CLI )  code = `${pack.entry.CLI}\n\n${code}`;
 
 if ( Command.stdOut )
     process.stdout.write( code );
 else {
-    FS.outputFileSync(bundle_file,  code);
+    outputFileSync(bundle_file,  code);
 
     console.info( '-'.repeat( 30 ) );
 
