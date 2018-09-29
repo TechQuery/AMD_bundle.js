@@ -56,14 +56,15 @@ ${merge}
 
 ${outPackage}
 
-    var require = _require_.bind(null, './');
+    var _include_ = include.bind(null, './');
 
-    function _require_(base, path) {
+    function include(base, path) {
 
-        var module = _module_[
-                outPackage( path )  ?  path  :  ('./' + merge(base, path))
-            ],
-            exports;
+        path = outPackage( path )  ?  path  :  ('./' + merge(base, path));
+
+        var module = _module_[path], exports;
+
+        if (! module)  return require(path);
 
         if (! module.exports) {
 
@@ -72,11 +73,11 @@ ${outPackage}
             var dependency = module.dependency;
 
             for (var i = 0;  dependency[i];  i++)
-                module.dependency[i] = require( dependency[i] );
+                module.dependency[i] = _include_( dependency[i] );
 
             exports = module.factory.apply(
                 null,  module.dependency.concat(
-                    _require_.bind(null, module.base),  module.exports,  module
+                    include.bind(null, module.base),  module.exports,  module
                 )
             );
 
@@ -90,6 +91,6 @@ ${outPackage}
 
 ${concatModule(pack, name, modName, varName)}
 
-    return require('${entry}');
+    return _include_('${entry}');
 });`.trim();
 }

@@ -50,13 +50,17 @@ amd-bundle -a \
 
 #### Configuration
 
-[Example](https://github.com/TechQuery/AMD_bundle.js/blob/master/package.json#L71)
+[Example](https://github.com/TechQuery/AMD_bundle.js/blob/master/package.json#L75)
 
 Key/value of option `moduleMap` is same as [the basic parameters of `String.prototype.replace()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/replace#Parameters).
 
 #### JS Module
 
-https://techquery.github.io/AMD_bundle.js/class/source/Package.js~Package.html#instance-method-bundle
+ - [API](https://techquery.github.io/AMD_bundle.js/class/source/Package.js~Package.html#instance-method-bundle)
+
+ - [Example 1](https://github.com/TechQuery/AMD_bundle.js/blob/master/source/index.js#L47)
+
+ - [Example 2](https://github.com/EasyWebApp/DevCLI/blob/master/source/Component.js#L122)
 
 
 ### Advanced
@@ -79,8 +83,8 @@ Build **standalone release files** (Full source code, Minimized code & Source ma
 
 ## Typical Cases
 
- 1. [iQuery.js](https://github.com/TechQuery/iQuery.js) (where the prototype of `amd-bundle` came from)
+ 1. [iQuery.js](https://techquery.github.io/iQuery.js/) (where the prototype of `amd-bundle` came from)
 
- 2. [WebCell](https://github.com/EasyWebApp/WebCell) (where `v1.0` rewritten out)
+ 2. [WebCell](https://web-cell.tk/) (where `v1.0` rewritten out)
 
- 3. [EasyWebUI](https://github.com/TechQuery/EasyWebUI)
+ 3. [WebCell DevCLI](https://easywebapp.github.io/DevCLI/) (where `v1.3+` came out)

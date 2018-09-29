@@ -1,7 +1,24 @@
 {
   "name": "amd-bundle",
-  "version": "1.6.0",
+  "version": "1.6.1",
   "description": "A dual-use tool for bundling up AMD modules, which is much easier to use than r.js with Almond or AMDclean",
+  "keywords": [
+    "javascript",
+    "amd-loader",
+    "bundle",
+    "require-js",
+    "command-line"
+  ],
+  "author": "shiy2008@gmail.com",
+  "license": "AGPL-3.0",
+  "homepage": "https://techquery.github.io/AMD_bundle.js/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TechQuery/AMD_bundle.js.git"
+  },
+  "bugs": {
+    "url": "https://github.com/TechQuery/AMD_bundle.js/issues"
+  },
   "main": "build/Package.js",
   "bin": "build/index.js",
   "engines": {
@@ -13,50 +30,37 @@
     "check": "mocha -r @babel/register -r @babel/polyfill -r should -c --inline-diffs",
     "test": "npm run check -- --exit",
     "debug": "npm run check -- --inspect-brk",
-    "build": "npm run lint  &&  npm run bundle  &&  npm test",
+    "build": "npm run lint  &&  npm run bundle  &&  npm test  &&  esdoc",
     "prepublishOnly": "npm run build",
-    "precommit": "npm run build  &&  esdoc  &&  git add .",
     "start": "web-server docs/ -o",
     "install": "node install"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/TechQuery/AMD_bundle.js.git"
+  "husky": {
+    "hook": {
+      "pre-commit": "npm run build  &&  git add ."
+    }
   },
-  "keywords": [
-    "javascript",
-    "amd-loader",
-    "bundle",
-    "require-js",
-    "command-line"
-  ],
-  "author": "shiy007@qq.com",
-  "license": "AGPL-3.0",
-  "bugs": {
-    "url": "https://github.com/TechQuery/AMD_bundle.js/issues"
-  },
-  "homepage": "https://techquery.github.io/AMD_bundle.js/",
   "dependencies": {
-    "@babel/core": "^7.1.0",
+    "@babel/core": "^7.1.2",
     "@babel/plugin-transform-modules-commonjs": "^7.1.0",
     "@babel/polyfill": "^7.0.0",
     "@babel/preset-env": "^7.1.0",
     "@babel/register": "^7.0.0",
-    "@babel/runtime": "^7.0.0",
-    "@tech_query/node-toolkit": "^0.6.0",
+    "@babel/runtime": "^7.1.2",
+    "@tech_query/node-toolkit": "^0.6.2",
     "commander": "^2.18.0",
     "fs-extra": "^7.0.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.1.0",
+    "@babel/cli": "^7.1.2",
     "@babel/plugin-transform-runtime": "^7.1.0",
     "cross-env": "^5.2.0",
     "esdoc": "^1.1.0",
     "esdoc-external-nodejs-plugin": "^1.0.0",
     "esdoc-standard-plugin": "^1.0.0",
-    "eslint": "^5.6.0",
-    "husky": "^0.14.3",
-    "koapache": "^1.0.2",
+    "eslint": "^5.6.1",
+    "husky": "^1.0.1",
+    "koapache": "^1.0.4",
     "mocha": "^5.2.0",
     "should": "^13.2.3"
   },
