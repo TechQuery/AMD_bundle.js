@@ -19,7 +19,7 @@ cd path/to/project/root
 
 npm install amd-bundle --save-dev
 
-amd-bundle -a \
+amd-bundle -a -m \
     path/to/project/source/entry \
     path/to/project/bundle/file
 ```
@@ -31,6 +31,8 @@ amd-bundle -a \
  2. write into `path/to/project/bundle/file.js` with only one `define('file', [ ])` and `global.file` definition, just like [UMD](https://github.com/umdjs/umd) style
 
  3. treat `${process.cwd()}/node_modules/${module_full_name}` as a user's module to pack in
+
+ 4. generate `file.min.js` & `file.js.map` in `path/to/project/bundle/`
 
 
 ### More options
@@ -45,6 +47,7 @@ amd-bundle -a \
 
         -V, --version      output the version number
         -a, --include-all  Bundle all dependencies (include those in "./node_modules/")
+        -m, --minify       Generate minified source code & source map
         -s, --std-out      Write into "stdout" without logs
         -h, --help         output usage information
 
@@ -69,15 +72,13 @@ Build **standalone release files** (Full source code, Minimized code & Source ma
 
 #### Multiple bundles from one source
 
- - Development dependency: [UglifyJS](http://lisperator.net/uglifyjs/)
-
- - **NPM-scripts** reference: [iQuery.js](https://github.com/TechQuery/iQuery.js/blob/master/package.json#L40)
+ - **NPM-scripts** reference: [iQuery.js](https://github.com/TechQuery/iQuery.js/blob/master/package.json#L26)
 
 #### Bundle ECMAScript 6+ codes
 
  - Development dependency: [Babel](https://babeljs.io/)
 
- - **NPM-scripts** reference: [WebCell](https://github.com/EasyWebApp/WebCell/blob/master/package.json#L31)
+ - **NPM-scripts** reference: [WebCell](https://github.com/EasyWebApp/WebCell/blob/master/package.json#L32)
 
 
 

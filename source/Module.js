@@ -172,6 +172,8 @@ export default  class Module extends EventEmitter {
      * @param {string} type      - `compile` for AMD & `runtime` for CJS
      * @param {string} name      - Name of a module
      * @param {string} [varName] - Variable name of a module in another module
+     *
+     * @return {?String} Replaced module name
      */
     addChild(type, name, varName) {
 

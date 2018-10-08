@@ -57,12 +57,12 @@ function (A, require, exports, module) {/* AMD module */
     it(
         'Load ES 6 module',
         ()  =>  (new Module('./b', './test/example/libs/')).load().should.be.eql(`
-Object.defineProperty(exports, "__esModule", {
-  value: true
+Object.defineProperty(exports, '__esModule', {
+    value: true
 });
 exports.default = void 0;
 
-require("../c");
+require('../c');
 
 var _default = 'This is B';
 exports.default = _default;`.trim())

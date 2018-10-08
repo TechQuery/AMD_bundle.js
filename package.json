@@ -1,6 +1,6 @@
 {
   "name": "amd-bundle",
-  "version": "1.6.1",
+  "version": "1.7.0",
   "description": "A dual-use tool for bundling up AMD modules, which is much easier to use than r.js with Almond or AMDclean",
   "keywords": [
     "javascript",
@@ -25,7 +25,7 @@
     "node": "^6.5.0"
   },
   "scripts": {
-    "lint": "eslint install.js source/ test/ --fix",
+    "lint": "eslint install.js source/ test/*.js --fix",
     "bundle": "babel source/ --out-dir build/",
     "check": "mocha -r @babel/register -r @babel/polyfill -r should -c --inline-diffs",
     "test": "npm run check -- --exit",
@@ -47,9 +47,10 @@
     "@babel/preset-env": "^7.1.0",
     "@babel/register": "^7.0.0",
     "@babel/runtime": "^7.1.2",
-    "@tech_query/node-toolkit": "^0.6.2",
+    "@tech_query/node-toolkit": "^0.7.0",
     "commander": "^2.18.0",
-    "fs-extra": "^7.0.0"
+    "fs-extra": "^7.0.0",
+    "uglify-js": "^3.4.9"
   },
   "devDependencies": {
     "@babel/cli": "^7.1.2",
@@ -59,7 +60,7 @@
     "esdoc-external-nodejs-plugin": "^1.0.0",
     "esdoc-standard-plugin": "^1.0.0",
     "eslint": "^5.6.1",
-    "husky": "^1.0.1",
+    "husky": "^1.1.1",
     "koapache": "^1.0.4",
     "mocha": "^5.2.0",
     "should": "^13.2.3"

@@ -1,28 +1,28 @@
 {
   "type": "File",
   "start": 0,
-  "end": 2555,
+  "end": 2772,
   "loc": {
     "start": {
       "line": 1,
       "column": 0
     },
     "end": {
-      "line": 97,
+      "line": 105,
       "column": 0
     }
   },
   "program": {
     "type": "Program",
     "start": 0,
-    "end": 2555,
+    "end": 2772,
     "loc": {
       "start": {
         "line": 1,
         "column": 0
       },
       "end": {
-        "line": 97,
+        "line": 105,
         "column": 0
       }
     },
@@ -1605,14 +1605,14 @@
       {
         "type": "ExportNamedDeclaration",
         "start": 895,
-        "end": 2554,
+        "end": 2771,
         "loc": {
           "start": {
             "line": 34,
             "column": 0
           },
           "end": {
-            "line": 96,
+            "line": 104,
             "column": 1
           }
         },
@@ -1621,14 +1621,14 @@
         "declaration": {
           "type": "FunctionDeclaration",
           "start": 902,
-          "end": 2554,
+          "end": 2771,
           "loc": {
             "start": {
               "line": 34,
               "column": 7
             },
             "end": {
-              "line": 96,
+              "line": 104,
               "column": 1
             }
           },
@@ -1726,14 +1726,14 @@
           "body": {
             "type": "BlockStatement",
             "start": 948,
-            "end": 2554,
+            "end": 2771,
             "loc": {
               "start": {
                 "line": 34,
                 "column": 53
               },
               "end": {
-                "line": 96,
+                "line": 104,
                 "column": 1
               }
             },
@@ -2272,56 +2272,56 @@
               {
                 "type": "ReturnStatement",
                 "start": 1116,
-                "end": 2552,
+                "end": 2769,
                 "loc": {
                   "start": {
                     "line": 40,
                     "column": 4
                   },
                   "end": {
-                    "line": 95,
+                    "line": 103,
                     "column": 12
                   }
                 },
                 "argument": {
                   "type": "CallExpression",
                   "start": 1123,
-                  "end": 2551,
+                  "end": 2768,
                   "loc": {
                     "start": {
                       "line": 40,
                       "column": 11
                     },
                     "end": {
-                      "line": 95,
+                      "line": 103,
                       "column": 11
                     }
                   },
                   "callee": {
                     "type": "MemberExpression",
                     "start": 1123,
-                    "end": 2549,
+                    "end": 2766,
                     "loc": {
                       "start": {
                         "line": 40,
                         "column": 11
                       },
                       "end": {
-                        "line": 95,
+                        "line": 103,
                         "column": 9
                       }
                     },
                     "object": {
                       "type": "TemplateLiteral",
                       "start": 1123,
-                      "end": 2544,
+                      "end": 2761,
                       "loc": {
                         "start": {
                           "line": 40,
                           "column": 11
                         },
                         "end": {
-                          "line": 95,
+                          "line": 103,
                           "column": 4
                         }
                       },
@@ -2792,29 +2792,29 @@
                         },
                         {
                           "type": "CallExpression",
-                          "start": 2461,
-                          "end": 2503,
+                          "start": 2678,
+                          "end": 2720,
                           "loc": {
                             "start": {
-                              "line": 92,
+                              "line": 100,
                               "column": 2
                             },
                             "end": {
-                              "line": 92,
+                              "line": 100,
                               "column": 44
                             }
                           },
                           "callee": {
                             "type": "Identifier",
-                            "start": 2461,
-                            "end": 2473,
+                            "start": 2678,
+                            "end": 2690,
                             "loc": {
                               "start": {
-                                "line": 92,
+                                "line": 100,
                                 "column": 2
                               },
                               "end": {
-                                "line": 92,
+                                "line": 100,
                                 "column": 14
                               },
                               "identifierName": "concatModule"
@@ -2824,15 +2824,15 @@
                           "arguments": [
                             {
                               "type": "Identifier",
-                              "start": 2474,
-                              "end": 2478,
+                              "start": 2691,
+                              "end": 2695,
                               "loc": {
                                 "start": {
-                                  "line": 92,
+                                  "line": 100,
                                   "column": 15
                                 },
                                 "end": {
-                                  "line": 92,
+                                  "line": 100,
                                   "column": 19
                                 },
                                 "identifierName": "pack"
@@ -2841,15 +2841,15 @@
                             },
                             {
                               "type": "Identifier",
-                              "start": 2480,
-                              "end": 2484,
+                              "start": 2697,
+                              "end": 2701,
                               "loc": {
                                 "start": {
-                                  "line": 92,
+                                  "line": 100,
                                   "column": 21
                                 },
                                 "end": {
-                                  "line": 92,
+                                  "line": 100,
                                   "column": 25
                                 },
                                 "identifierName": "name"
@@ -2858,15 +2858,15 @@
                             },
                             {
                               "type": "Identifier",
-                              "start": 2486,
-                              "end": 2493,
+                              "start": 2703,
+                              "end": 2710,
                               "loc": {
                                 "start": {
-                                  "line": 92,
+                                  "line": 100,
                                   "column": 27
                                 },
                                 "end": {
-                                  "line": 92,
+                                  "line": 100,
                                   "column": 34
                                 },
                                 "identifierName": "modName"
@@ -2875,15 +2875,15 @@
                             },
                             {
                               "type": "Identifier",
-                              "start": 2495,
-                              "end": 2502,
+                              "start": 2712,
+                              "end": 2719,
                               "loc": {
                                 "start": {
-                                  "line": 92,
+                                  "line": 100,
                                   "column": 36
                                 },
                                 "end": {
-                                  "line": 92,
+                                  "line": 100,
                                   "column": 43
                                 },
                                 "identifierName": "varName"
@@ -2894,15 +2894,15 @@
                         },
                         {
                           "type": "Identifier",
-                          "start": 2530,
-                          "end": 2535,
+                          "start": 2747,
+                          "end": 2752,
                           "loc": {
                             "start": {
-                              "line": 94,
+                              "line": 102,
                               "column": 24
                             },
                             "end": {
-                              "line": 94,
+                              "line": 102,
                               "column": 29
                             },
                             "identifierName": "entry"
@@ -3074,34 +3074,34 @@
                         {
                           "type": "TemplateElement",
                           "start": 1593,
-                          "end": 2459,
+                          "end": 2676,
                           "loc": {
                             "start": {
                               "line": 57,
                               "column": 13
                             },
                             "end": {
-                              "line": 92,
+                              "line": 100,
                               "column": 0
                             }
                           },
                           "value": {
-                            "raw": "\n\n    var _include_ = include.bind(null, './');\n\n    function include(base, path) {\n\n        path = outPackage( path )  ?  path  :  ('./' + merge(base, path));\n\n        var module = _module_[path], exports;\n\n        if (! module)  return require(path);\n\n        if (! module.exports) {\n\n            module.exports = { };\n\n            var dependency = module.dependency;\n\n            for (var i = 0;  dependency[i];  i++)\n                module.dependency[i] = _include_( dependency[i] );\n\n            exports = module.factory.apply(\n                null,  module.dependency.concat(\n                    include.bind(null, module.base),  module.exports,  module\n                )\n            );\n\n            if (exports != null)  module.exports = exports;\n\n            delete module.dependency;  delete module.factory;\n        }\n\n        return module.exports;\n    }\n\n",
-                            "cooked": "\n\n    var _include_ = include.bind(null, './');\n\n    function include(base, path) {\n\n        path = outPackage( path )  ?  path  :  ('./' + merge(base, path));\n\n        var module = _module_[path], exports;\n\n        if (! module)  return require(path);\n\n        if (! module.exports) {\n\n            module.exports = { };\n\n            var dependency = module.dependency;\n\n            for (var i = 0;  dependency[i];  i++)\n                module.dependency[i] = _include_( dependency[i] );\n\n            exports = module.factory.apply(\n                null,  module.dependency.concat(\n                    include.bind(null, module.base),  module.exports,  module\n                )\n            );\n\n            if (exports != null)  module.exports = exports;\n\n            delete module.dependency;  delete module.factory;\n        }\n\n        return module.exports;\n    }\n\n"
+                            "raw": "\n\n    if (typeof require !== 'function')\n        require = function (name) {\n\n            if (self[name] != null)  return self[name];\n\n            throw ReferenceError('Can\\\\'t find \"' + name + '\" module');\n        };\n\n    var _include_ = include.bind(null, './');\n\n    function include(base, path) {\n\n        path = outPackage( path )  ?  path  :  ('./' + merge(base, path));\n\n        var module = _module_[path], exports;\n\n        if (! module)  return require(path);\n\n        if (! module.exports) {\n\n            module.exports = { };\n\n            var dependency = module.dependency;\n\n            for (var i = 0;  dependency[i];  i++)\n                module.dependency[i] = _include_( dependency[i] );\n\n            exports = module.factory.apply(\n                null,  module.dependency.concat(\n                    include.bind(null, module.base),  module.exports,  module\n                )\n            );\n\n            if (exports != null)  module.exports = exports;\n\n            delete module.dependency;  delete module.factory;\n        }\n\n        return module.exports;\n    }\n\n",
+                            "cooked": "\n\n    if (typeof require !== 'function')\n        require = function (name) {\n\n            if (self[name] != null)  return self[name];\n\n            throw ReferenceError('Can\\'t find \"' + name + '\" module');\n        };\n\n    var _include_ = include.bind(null, './');\n\n    function include(base, path) {\n\n        path = outPackage( path )  ?  path  :  ('./' + merge(base, path));\n\n        var module = _module_[path], exports;\n\n        if (! module)  return require(path);\n\n        if (! module.exports) {\n\n            module.exports = { };\n\n            var dependency = module.dependency;\n\n            for (var i = 0;  dependency[i];  i++)\n                module.dependency[i] = _include_( dependency[i] );\n\n            exports = module.factory.apply(\n                null,  module.dependency.concat(\n                    include.bind(null, module.base),  module.exports,  module\n                )\n            );\n\n            if (exports != null)  module.exports = exports;\n\n            delete module.dependency;  delete module.factory;\n        }\n\n        return module.exports;\n    }\n\n"
                           },
                           "tail": false
                         },
                         {
                           "type": "TemplateElement",
-                          "start": 2504,
-                          "end": 2528,
+                          "start": 2721,
+                          "end": 2745,
                           "loc": {
                             "start": {
-                              "line": 92,
+                              "line": 100,
                               "column": 45
                             },
                             "end": {
-                              "line": 94,
+                              "line": 102,
                               "column": 22
                             }
                           },
@@ -3113,15 +3113,15 @@
                         },
                         {
                           "type": "TemplateElement",
-                          "start": 2536,
-                          "end": 2543,
+                          "start": 2753,
+                          "end": 2760,
                           "loc": {
                             "start": {
-                              "line": 94,
+                              "line": 102,
                               "column": 30
                             },
                             "end": {
-                              "line": 95,
+                              "line": 103,
                               "column": 3
                             }
                           },
@@ -3135,15 +3135,15 @@
                     },
                     "property": {
                       "type": "Identifier",
-                      "start": 2545,
-                      "end": 2549,
+                      "start": 2762,
+                      "end": 2766,
                       "loc": {
                         "start": {
-                          "line": 95,
+                          "line": 103,
                           "column": 5
                         },
                         "end": {
-                          "line": 95,
+                          "line": 103,
                           "column": 9
                         },
                         "identifierName": "trim"
@@ -9585,16 +9585,16 @@
         "binop": null,
         "updateContext": null
       },
-      "value": "\n\n    var _include_ = include.bind(null, './');\n\n    function include(base, path) {\n\n        path = outPackage( path )  ?  path  :  ('./' + merge(base, path));\n\n        var module = _module_[path], exports;\n\n        if (! module)  return require(path);\n\n        if (! module.exports) {\n\n            module.exports = { };\n\n            var dependency = module.dependency;\n\n            for (var i = 0;  dependency[i];  i++)\n                module.dependency[i] = _include_( dependency[i] );\n\n            exports = module.factory.apply(\n                null,  module.dependency.concat(\n                    include.bind(null, module.base),  module.exports,  module\n                )\n            );\n\n            if (exports != null)  module.exports = exports;\n\n            delete module.dependency;  delete module.factory;\n        }\n\n        return module.exports;\n    }\n\n",
+      "value": "\n\n    if (typeof require !== 'function')\n        require = function (name) {\n\n            if (self[name] != null)  return self[name];\n\n            throw ReferenceError('Can\\'t find \"' + name + '\" module');\n        };\n\n    var _include_ = include.bind(null, './');\n\n    function include(base, path) {\n\n        path = outPackage( path )  ?  path  :  ('./' + merge(base, path));\n\n        var module = _module_[path], exports;\n\n        if (! module)  return require(path);\n\n        if (! module.exports) {\n\n            module.exports = { };\n\n            var dependency = module.dependency;\n\n            for (var i = 0;  dependency[i];  i++)\n                module.dependency[i] = _include_( dependency[i] );\n\n            exports = module.factory.apply(\n                null,  module.dependency.concat(\n                    include.bind(null, module.base),  module.exports,  module\n                )\n            );\n\n            if (exports != null)  module.exports = exports;\n\n            delete module.dependency;  delete module.factory;\n        }\n\n        return module.exports;\n    }\n\n",
       "start": 1593,
-      "end": 2459,
+      "end": 2676,
       "loc": {
         "start": {
           "line": 57,
           "column": 13
         },
         "end": {
-          "line": 92,
+          "line": 100,
           "column": 0
         }
       }
@@ -9611,15 +9611,15 @@
         "postfix": false,
         "binop": null
       },
-      "start": 2459,
-      "end": 2461,
+      "start": 2676,
+      "end": 2678,
       "loc": {
         "start": {
-          "line": 92,
+          "line": 100,
           "column": 0
         },
         "end": {
-          "line": 92,
+          "line": 100,
           "column": 2
         }
       }
@@ -9637,15 +9637,15 @@
         "binop": null
       },
       "value": "concatModule",
-      "start": 2461,
-      "end": 2473,
+      "start": 2678,
+      "end": 2690,
       "loc": {
         "start": {
-          "line": 92,
+          "line": 100,
           "column": 2
         },
         "end": {
-          "line": 92,
+          "line": 100,
           "column": 14
         }
       }
@@ -9662,15 +9662,15 @@
         "postfix": false,
         "binop": null
       },
-      "start": 2473,
-      "end": 2474,
+      "start": 2690,
+      "end": 2691,
       "loc": {
         "start": {
-          "line": 92,
+          "line": 100,
           "column": 14
         },
         "end": {
-          "line": 92,
+          "line": 100,
           "column": 15
         }
       }
@@ -9688,15 +9688,15 @@
         "binop": null
       },
       "value": "pack",
-      "start": 2474,
-      "end": 2478,
+      "start": 2691,
+      "end": 2695,
       "loc": {
         "start": {
-          "line": 92,
+          "line": 100,
           "column": 15
         },
         "end": {
-          "line": 92,
+          "line": 100,
           "column": 19
         }
       }
@@ -9714,15 +9714,15 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 2478,
-      "end": 2479,
+      "start": 2695,
+      "end": 2696,
       "loc": {
         "start": {
-          "line": 92,
+          "line": 100,
           "column": 19
         },
         "end": {
-          "line": 92,
+          "line": 100,
           "column": 20
         }
       }
@@ -9740,15 +9740,15 @@
         "binop": null
       },
       "value": "name",
-      "start": 2480,
-      "end": 2484,
+      "start": 2697,
+      "end": 2701,
       "loc": {
         "start": {
-          "line": 92,
+          "line": 100,
           "column": 21
         },
         "end": {
-          "line": 92,
+          "line": 100,
           "column": 25
         }
       }
@@ -9766,15 +9766,15 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 2484,
-      "end": 2485,
+      "start": 2701,
+      "end": 2702,
       "loc": {
         "start": {
-          "line": 92,
+          "line": 100,
           "column": 25
         },
         "end": {
-          "line": 92,
+          "line": 100,
           "column": 26
         }
       }
@@ -9792,15 +9792,15 @@
         "binop": null
       },
       "value": "modName",
-      "start": 2486,
-      "end": 2493,
+      "start": 2703,
+      "end": 2710,
       "loc": {
         "start": {
-          "line": 92,
+          "line": 100,
           "column": 27
         },
         "end": {
-          "line": 92,
+          "line": 100,
           "column": 34
         }
       }
@@ -9818,15 +9818,15 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 2493,
-      "end": 2494,
+      "start": 2710,
+      "end": 2711,
       "loc": {
         "start": {
-          "line": 92,
+          "line": 100,
           "column": 34
         },
         "end": {
-          "line": 92,
+          "line": 100,
           "column": 35
         }
       }
@@ -9844,15 +9844,15 @@
         "binop": null
       },
       "value": "varName",
-      "start": 2495,
-      "end": 2502,
+      "start": 2712,
+      "end": 2719,
       "loc": {
         "start": {
-          "line": 92,
+          "line": 100,
           "column": 36
         },
         "end": {
-          "line": 92,
+          "line": 100,
           "column": 43
         }
       }
@@ -9869,15 +9869,15 @@
         "postfix": false,
         "binop": null
       },
-      "start": 2502,
-      "end": 2503,
+      "start": 2719,
+      "end": 2720,
       "loc": {
         "start": {
-          "line": 92,
+          "line": 100,
           "column": 43
         },
         "end": {
-          "line": 92,
+          "line": 100,
           "column": 44
         }
       }
@@ -9894,15 +9894,15 @@
         "postfix": false,
         "binop": null
       },
-      "start": 2503,
-      "end": 2504,
+      "start": 2720,
+      "end": 2721,
       "loc": {
         "start": {
-          "line": 92,
+          "line": 100,
           "column": 44
         },
         "end": {
-          "line": 92,
+          "line": 100,
           "column": 45
         }
       }
@@ -9921,15 +9921,15 @@
         "updateContext": null
       },
       "value": "\n\n    return _include_('",
-      "start": 2504,
-      "end": 2528,
+      "start": 2721,
+      "end": 2745,
       "loc": {
         "start": {
-          "line": 92,
+          "line": 100,
           "column": 45
         },
         "end": {
-          "line": 94,
+          "line": 102,
           "column": 22
         }
       }
@@ -9946,15 +9946,15 @@
         "postfix": false,
         "binop": null
       },
-      "start": 2528,
-      "end": 2530,
+      "start": 2745,
+      "end": 2747,
       "loc": {
         "start": {
-          "line": 94,
+          "line": 102,
           "column": 22
         },
         "end": {
-          "line": 94,
+          "line": 102,
           "column": 24
         }
       }
@@ -9972,15 +9972,15 @@
         "binop": null
       },
       "value": "entry",
-      "start": 2530,
-      "end": 2535,
+      "start": 2747,
+      "end": 2752,
       "loc": {
         "start": {
-          "line": 94,
+          "line": 102,
           "column": 24
         },
         "end": {
-          "line": 94,
+          "line": 102,
           "column": 29
         }
       }
@@ -9997,15 +9997,15 @@
         "postfix": false,
         "binop": null
       },
-      "start": 2535,
-      "end": 2536,
+      "start": 2752,
+      "end": 2753,
       "loc": {
         "start": {
-          "line": 94,
+          "line": 102,
           "column": 29
         },
         "end": {
-          "line": 94,
+          "line": 102,
           "column": 30
         }
       }
@@ -10024,15 +10024,15 @@
         "updateContext": null
       },
       "value": "');\n});",
-      "start": 2536,
-      "end": 2543,
+      "start": 2753,
+      "end": 2760,
       "loc": {
         "start": {
-          "line": 94,
+          "line": 102,
           "column": 30
         },
         "end": {
-          "line": 95,
+          "line": 103,
           "column": 3
         }
       }
@@ -10049,15 +10049,15 @@
         "postfix": false,
         "binop": null
       },
-      "start": 2543,
-      "end": 2544,
+      "start": 2760,
+      "end": 2761,
       "loc": {
         "start": {
-          "line": 95,
+          "line": 103,
           "column": 3
         },
         "end": {
-          "line": 95,
+          "line": 103,
           "column": 4
         }
       }
@@ -10075,15 +10075,15 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 2544,
-      "end": 2545,
+      "start": 2761,
+      "end": 2762,
       "loc": {
         "start": {
-          "line": 95,
+          "line": 103,
           "column": 4
         },
         "end": {
-          "line": 95,
+          "line": 103,
           "column": 5
         }
       }
@@ -10101,15 +10101,15 @@
         "binop": null
       },
       "value": "trim",
-      "start": 2545,
-      "end": 2549,
+      "start": 2762,
+      "end": 2766,
       "loc": {
         "start": {
-          "line": 95,
+          "line": 103,
           "column": 5
         },
         "end": {
-          "line": 95,
+          "line": 103,
           "column": 9
         }
       }
@@ -10126,15 +10126,15 @@
         "postfix": false,
         "binop": null
       },
-      "start": 2549,
-      "end": 2550,
+      "start": 2766,
+      "end": 2767,
       "loc": {
         "start": {
-          "line": 95,
+          "line": 103,
           "column": 9
         },
         "end": {
-          "line": 95,
+          "line": 103,
           "column": 10
         }
       }
@@ -10151,15 +10151,15 @@
         "postfix": false,
         "binop": null
       },
-      "start": 2550,
-      "end": 2551,
+      "start": 2767,
+      "end": 2768,
       "loc": {
         "start": {
-          "line": 95,
+          "line": 103,
           "column": 10
         },
         "end": {
-          "line": 95,
+          "line": 103,
           "column": 11
         }
       }
@@ -10177,15 +10177,15 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 2551,
-      "end": 2552,
+      "start": 2768,
+      "end": 2769,
       "loc": {
         "start": {
-          "line": 95,
+          "line": 103,
           "column": 11
         },
         "end": {
-          "line": 95,
+          "line": 103,
           "column": 12
         }
       }
@@ -10202,15 +10202,15 @@
         "postfix": false,
         "binop": null
       },
-      "start": 2553,
-      "end": 2554,
+      "start": 2770,
+      "end": 2771,
       "loc": {
         "start": {
-          "line": 96,
+          "line": 104,
           "column": 0
         },
         "end": {
-          "line": 96,
+          "line": 104,
           "column": 1
         }
       }
@@ -10228,15 +10228,15 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 2555,
-      "end": 2555,
+      "start": 2772,
+      "end": 2772,
       "loc": {
         "start": {
-          "line": 97,
+          "line": 105,
           "column": 0
         },
         "end": {
-          "line": 97,
+          "line": 105,
           "column": 0
         }
       }

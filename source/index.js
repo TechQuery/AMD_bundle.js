@@ -14,6 +14,8 @@ import {
     packageOf, currentModulePath, configOf, patternOf
 } from '@tech_query/node-toolkit';
 
+import { uglify } from './utility';
+
 
 const meta = packageOf( currentModulePath() ).meta;
 
@@ -26,6 +28,7 @@ Command
         '-a, --include-all',
         'Bundle all dependencies (include those in "./node_modules/")'
     )
+    .option('-m, --minify',  'Generate minified source code & source map')
     .option('-s, --std-out',  'Write into "stdout" without logs')
     .parse( process.argv );
 
@@ -43,7 +46,7 @@ const entry_file = Command.args[0],
 const bundle_file = (
         Command.args[1] ||
         join(entry_file,  '../../',  basename( entry_file ))
-    ) + '.js',
+    ),
     pack = new Package(
         entry_file,
         Command.includeAll,
@@ -53,14 +56,23 @@ const bundle_file = (
 
 if (! Command.stdOut)  console.time('Package bundle');
 
-var code = pack.bundle( basename( bundle_file ).split('.')[0] );
+var bundle = pack.bundle( basename( bundle_file ) );
 
-if ( pack.entry.CLI )  code = `${pack.entry.CLI}\n\n${code}`;
+if ( Command.minify ) {
+
+    const {code, map} = uglify(bundle, `${basename( bundle_file )}.js`);
+
+    outputFileSync(`${bundle_file}.min.js`, code);
+
+    outputFileSync(`${bundle_file}.js.map`, map);
+}
+
+if ( pack.entry.CLI )  bundle = `${pack.entry.CLI}\n\n${bundle}`;
 
 if ( Command.stdOut )
-    process.stdout.write( code );
+    process.stdout.write( bundle );
 else {
-    outputFileSync(bundle_file,  code);
+    outputFileSync(`${bundle_file}.js`,  bundle);
 
     console.info( '-'.repeat( 30 ) );
 

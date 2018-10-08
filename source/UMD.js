@@ -56,6 +56,14 @@ ${merge}
 
 ${outPackage}
 
+    if (typeof require !== 'function')
+        require = function (name) {
+
+            if (self[name] != null)  return self[name];
+
+            throw ReferenceError('Can\\'t find "' + name + '" module');
+        };
+
     var _include_ = include.bind(null, './');
 
     function include(base, path) {

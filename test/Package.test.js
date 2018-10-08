@@ -4,8 +4,8 @@ import {execSync} from 'child_process';
 
 import {readFileSync, outputFileSync, removeSync} from 'fs-extra';
 
-var bundle_code;
 
+const bundle_code = (readFileSync('./test/example/bundle.js') + '').trim();
 
 /**
  * @test {Package}
@@ -47,7 +47,7 @@ describe('Package bundler',  () => {
 
     function testBundle(all) {
 
-        bundle_code = (new Package(
+        const bundle_code = (new Package(
             './test/example/index', all, null, true
         )).bundle();
 
@@ -92,7 +92,11 @@ describe('Command line',  () => {
 
     it(
         'Write into `stdout` without printing',
-        ()  =>  (execSync(`${entry}index -s`) + '').should.be.eql( bundle_code )
+        ()  =>  (execSync(`${entry}index -s`) + '').should.be.eql(
+            bundle_code
+                .replace(/build/g, 'index')
+                .replace(/test4sample/g, 'test')
+        )
     );
 
 
@@ -107,11 +111,7 @@ describe('Command line',  () => {
 √ Module "./c" has been bundled`.trim()
             );
 
-        (readFileSync(`${output}.js`) + '').should.be.equal(
-            bundle_code
-                .replace(/test([^:(])/g, 'test4sample$1')
-                .replace(/('|\.)index/g, '$1build')
-        );
+        (readFileSync(`${output}.js`) + '').should.be.equal( bundle_code );
     });
 
 

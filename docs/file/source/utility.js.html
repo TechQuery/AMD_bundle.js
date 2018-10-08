@@ -37,6 +37,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getNPMPackage">getNPMPackage</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-merge">merge</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-outPackage">outPackage</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-uglify">uglify</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-DependencyMap">DependencyMap</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-NameMap">NameMap</a></span></span></li>
 </ul>
@@ -47,6 +48,8 @@
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import {join} from &apos;path&apos;;
 
 import {existsSync, readFileSync, statSync} from &apos;fs&apos;;
+
+import { minify } from &apos;uglify-js&apos;;
 
 
 /**
@@ -131,6 +134,36 @@ export function getNPMPackage(name) {
     for (let key  of  [&apos;main&apos;, &apos;browser&apos;])
         if (path = fileInNPM( join(name, config[key]) ))
             return  statSync( path ).isFile()  ?  path  :  getNPMIndex( path );
+}
+
+
+/**
+ * @param {String} source   - JS source code
+ * @param {String} filename - Name of this JS source file
+ *
+ * @return   {Object}
+ * @property {String} code
+ * @property {String} map
+ */
+export function uglify(source, filename) {
+
+    const {error, code, map} = minify(source, {
+        mangle:     {
+            keep_fnames:    true
+        },
+        output:     {
+            comments:    &apos;some&apos;
+        },
+        ie8:        true,
+        sourceMap:  {
+            filename,  url: `${filename}.map`
+        },
+        warnings:   &apos;verbose&apos;
+    });
+
+    if ( error )  throw error;
+
+    return  {code, map};
 }
 </code></pre>
 

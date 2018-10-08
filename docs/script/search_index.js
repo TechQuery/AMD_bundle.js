@@ -48,140 +48,146 @@ window.esdocSearchIndex = [
     "function"
   ],
   [
+    "amd-bundle/source/utility.js~uglify",
+    "function/index.html#static-function-uglify",
+    "<span>uglify</span> <span class=\"search-result-import-path\">amd-bundle/source/utility.js</span>",
+    "function"
+  ],
+  [
     "",
-    "test-file/test/Package.js.html#lineNumber78",
+    "test-file/test/Package.test.js.html#lineNumber78",
     "Command line",
     "test"
   ],
   [
     "",
-    "test-file/test/Package.js.html#lineNumber118",
+    "test-file/test/Package.test.js.html#lineNumber118",
     "Command line Handle \"Hash bang\" automatically",
     "test"
   ],
   [
     "",
-    "test-file/test/Package.js.html#lineNumber83",
+    "test-file/test/Package.test.js.html#lineNumber83",
     "Command line Output to a file",
     "test"
   ],
   [
     "",
-    "test-file/test/Package.js.html#lineNumber99",
+    "test-file/test/Package.test.js.html#lineNumber103",
     "Command line Replace a module by the map option",
     "test"
   ],
   [
     "",
-    "test-file/test/Package.js.html#lineNumber93",
+    "test-file/test/Package.test.js.html#lineNumber93",
     "Command line Write into `stdout` without printing",
     "test"
   ],
   [
     "module source/module.js~module,module",
-    "test-file/test/Module.js.html#lineNumber7",
+    "test-file/test/Module.test.js.html#lineNumber7",
     "Module parser",
     "test"
   ],
   [
     "module#dependencypath source/module.js~module#dependencypath,module#dependencypath",
-    "test-file/test/Module.js.html#lineNumber49",
+    "test-file/test/Module.test.js.html#lineNumber49",
     "Module parser Get paths of the dependency",
     "test"
   ],
   [
     "module#load source/module.js~module#load,module#load",
-    "test-file/test/Module.js.html#lineNumber57",
+    "test-file/test/Module.test.js.html#lineNumber57",
     "Module parser Load ES 6 module",
     "test"
   ],
   [
     "module#parseamd source/module.js~module#parseamd,module#parseamd",
-    "test-file/test/Module.js.html#lineNumber16",
+    "test-file/test/Module.test.js.html#lineNumber16",
     "Module parser Parse AMD",
     "test"
   ],
   [
     "module#parsecjs source/module.js~module#parsecjs,module#parsecjs",
-    "test-file/test/Module.js.html#lineNumber31",
+    "test-file/test/Module.test.js.html#lineNumber31",
     "Module parser Parse CommonJS",
     "test"
   ],
   [
     "module#parse source/module.js~module#parse,module#parse",
-    "test-file/test/Module.js.html#lineNumber36",
+    "test-file/test/Module.test.js.html#lineNumber36",
     "Module parser Parse all",
     "test"
   ],
   [
     "module#mapname source/module.js~module#mapname,module#mapname",
-    "test-file/test/Module.js.html#lineNumber74",
+    "test-file/test/Module.test.js.html#lineNumber74",
     "Module parser Replace a dependency",
     "test"
   ],
   [
     "package source/package.js~package,package",
-    "test-file/test/Package.js.html#lineNumber13",
+    "test-file/test/Package.test.js.html#lineNumber13",
     "Package bundler",
     "test"
   ],
   [
     "generate source/umd.js~generate,generate",
-    "test-file/test/Package.js.html#lineNumber69",
+    "test-file/test/Package.test.js.html#lineNumber69",
     "Package bundler Bundle all dependencies",
     "test"
   ],
   [
     "package#bundle source/package.js~package#bundle,package#bundle",
-    "test-file/test/Package.js.html#lineNumber74",
+    "test-file/test/Package.test.js.html#lineNumber74",
     "Package bundler Bundle without NPM packages",
     "test"
   ],
   [
     "package#parse source/package.js~package#parse,package#parse",
-    "test-file/test/Package.js.html#lineNumber36",
+    "test-file/test/Package.test.js.html#lineNumber36",
     "Package bundler Parse package",
     "test"
   ],
   [
     "package#register source/package.js~package#register,package#register",
-    "test-file/test/Package.js.html#lineNumber20",
+    "test-file/test/Package.test.js.html#lineNumber20",
     "Package bundler Register module",
     "test"
   ],
   [
     "",
-    "test-file/test/utility.js.html#lineNumber7",
+    "test-file/test/utility.test.js.html#lineNumber7",
     "Utility",
     "test"
   ],
   [
     "outpackage source/utility.js~outpackage,outpackage",
-    "test-file/test/utility.js.html#lineNumber19",
+    "test-file/test/utility.test.js.html#lineNumber19",
     "Utility Determine package type by name",
     "test"
   ],
   [
     "getnpmindex source/utility.js~getnpmindex,getnpmindex",
-    "test-file/test/utility.js.html#lineNumber43",
+    "test-file/test/utility.test.js.html#lineNumber43",
     "Utility Get \"index.js\" path of a module",
     "test"
   ],
   [
     "getnpmpackage source/utility.js~getnpmpackage,getnpmpackage",
-    "test-file/test/utility.js.html#lineNumber53",
+    "test-file/test/utility.test.js.html#lineNumber53",
     "Utility Get entry file path from \"package.json\" of a module",
     "test"
   ],
   [
     "getnpmfile source/utility.js~getnpmfile,getnpmfile",
-    "test-file/test/utility.js.html#lineNumber35",
+    "test-file/test/utility.test.js.html#lineNumber35",
     "Utility Get path of JS modules",
     "test"
   ],
   [
     "merge source/utility.js~merge,merge",
-    "test-file/test/utility.js.html#lineNumber11",
+    "test-file/test/utility.test.js.html#lineNumber11",
     "Utility Merge module paths",
     "test"
   ],
@@ -708,51 +714,21 @@ window.esdocSearchIndex = [
     "file"
   ],
   [
-    "test/module.js",
-    "test-file/test/Module.js.html",
-    "test/Module.js",
+    "test/module.test.js",
+    "test-file/test/Module.test.js.html",
+    "test/Module.test.js",
     "testFile"
   ],
   [
-    "test/package.js",
-    "test-file/test/Package.js.html",
-    "test/Package.js",
+    "test/package.test.js",
+    "test-file/test/Package.test.js.html",
+    "test/Package.test.js",
     "testFile"
   ],
   [
-    "test/example/a.js",
-    "test-file/test/example/a.js.html",
-    "test/example/a.js",
-    "testFile"
-  ],
-  [
-    "test/example/c.js",
-    "test-file/test/example/c.js.html",
-    "test/example/c.js",
-    "testFile"
-  ],
-  [
-    "test/example/command.js",
-    "test-file/test/example/command.js.html",
-    "test/example/command.js",
-    "testFile"
-  ],
-  [
-    "test/example/index.js",
-    "test-file/test/example/index.js.html",
-    "test/example/index.js",
-    "testFile"
-  ],
-  [
-    "test/example/libs/b.js",
-    "test-file/test/example/libs/b.js.html",
-    "test/example/libs/b.js",
-    "testFile"
-  ],
-  [
-    "test/utility.js",
-    "test-file/test/utility.js.html",
-    "test/utility.js",
+    "test/utility.test.js",
+    "test-file/test/utility.test.js.html",
+    "test/utility.test.js",
     "testFile"
   ]
 ]

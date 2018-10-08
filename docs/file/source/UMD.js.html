@@ -37,6 +37,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getNPMPackage">getNPMPackage</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-merge">merge</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-outPackage">outPackage</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-uglify">uglify</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-DependencyMap">DependencyMap</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-NameMap">NameMap</a></span></span></li>
 </ul>
@@ -101,6 +102,14 @@ export function generate(pack, name, entry, outside) {
 ${merge}
 
 ${outPackage}
+
+    if (typeof require !== &apos;function&apos;)
+        require = function (name) {
+
+            if (self[name] != null)  return self[name];
+
+            throw ReferenceError(&apos;Can\\&apos;t find &quot;&apos; + name + &apos;&quot; module&apos;);
+        };
 
     var _include_ = include.bind(null, &apos;./&apos;);
 
