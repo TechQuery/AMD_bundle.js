@@ -579,7 +579,7 @@
     "__docId__": 50,
     "kind": "file",
     "name": "source/index.js",
-    "content": "#! /usr/bin/env node\n\nimport '@babel/polyfill';\n\nimport { join, basename } from 'path';\n\nimport { outputFileSync } from 'fs-extra';\n\nimport Command from 'commander';\n\nimport Package from './Package';\n\nimport {\n    packageOf, currentModulePath, configOf, patternOf\n} from '@tech_query/node-toolkit';\n\nimport { uglify } from './utility';\n\n\nconst meta = packageOf( currentModulePath() ).meta;\n\nCommand\n    .version( meta.version )\n    .description( meta.description )\n    .usage('[options] <entry file> [bundle file]')\n    .arguments('<entry file> [bundle file]')\n    .option(\n        '-a, --include-all',\n        'Bundle all dependencies (include those in \"./node_modules/\")'\n    )\n    .option('-m, --minify',  'Generate minified source code & source map')\n    .option('-s, --std-out',  'Write into \"stdout\" without logs')\n    .parse( process.argv );\n\nif (! (process.argv[2] || '').trim()) {\n\n    Command.outputHelp();\n\n    process.exit(1);\n}\n\n\nconst entry_file = Command.args[0],\n    module_map = (configOf( meta.name ) || '').moduleMap;\n\nconst bundle_file = (\n        Command.args[1] ||\n        join(entry_file,  '../../',  basename( entry_file ))\n    ),\n    pack = new Package(\n        entry_file,\n        Command.includeAll,\n        module_map  &&  patternOf(module_map),\n        Command.stdOut\n    );\n\nif (! Command.stdOut)  console.time('Package bundle');\n\nvar bundle = pack.bundle( basename( bundle_file ) );\n\nif ( Command.minify ) {\n\n    const {code, map} = uglify(bundle, `${basename( bundle_file )}.js`);\n\n    outputFileSync(`${bundle_file}.min.js`, code);\n\n    outputFileSync(`${bundle_file}.js.map`, map);\n}\n\nif ( pack.entry.CLI )  bundle = `${pack.entry.CLI}\\n\\n${bundle}`;\n\nif ( Command.stdOut )\n    process.stdout.write( bundle );\nelse {\n    outputFileSync(`${bundle_file}.js`,  bundle);\n\n    console.info( '-'.repeat( 30 ) );\n\n    console.timeEnd('Package bundle');\n\n    console.info(`Module count: ${pack.length}`);\n}\n",
+    "content": "#! /usr/bin/env node\n\nimport '@babel/polyfill';\n\nimport { join, basename } from 'path';\n\nimport { outputFileSync } from 'fs-extra';\n\nimport Command from 'commander';\n\nimport Package from './Package';\n\nimport {\n    packageOf, currentModulePath, configOf, patternOf, uglify\n} from '@tech_query/node-toolkit';\n\n\nconst meta = packageOf( currentModulePath() ).meta;\n\nCommand\n    .version( meta.version )\n    .description( meta.description )\n    .usage('[options] <entry file> [bundle file]')\n    .arguments('<entry file> [bundle file]')\n    .option(\n        '-a, --include-all',\n        'Bundle all dependencies (include those in \"./node_modules/\")'\n    )\n    .option('-m, --minify',  'Generate minified source code & source map')\n    .option('-s, --std-out',  'Write into \"stdout\" without logs')\n    .parse( process.argv );\n\nif (! (process.argv[2] || '').trim()) {\n\n    Command.outputHelp();\n\n    process.exit(1);\n}\n\n\nconst entry_file = Command.args[0],\n    module_map = (configOf( meta.name ) || '').moduleMap;\n\nconst bundle_file = (\n        Command.args[1] ||\n        join(entry_file,  '../../',  basename( entry_file ))\n    ),\n    pack = new Package(\n        entry_file,\n        Command.includeAll,\n        module_map  &&  patternOf(module_map),\n        Command.stdOut\n    );\n\nif (! Command.stdOut)  console.time('Package bundle');\n\nvar bundle = pack.bundle( basename( bundle_file ) );\n\nif ( Command.minify ) {\n\n    const {code, map} = uglify(bundle, `${basename( bundle_file )}.js`);\n\n    outputFileSync(`${bundle_file}.min.js`, code);\n\n    outputFileSync(`${bundle_file}.js.map`, map);\n}\n\nif ( pack.entry.CLI )  bundle = `${pack.entry.CLI}\\n\\n${bundle}`;\n\nif ( Command.stdOut )\n    process.stdout.write( bundle );\nelse {\n    outputFileSync(`${bundle_file}.js`,  bundle);\n\n    console.info( '-'.repeat( 30 ) );\n\n    console.timeEnd('Package bundle');\n\n    console.info(`Module count: ${pack.length}`);\n}\n",
     "static": true,
     "longname": "D:/TechQuery/AMD_bundle.js/source/index.js",
     "access": "public",
@@ -598,7 +598,7 @@
     "importPath": "amd-bundle/source/index.js",
     "importStyle": null,
     "description": null,
-    "lineNumber": 20,
+    "lineNumber": 18,
     "undocument": true,
     "type": {
       "types": [
@@ -619,7 +619,7 @@
     "importPath": "amd-bundle/source/index.js",
     "importStyle": null,
     "description": null,
-    "lineNumber": 43,
+    "lineNumber": 41,
     "undocument": true,
     "type": {
       "types": [
@@ -640,7 +640,7 @@
     "importPath": "amd-bundle/source/index.js",
     "importStyle": null,
     "description": null,
-    "lineNumber": 46,
+    "lineNumber": 44,
     "undocument": true,
     "type": {
       "types": [
@@ -661,7 +661,7 @@
     "importPath": "amd-bundle/source/index.js",
     "importStyle": null,
     "description": null,
-    "lineNumber": 59,
+    "lineNumber": 57,
     "undocument": true,
     "type": {
       "types": [
@@ -1796,7 +1796,7 @@
     "__docId__": 102,
     "kind": "file",
     "name": "source/utility.js",
-    "content": "import {join} from 'path';\n\nimport {existsSync, readFileSync, statSync} from 'fs';\n\nimport { minify } from 'uglify-js';\n\n\n/**\n * This will be used in the bundled source\n *\n * @param {string} base - Root path\n * @param {string} path - Path relative to `base`\n *\n * @return {string} Joined & normalized path\n */\nexport function merge(base, path) {\n\n    return  (base + '/' + path)\n        .replace(/\\/\\//g, '/')\n        .replace(/[^/.]+\\/\\.\\.\\//g, '')\n        .replace(/\\.\\//g,  function (match, index, input) {\n\n            return  (input[index - 1]  ===  '.')  ?  match  :  '';\n        });\n}\n\n\n/**\n * @param {string} name - Name of a module\n *\n * @return {boolean} Whether `name` is a dependency out of this package\n */\nexport function outPackage(name) {  return /^[^./]/.test( name );  }\n\n\n\nfunction fileInNPM(path) {\n\n    path = join('node_modules', path);\n\n    if (existsSync( path )  &&  statSync( path ).isFile())\n        return  path.replace(/\\\\/g, '/');\n}\n\n\nfunction findNPMFile(list) {\n\n    for (let path of list)  if (path = fileInNPM( path ))  return path;\n}\n\n\n/**\n * @param {string} name - Name of a module\n *\n * @return {?string} Valid `name` in `./node_modules/` is a JS or JSON file\n */\nexport function getNPMFile(name) {\n\n    return  findNPMFile([name, `${name}.js`, `${name}.json`]);\n}\n\n\n/**\n * @param {string} name - Name of a module\n *\n * @return {?string} Valid `name` in `./node_modules/` is `index.js` or `index.json`\n */\nexport function getNPMIndex(name) {\n\n    return  findNPMFile([`${name}/index.js`, `${name}/index.json`]);\n}\n\n\n/**\n * @param {string} name - Name of a module\n *\n * @return {?string} Entry file path of an existing `package.json`\n */\nexport function getNPMPackage(name) {\n\n    var path = fileInNPM(`${name}/package.json`);\n\n    if (! path)  return;\n\n    const config = JSON.parse( readFileSync( path ) );\n\n    for (let key  of  ['main', 'browser'])\n        if (path = fileInNPM( join(name, config[key]) ))\n            return  statSync( path ).isFile()  ?  path  :  getNPMIndex( path );\n}\n\n\n/**\n * @param {String} source   - JS source code\n * @param {String} filename - Name of this JS source file\n *\n * @return   {Object}\n * @property {String} code\n * @property {String} map\n */\nexport function uglify(source, filename) {\n\n    const {error, code, map} = minify(source, {\n        mangle:     {\n            keep_fnames:    true\n        },\n        output:     {\n            comments:    'some'\n        },\n        ie8:        true,\n        sourceMap:  {\n            filename,  url: `${filename}.map`\n        },\n        warnings:   'verbose'\n    });\n\n    if ( error )  throw error;\n\n    return  {code, map};\n}\n",
+    "content": "import {join} from 'path';\n\nimport {existsSync, readFileSync, statSync} from 'fs';\n\n\n/**\n * This will be used in the bundled source\n *\n * @param {string} base - Root path\n * @param {string} path - Path relative to `base`\n *\n * @return {string} Joined & normalized path\n */\nexport function merge(base, path) {\n\n    return  (base + '/' + path)\n        .replace(/\\/\\//g, '/')\n        .replace(/[^/.]+\\/\\.\\.\\//g, '')\n        .replace(/\\.\\//g,  function (match, index, input) {\n\n            return  (input[index - 1]  ===  '.')  ?  match  :  '';\n        });\n}\n\n\n/**\n * @param {string} name - Name of a module\n *\n * @return {boolean} Whether `name` is a dependency out of this package\n */\nexport function outPackage(name) {  return /^[^./]/.test( name );  }\n\n\n\nfunction fileInNPM(path) {\n\n    path = join('node_modules', path);\n\n    if (existsSync( path )  &&  statSync( path ).isFile())\n        return  path.replace(/\\\\/g, '/');\n}\n\n\nfunction findNPMFile(list) {\n\n    for (let path of list)  if (path = fileInNPM( path ))  return path;\n}\n\n\n/**\n * @param {string} name - Name of a module\n *\n * @return {?string} Valid `name` in `./node_modules/` is a JS or JSON file\n */\nexport function getNPMFile(name) {\n\n    return  findNPMFile([name, `${name}.js`, `${name}.json`]);\n}\n\n\n/**\n * @param {string} name - Name of a module\n *\n * @return {?string} Valid `name` in `./node_modules/` is `index.js` or `index.json`\n */\nexport function getNPMIndex(name) {\n\n    return  findNPMFile([`${name}/index.js`, `${name}/index.json`]);\n}\n\n\n/**\n * @param {string} name - Name of a module\n *\n * @return {?string} Entry file path of an existing `package.json`\n */\nexport function getNPMPackage(name) {\n\n    var path = fileInNPM(`${name}/package.json`);\n\n    if (! path)  return;\n\n    const config = JSON.parse( readFileSync( path ) );\n\n    for (let key  of  ['main', 'browser'])\n        if (path = fileInNPM( join(name, config[key]) ))\n            return  statSync( path ).isFile()  ?  path  :  getNPMIndex( path );\n}\n",
     "static": true,
     "longname": "D:/TechQuery/AMD_bundle.js/source/utility.js",
     "access": "public",
@@ -1817,7 +1817,7 @@
     "importPath": "amd-bundle/source/utility.js",
     "importStyle": "{merge}",
     "description": "This will be used in the bundled source",
-    "lineNumber": 16,
+    "lineNumber": 14,
     "params": [
       {
         "nullable": null,
@@ -1863,7 +1863,7 @@
     "importPath": "amd-bundle/source/utility.js",
     "importStyle": "{outPackage}",
     "description": "",
-    "lineNumber": 33,
+    "lineNumber": 31,
     "params": [
       {
         "nullable": null,
@@ -1899,7 +1899,7 @@
     "importPath": "amd-bundle/source/utility.js",
     "importStyle": null,
     "description": null,
-    "lineNumber": 37,
+    "lineNumber": 35,
     "undocument": true,
     "params": [
       {
@@ -1930,7 +1930,7 @@
     "importPath": "amd-bundle/source/utility.js",
     "importStyle": null,
     "description": null,
-    "lineNumber": 46,
+    "lineNumber": 44,
     "undocument": true,
     "params": [
       {
@@ -1961,7 +1961,7 @@
     "importPath": "amd-bundle/source/utility.js",
     "importStyle": "{getNPMFile}",
     "description": "",
-    "lineNumber": 57,
+    "lineNumber": 55,
     "params": [
       {
         "nullable": null,
@@ -1997,7 +1997,7 @@
     "importPath": "amd-bundle/source/utility.js",
     "importStyle": "{getNPMIndex}",
     "description": "",
-    "lineNumber": 68,
+    "lineNumber": 66,
     "params": [
       {
         "nullable": null,
@@ -2033,7 +2033,7 @@
     "importPath": "amd-bundle/source/utility.js",
     "importStyle": "{getNPMPackage}",
     "description": "",
-    "lineNumber": 79,
+    "lineNumber": 77,
     "params": [
       {
         "nullable": null,
@@ -2056,74 +2056,6 @@
     }
   },
   {
-    "__docId__": 110,
-    "kind": "function",
-    "name": "uglify",
-    "memberof": "source/utility.js",
-    "generator": false,
-    "async": false,
-    "static": true,
-    "longname": "source/utility.js~uglify",
-    "access": "public",
-    "export": true,
-    "importPath": "amd-bundle/source/utility.js",
-    "importStyle": "{uglify}",
-    "description": "",
-    "lineNumber": 101,
-    "params": [
-      {
-        "nullable": null,
-        "types": [
-          "String"
-        ],
-        "spread": false,
-        "optional": false,
-        "name": "source",
-        "description": "JS source code"
-      },
-      {
-        "nullable": null,
-        "types": [
-          "String"
-        ],
-        "spread": false,
-        "optional": false,
-        "name": "filename",
-        "description": "Name of this JS source file"
-      }
-    ],
-    "properties": [
-      {
-        "nullable": null,
-        "types": [
-          "String"
-        ],
-        "spread": false,
-        "optional": false,
-        "name": "code",
-        "description": ""
-      },
-      {
-        "nullable": null,
-        "types": [
-          "String"
-        ],
-        "spread": false,
-        "optional": false,
-        "name": "map",
-        "description": ""
-      }
-    ],
-    "return": {
-      "nullable": null,
-      "types": [
-        "Object"
-      ],
-      "spread": false,
-      "description": ""
-    }
-  },
-  {
     "kind": "index",
     "content": "# AMD bundle\n\n**A multiple-use tool for bundling up [AMD](https://github.com/amdjs/amdjs-api/blob/master/AMD.md), [CJS](http://wiki.commonjs.org/wiki/Modules) & ES 6 modules**,\nwhich is much easier to use than [`r.js`](https://github.com/requirejs/r.js) with [Almond](https://github.com/requirejs/almond) or [AMDclean](https://github.com/gfranko/amdclean).\n\n[![NPM Dependency](https://david-dm.org/TechQuery/AMD_bundle.js.svg)](https://david-dm.org/TechQuery/AMD_bundle.js)\n\n[![NPM](https://nodei.co/npm/amd-bundle.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/amd-bundle/)\n\n\n\n## Recommended Usage\n\n\n### Basic\n\n```Shell\ncd path/to/project/root\n\nnpm install amd-bundle --save-dev\n\namd-bundle -a -m \\\n    path/to/project/source/entry \\\n    path/to/project/bundle/file\n```\n\n`amd-bundle` will\n\n 1. start bundling from the entry point `path/to/project/source/entry.js`\n\n 2. write into `path/to/project/bundle/file.js` with only one `define('file', [ ])` and `global.file` definition, just like [UMD](https://github.com/umdjs/umd) style\n\n 3. treat `${process.cwd()}/node_modules/${module_full_name}` as a user's module to pack in\n\n 4. generate `file.min.js` & `file.js.map` in `path/to/project/bundle/`\n\n\n### More options\n\n#### Command-line\n\n`amd-bundle --help`\n\n    Usage: amd-bundle [options] <entry file> [bundle file]\n\n    Options:\n\n        -V, --version      output the version number\n        -a, --include-all  Bundle all dependencies (include those in \"./node_modules/\")\n        -m, --minify       Generate minified source code & source map\n        -s, --std-out      Write into \"stdout\" without logs\n        -h, --help         output usage information\n\n#### Configuration\n\n[Example](https://github.com/TechQuery/AMD_bundle.js/blob/master/package.json#L75)\n\nKey/value of option `moduleMap` is same as [the basic parameters of `String.prototype.replace()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/replace#Parameters).\n\n#### JS Module\n\n - [API](https://techquery.github.io/AMD_bundle.js/class/source/Package.js~Package.html#instance-method-bundle)\n\n - [Example 1](https://github.com/TechQuery/AMD_bundle.js/blob/master/source/index.js#L47)\n\n - [Example 2](https://github.com/EasyWebApp/DevCLI/blob/master/source/Component.js#L122)\n\n\n### Advanced\n\nBuild **standalone release files** (Full source code, Minimized code & Source map) by executing a single command (`npm run build`).\n\n#### Multiple bundles from one source\n\n - **NPM-scripts** reference: [iQuery.js](https://github.com/TechQuery/iQuery.js/blob/master/package.json#L26)\n\n#### Bundle ECMAScript 6+ codes\n\n - Development dependency: [Babel](https://babeljs.io/)\n\n - **NPM-scripts** reference: [WebCell](https://github.com/EasyWebApp/WebCell/blob/master/package.json#L32)\n\n\n\n## Typical Cases\n\n 1. [iQuery.js](https://techquery.github.io/iQuery.js/) (where the prototype of `amd-bundle` came from)\n\n 2. [WebCell](https://web-cell.tk/) (where `v1.0` rewritten out)\n\n 3. [WebCell DevCLI](https://easywebapp.github.io/DevCLI/) (where `v1.3+` came out)\n",
     "longname": "D:\\TechQuery\\AMD_bundle.js\\README.md",
@@ -2133,14 +2065,14 @@
   },
   {
     "kind": "packageJSON",
-    "content": "{\n  \"name\": \"amd-bundle\",\n  \"version\": \"1.7.0\",\n  \"description\": \"A dual-use tool for bundling up AMD modules, which is much easier to use than r.js with Almond or AMDclean\",\n  \"keywords\": [\n    \"javascript\",\n    \"amd-loader\",\n    \"bundle\",\n    \"require-js\",\n    \"command-line\"\n  ],\n  \"author\": \"shiy2008@gmail.com\",\n  \"license\": \"AGPL-3.0\",\n  \"homepage\": \"https://techquery.github.io/AMD_bundle.js/\",\n  \"repository\": {\n    \"type\": \"git\",\n    \"url\": \"git+https://github.com/TechQuery/AMD_bundle.js.git\"\n  },\n  \"bugs\": {\n    \"url\": \"https://github.com/TechQuery/AMD_bundle.js/issues\"\n  },\n  \"main\": \"build/Package.js\",\n  \"bin\": \"build/index.js\",\n  \"engines\": {\n    \"node\": \"^6.5.0\"\n  },\n  \"scripts\": {\n    \"lint\": \"eslint install.js source/ test/*.js --fix\",\n    \"bundle\": \"babel source/ --out-dir build/\",\n    \"check\": \"mocha -r @babel/register -r @babel/polyfill -r should -c --inline-diffs\",\n    \"test\": \"npm run check -- --exit\",\n    \"debug\": \"npm run check -- --inspect-brk\",\n    \"build\": \"npm run lint  &&  npm run bundle  &&  npm test  &&  esdoc\",\n    \"prepublishOnly\": \"npm run build\",\n    \"start\": \"web-server docs/ -o\",\n    \"install\": \"node install\"\n  },\n  \"husky\": {\n    \"hook\": {\n      \"pre-commit\": \"npm run build  &&  git add .\"\n    }\n  },\n  \"dependencies\": {\n    \"@babel/core\": \"^7.1.2\",\n    \"@babel/plugin-transform-modules-commonjs\": \"^7.1.0\",\n    \"@babel/polyfill\": \"^7.0.0\",\n    \"@babel/preset-env\": \"^7.1.0\",\n    \"@babel/register\": \"^7.0.0\",\n    \"@babel/runtime\": \"^7.1.2\",\n    \"@tech_query/node-toolkit\": \"^0.7.0\",\n    \"commander\": \"^2.18.0\",\n    \"fs-extra\": \"^7.0.0\",\n    \"uglify-js\": \"^3.4.9\"\n  },\n  \"devDependencies\": {\n    \"@babel/cli\": \"^7.1.2\",\n    \"@babel/plugin-transform-runtime\": \"^7.1.0\",\n    \"cross-env\": \"^5.2.0\",\n    \"esdoc\": \"^1.1.0\",\n    \"esdoc-external-nodejs-plugin\": \"^1.0.0\",\n    \"esdoc-standard-plugin\": \"^1.0.0\",\n    \"eslint\": \"^5.6.1\",\n    \"husky\": \"^1.1.1\",\n    \"koapache\": \"^1.0.4\",\n    \"mocha\": \"^5.2.0\",\n    \"should\": \"^13.2.3\"\n  },\n  \"babel\": {\n    \"presets\": [\n      \"@babel/preset-env\"\n    ],\n    \"plugins\": [\n      \"@babel/plugin-transform-runtime\"\n    ]\n  },\n  \"amd-bundle\": {\n    \"env\": {\n      \"test\": {\n        \"moduleMap\": {\n          \"/Test/i\": \"$&4sample\"\n        }\n      }\n    }\n  }\n}\n",
+    "content": "{\n  \"name\": \"amd-bundle\",\n  \"version\": \"1.7.1\",\n  \"description\": \"A dual-use tool for bundling up AMD modules, which is much easier to use than r.js with Almond or AMDclean\",\n  \"keywords\": [\n    \"javascript\",\n    \"amd-loader\",\n    \"bundle\",\n    \"require-js\",\n    \"command-line\"\n  ],\n  \"author\": \"shiy2008@gmail.com\",\n  \"license\": \"AGPL-3.0\",\n  \"homepage\": \"https://techquery.github.io/AMD_bundle.js/\",\n  \"repository\": {\n    \"type\": \"git\",\n    \"url\": \"git+https://github.com/TechQuery/AMD_bundle.js.git\"\n  },\n  \"bugs\": {\n    \"url\": \"https://github.com/TechQuery/AMD_bundle.js/issues\"\n  },\n  \"main\": \"build/Package.js\",\n  \"bin\": \"build/index.js\",\n  \"engines\": {\n    \"node\": \"^6.5.0\"\n  },\n  \"scripts\": {\n    \"lint\": \"eslint install.js source/ test/*.js --fix\",\n    \"bundle\": \"babel source/ --out-dir build/\",\n    \"check\": \"mocha -r @babel/register -r @babel/polyfill -r should -c --inline-diffs\",\n    \"test\": \"npm run check -- --exit\",\n    \"debug\": \"npm run check -- --inspect-brk\",\n    \"build\": \"npm run lint  &&  npm run bundle  &&  npm test  &&  esdoc\",\n    \"prepublishOnly\": \"npm run build\",\n    \"start\": \"web-server docs/ -o\",\n    \"install\": \"node install\"\n  },\n  \"husky\": {\n    \"hook\": {\n      \"pre-commit\": \"npm run build  &&  git add .\"\n    }\n  },\n  \"dependencies\": {\n    \"@babel/core\": \"^7.1.2\",\n    \"@babel/plugin-transform-modules-commonjs\": \"^7.1.0\",\n    \"@babel/polyfill\": \"^7.0.0\",\n    \"@babel/preset-env\": \"^7.1.0\",\n    \"@babel/register\": \"^7.0.0\",\n    \"@babel/runtime\": \"^7.1.2\",\n    \"@tech_query/node-toolkit\": \"^0.7.1\",\n    \"commander\": \"^2.19.0\",\n    \"fs-extra\": \"^7.0.0\"\n  },\n  \"devDependencies\": {\n    \"@babel/cli\": \"^7.1.2\",\n    \"@babel/plugin-transform-runtime\": \"^7.1.0\",\n    \"cross-env\": \"^5.2.0\",\n    \"esdoc\": \"^1.1.0\",\n    \"esdoc-external-nodejs-plugin\": \"^1.0.0\",\n    \"esdoc-standard-plugin\": \"^1.0.0\",\n    \"eslint\": \"^5.6.1\",\n    \"husky\": \"^1.1.1\",\n    \"koapache\": \"^1.0.4\",\n    \"mocha\": \"^5.2.0\",\n    \"should\": \"^13.2.3\"\n  },\n  \"babel\": {\n    \"presets\": [\n      \"@babel/preset-env\"\n    ],\n    \"plugins\": [\n      \"@babel/plugin-transform-runtime\"\n    ]\n  },\n  \"amd-bundle\": {\n    \"env\": {\n      \"test\": {\n        \"moduleMap\": {\n          \"/Test/i\": \"$&4sample\"\n        }\n      }\n    }\n  }\n}\n",
     "longname": "D:\\TechQuery\\AMD_bundle.js\\package.json",
     "name": "package.json",
     "static": true,
     "access": "public"
   },
   {
-    "__docId__": 111,
+    "__docId__": 110,
     "kind": "testFile",
     "name": "test/Module.test.js",
     "content": "import Module from '../source/Module';\n\n\n/**\n * @test {Module}\n */\ndescribe('Module parser',  () => {\n\n    var module;\n\n    before(()  =>  (module = new Module('./index', './test/example/')).load());\n\n    /**\n     * @test {Module#parseAMD}\n     */\n    it('Parse AMD',  () => {\n\n        module.parseAMD().should.be.eql( {'./a': 'A'} );\n\n        (module + '').should.be.equal(`/* AMD module */\n\n    var C = require('./c');\n\n    return  {a: A, c: C, test: require('test')};\n`);\n    });\n\n    /**\n     * @test {Module#parseCJS}\n     */\n    it('Parse CommonJS',  ()  =>  module.parseCJS().should.be.eql({'./c': '_c'}));\n\n    /**\n     * @test {Module#parse}\n     */\n    it('Parse all',  () => module.parse().should.be.equal(`\n\nfunction (A, require, exports, module) {/* AMD module */\n\n    var C = require('./c');\n\n    return  {a: A, c: C, test: require('test')};\n}`.trim())\n    );\n\n    /**\n     * @test {Module#dependencyPath}\n     */\n    it(\n        'Get paths of the dependency',\n        ()  =>  module.dependencyPath.should.be.eql(['./a', './c'])\n    );\n\n    /**\n     * @test {Module#load}\n     */\n    it(\n        'Load ES 6 module',\n        ()  =>  (new Module('./b', './test/example/libs/')).load().should.be.eql(`\nObject.defineProperty(exports, '__esModule', {\n    value: true\n});\nexports.default = void 0;\n\nrequire('../c');\n\nvar _default = 'This is B';\nexports.default = _default;`.trim())\n    );\n\n    /**\n     * @test {Module#mapName}\n     */\n    it('Replace a dependency',  () => {\n\n        module = new Module(\n            './index',  './test/example/',  true,  {jquery: /^test$/}\n        );\n\n        module.parse().should.be.equal(`\n\nfunction (A, require, exports, module) {/* AMD module */\n\n    var C = require('./c');\n\n    return  {a: A, c: C, test: require('jquery')};\n}`.trim());\n\n        module.dependencyPath.should.be.containEql('jquery');\n    });\n});\n",
@@ -2151,7 +2083,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 112,
+    "__docId__": 111,
     "kind": "test",
     "name": "describe0",
     "testId": 0,
@@ -2167,7 +2099,7 @@
     ]
   },
   {
-    "__docId__": 113,
+    "__docId__": 112,
     "kind": "test",
     "name": "it1",
     "testId": 1,
@@ -2183,7 +2115,7 @@
     ]
   },
   {
-    "__docId__": 114,
+    "__docId__": 113,
     "kind": "test",
     "name": "it2",
     "testId": 2,
@@ -2199,7 +2131,7 @@
     ]
   },
   {
-    "__docId__": 115,
+    "__docId__": 114,
     "kind": "test",
     "name": "it3",
     "testId": 3,
@@ -2215,7 +2147,7 @@
     ]
   },
   {
-    "__docId__": 116,
+    "__docId__": 115,
     "kind": "test",
     "name": "it4",
     "testId": 4,
@@ -2231,7 +2163,7 @@
     ]
   },
   {
-    "__docId__": 117,
+    "__docId__": 116,
     "kind": "test",
     "name": "it5",
     "testId": 5,
@@ -2247,7 +2179,7 @@
     ]
   },
   {
-    "__docId__": 118,
+    "__docId__": 117,
     "kind": "test",
     "name": "it6",
     "testId": 6,
@@ -2263,7 +2195,7 @@
     ]
   },
   {
-    "__docId__": 119,
+    "__docId__": 118,
     "kind": "testFile",
     "name": "test/Package.test.js",
     "content": "import Package from '../source/Package';\n\nimport {execSync} from 'child_process';\n\nimport {readFileSync, outputFileSync, removeSync} from 'fs-extra';\n\n\nconst bundle_code = (readFileSync('./test/example/bundle.js') + '').trim();\n\n/**\n * @test {Package}\n */\ndescribe('Package bundler',  () => {\n\n    var pack = new Package('');\n\n    /**\n     * @test {Package#register}\n     */\n    it('Register module',  () => {\n\n        pack.register('a');\n\n        pack.register('b');\n\n        pack.register('c');\n\n        pack.register('b');\n\n        Array.from(pack,  module => module.name).should.be.eql(['c', 'b', 'a']);\n    });\n\n    /**\n     * @test {Package#parse}\n     */\n    it('Parse package',  () => {\n\n        pack = new Package('./test/example/index', null, null, true);\n\n        pack.parse('./index');\n\n        Array.from(pack,  module => module.name).should.be.eql([\n            './c', './libs/b', './a', './index'\n        ]);\n    });\n\n\n    function testBundle(all) {\n\n        const bundle_code = (new Package(\n            './test/example/index', all, null, true\n        )).bundle();\n\n        try {\n            eval( bundle_code ).should.be.eql({\n                a:     'This is A',\n                c:     'This is C',\n                test:  {test: 1}\n            });\n        } catch (error) {\n\n            console.warn( bundle_code );  throw error;\n        }\n    }\n\n    /**\n     * @test {generate}\n     */\n    it('Bundle all dependencies',  testBundle.bind(null, true));\n\n    /**\n     * @test {Package#bundle}\n     */\n    it('Bundle without NPM packages',  testBundle.bind(null, false));\n});\n\n\ndescribe('Command line',  () => {\n\n    const entry = 'node build/index test/example/',\n        output = 'test/example/build';\n\n    it('Output to a file',  () => {\n\n        (execSync(`${entry}index ${output}`) + '').should.be.startWith(`\n√ Module \"./index\" has been bundled\n√ Module \"./a\" has been bundled\n√ Module \"./libs/b\" has been bundled\n√ Module \"./c\" has been bundled`.trim()\n        );\n    });\n\n    it(\n        'Write into `stdout` without printing',\n        ()  =>  (execSync(`${entry}index -s`) + '').should.be.eql(\n            bundle_code\n                .replace(/build/g, 'index')\n                .replace(/test4sample/g, 'test')\n        )\n    );\n\n\n    it('Replace a module by the map option',  () => {\n\n        (execSync(`cross-env NODE_ENV=test  ${entry}index ${output}`) + '')\n            .should.be.startWith(`\n→ Module \"test\" will be replaced by \"test4sample\"\n√ Module \"./index\" has been bundled\n√ Module \"./a\" has been bundled\n√ Module \"./libs/b\" has been bundled\n√ Module \"./c\" has been bundled`.trim()\n            );\n\n        (readFileSync(`${output}.js`) + '').should.be.equal( bundle_code );\n    });\n\n\n    it('Handle \"Hash bang\" automatically',  () => {\n\n        const code = execSync(`${entry}command -s`) + '';\n\n        code.match( /#! \\/usr\\/bin\\/env node/g ).should.have.length( 1 );\n\n        outputFileSync(`${output}.js`, code);\n\n        JSON.parse( execSync(`node ${output}`) ).should.be.eql({\n            a:     'This is A',\n            c:     'This is C',\n            test:  {test: 1}\n        });\n    });\n\n    after(() => removeSync('test/example/build.js'));\n});\n",
@@ -2274,7 +2206,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 120,
+    "__docId__": 119,
     "kind": "test",
     "name": "describe7",
     "testId": 7,
@@ -2290,7 +2222,7 @@
     ]
   },
   {
-    "__docId__": 121,
+    "__docId__": 120,
     "kind": "test",
     "name": "it8",
     "testId": 8,
@@ -2306,7 +2238,7 @@
     ]
   },
   {
-    "__docId__": 122,
+    "__docId__": 121,
     "kind": "test",
     "name": "it9",
     "testId": 9,
@@ -2322,7 +2254,7 @@
     ]
   },
   {
-    "__docId__": 123,
+    "__docId__": 122,
     "kind": "test",
     "name": "it10",
     "testId": 10,
@@ -2338,7 +2270,7 @@
     ]
   },
   {
-    "__docId__": 124,
+    "__docId__": 123,
     "kind": "test",
     "name": "it11",
     "testId": 11,
@@ -2354,7 +2286,7 @@
     ]
   },
   {
-    "__docId__": 125,
+    "__docId__": 124,
     "kind": "test",
     "name": "describe12",
     "testId": 12,
@@ -2367,7 +2299,7 @@
     "lineNumber": 78
   },
   {
-    "__docId__": 126,
+    "__docId__": 125,
     "kind": "test",
     "name": "it13",
     "testId": 13,
@@ -2380,7 +2312,7 @@
     "lineNumber": 83
   },
   {
-    "__docId__": 127,
+    "__docId__": 126,
     "kind": "test",
     "name": "it14",
     "testId": 14,
@@ -2393,7 +2325,7 @@
     "lineNumber": 93
   },
   {
-    "__docId__": 128,
+    "__docId__": 127,
     "kind": "test",
     "name": "it15",
     "testId": 15,
@@ -2406,7 +2338,7 @@
     "lineNumber": 103
   },
   {
-    "__docId__": 129,
+    "__docId__": 128,
     "kind": "test",
     "name": "it16",
     "testId": 16,
@@ -2419,7 +2351,7 @@
     "lineNumber": 118
   },
   {
-    "__docId__": 130,
+    "__docId__": 129,
     "kind": "testFile",
     "name": "test/utility.test.js",
     "content": "import {\n    merge, outPackage, getNPMFile, getNPMIndex, getNPMPackage\n} from '../source/utility';\n\n\n\ndescribe('Utility',  () => {\n    /**\n     * @test {merge}\n     */\n    it(\n        'Merge module paths',\n        ()  =>  merge('./../test//../', './example').should.be.equal('../example')\n    );\n\n    /**\n     * @test {outPackage}\n     */\n    it('Determine package type by name',  () => {\n\n        outPackage('./test').should.be.false();\n\n        outPackage('../test').should.be.false();\n\n        outPackage('/test').should.be.false();\n\n        outPackage('test').should.be.true();\n\n        outPackage('@example/test').should.be.true();\n    });\n\n    /**\n     * @test {getNPMFile}\n     */\n    it(\n        'Get path of JS modules',\n        () => getNPMFile('test').should.be.equal('node_modules/test.js')\n    );\n\n    /**\n     * @test {getNPMIndex}\n     */\n    it(\n        'Get \"index.js\" path of a module',\n        () => getNPMIndex('commander').should.be.equal(\n            'node_modules/commander/index.js'\n        )\n    );\n\n    /**\n     * @test {getNPMPackage}\n     */\n    it(\n        'Get entry file path from \"package.json\" of a module',\n        () => getNPMPackage('koapache').should.be.equal(\n            'node_modules/koapache/dist/koapache.js'\n        )\n    );\n});\n",
@@ -2430,7 +2362,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 131,
+    "__docId__": 130,
     "kind": "test",
     "name": "describe17",
     "testId": 17,
@@ -2443,7 +2375,7 @@
     "lineNumber": 7
   },
   {
-    "__docId__": 132,
+    "__docId__": 131,
     "kind": "test",
     "name": "it18",
     "testId": 18,
@@ -2459,7 +2391,7 @@
     ]
   },
   {
-    "__docId__": 133,
+    "__docId__": 132,
     "kind": "test",
     "name": "it19",
     "testId": 19,
@@ -2475,7 +2407,7 @@
     ]
   },
   {
-    "__docId__": 134,
+    "__docId__": 133,
     "kind": "test",
     "name": "it20",
     "testId": 20,
@@ -2491,7 +2423,7 @@
     ]
   },
   {
-    "__docId__": 135,
+    "__docId__": 134,
     "kind": "test",
     "name": "it21",
     "testId": 21,
@@ -2507,7 +2439,7 @@
     ]
   },
   {
-    "__docId__": 136,
+    "__docId__": 135,
     "kind": "test",
     "name": "it22",
     "testId": 22,

@@ -48,12 +48,6 @@ window.esdocSearchIndex = [
     "function"
   ],
   [
-    "amd-bundle/source/utility.js~uglify",
-    "function/index.html#static-function-uglify",
-    "<span>uglify</span> <span class=\"search-result-import-path\">amd-bundle/source/utility.js</span>",
-    "function"
-  ],
-  [
     "",
     "test-file/test/Package.test.js.html#lineNumber78",
     "Command line",

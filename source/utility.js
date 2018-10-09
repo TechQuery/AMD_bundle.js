@@ -2,8 +2,6 @@ import {join} from 'path';
 
 import {existsSync, readFileSync, statSync} from 'fs';
 
-import { minify } from 'uglify-js';
-
 
 /**
  * This will be used in the bundled source
@@ -87,34 +85,4 @@ export function getNPMPackage(name) {
     for (let key  of  ['main', 'browser'])
         if (path = fileInNPM( join(name, config[key]) ))
             return  statSync( path ).isFile()  ?  path  :  getNPMIndex( path );
-}
-
-
-/**
- * @param {String} source   - JS source code
- * @param {String} filename - Name of this JS source file
- *
- * @return   {Object}
- * @property {String} code
- * @property {String} map
- */
-export function uglify(source, filename) {
-
-    const {error, code, map} = minify(source, {
-        mangle:     {
-            keep_fnames:    true
-        },
-        output:     {
-            comments:    'some'
-        },
-        ie8:        true,
-        sourceMap:  {
-            filename,  url: `${filename}.map`
-        },
-        warnings:   'verbose'
-    });
-
-    if ( error )  throw error;
-
-    return  {code, map};
 }

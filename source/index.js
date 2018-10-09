@@ -11,10 +11,8 @@ import Command from 'commander';
 import Package from './Package';
 
 import {
-    packageOf, currentModulePath, configOf, patternOf
+    packageOf, currentModulePath, configOf, patternOf, uglify
 } from '@tech_query/node-toolkit';
-
-import { uglify } from './utility';
 
 
 const meta = packageOf( currentModulePath() ).meta;
