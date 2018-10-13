@@ -1,6 +1,6 @@
 {
   "name": "amd-bundle",
-  "version": "1.7.1",
+  "version": "1.7.2",
   "description": "A dual-use tool for bundling up AMD modules, which is much easier to use than r.js with Almond or AMDclean",
   "keywords": [
     "javascript",
@@ -36,7 +36,7 @@
     "install": "node install"
   },
   "husky": {
-    "hook": {
+    "hooks": {
       "pre-commit": "npm run build  &&  git add ."
     }
   },

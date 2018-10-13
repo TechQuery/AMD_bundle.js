@@ -6,9 +6,9 @@
     if ((typeof define === 'function')  &&  define.amd)
         define('build', ["test4sample"], factory);
     else if (typeof module === 'object')
-        return  module.exports = factory(require('test4sample'));
+        return  module.exports = factory.call(global,require('test4sample'));
     else
-        return  this['build'] = factory(this['test4sample']);
+        return  this['build'] = factory.call(self,this['test4sample']);
 
 })(function (test4sample) {
 
@@ -22,8 +22,8 @@ function outPackage(name) {
   return /^[^./]/.test(name);
 }
 
-    if (typeof require !== 'function')
-        require = function (name) {
+    var require = (typeof this.require === 'function') ?
+        this.require  :  function (name) {
 
             if (self[name] != null)  return self[name];
 

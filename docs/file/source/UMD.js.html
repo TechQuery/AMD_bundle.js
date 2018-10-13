@@ -92,9 +92,13 @@ export function generate(pack, name, entry, outside) {
     if ((typeof define === &apos;function&apos;)  &amp;&amp;  define.amd)
         define(&apos;${name}&apos;, ${dependency}factory);
     else if (typeof module === &apos;object&apos;)
-        return  module.exports = factory(${modName.map(name =&gt; `require(&apos;${name}&apos;)`)});
+        return  module.exports = factory.call(${
+            [&apos;global&apos;].concat( modName.map(name =&gt; `require(&apos;${name}&apos;)`) )
+        });
     else
-        return  this[&apos;${name}&apos;] = factory(${modName.map(name =&gt; `this[&apos;${name}&apos;]`)});
+        return  this[&apos;${name}&apos;] = factory.call(${
+            [&apos;self&apos;].concat( modName.map(name =&gt; `this[&apos;${name}&apos;]`) )
+        });
 
 })(function (${varName}) {
 
@@ -102,8 +106,8 @@ ${merge}
 
 ${outPackage}
 
-    if (typeof require !== &apos;function&apos;)
-        require = function (name) {
+    var require = (typeof this.require === &apos;function&apos;) ?
+        this.require  :  function (name) {
 
             if (self[name] != null)  return self[name];
 

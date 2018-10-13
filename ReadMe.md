@@ -61,9 +61,9 @@ Key/value of option `moduleMap` is same as [the basic parameters of `String.prot
 
  - [API](https://techquery.github.io/AMD_bundle.js/class/source/Package.js~Package.html#instance-method-bundle)
 
- - [Example 1](https://github.com/TechQuery/AMD_bundle.js/blob/master/source/index.js#L47)
+ - [Example 1](https://github.com/TechQuery/AMD_bundle.js/blob/master/source/index.js#L48)
 
- - [Example 2](https://github.com/EasyWebApp/DevCLI/blob/master/source/Component.js#L122)
+ - [Example 2](https://github.com/EasyWebApp/DevCLI/blob/master/source/Component.js#L124)
 
 
 ### Advanced
@@ -89,3 +89,5 @@ Build **standalone release files** (Full source code, Minimized code & Source ma
  2. [WebCell](https://web-cell.tk/) (where `v1.0` rewritten out)
 
  3. [WebCell DevCLI](https://easywebapp.github.io/DevCLI/) (where `v1.3+` came out)
+
+[More use case](https://github.com/TechQuery/AMD_bundle.js/network/dependents)

@@ -46,9 +46,13 @@ export function generate(pack, name, entry, outside) {
     if ((typeof define === 'function')  &&  define.amd)
         define('${name}', ${dependency}factory);
     else if (typeof module === 'object')
-        return  module.exports = factory(${modName.map(name => `require('${name}')`)});
+        return  module.exports = factory.call(${
+            ['global'].concat( modName.map(name => `require('${name}')`) )
+        });
     else
-        return  this['${name}'] = factory(${modName.map(name => `this['${name}']`)});
+        return  this['${name}'] = factory.call(${
+            ['self'].concat( modName.map(name => `this['${name}']`) )
+        });
 
 })(function (${varName}) {
 
@@ -56,8 +60,8 @@ ${merge}
 
 ${outPackage}
 
-    if (typeof require !== 'function')
-        require = function (name) {
+    var require = (typeof this.require === 'function') ?
+        this.require  :  function (name) {
 
             if (self[name] != null)  return self[name];
 
