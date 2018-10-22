@@ -22,13 +22,15 @@ function outPackage(name) {
   return /^[^./]/.test(name);
 }
 
-    var require = (typeof this.require === 'function') ?
-        this.require  :  function (name) {
+    var require = (typeof module === 'object') ?
+        module.require  :  (
+            this.require  ||  function (name) {
 
-            if (self[name] != null)  return self[name];
+                if (self[name] != null)  return self[name];
 
-            throw ReferenceError('Can\'t find "' + name + '" module');
-        };
+                throw ReferenceError('Can\'t find "' + name + '" module');
+            }
+        );
 
     var _include_ = include.bind(null, './');
 

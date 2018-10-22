@@ -106,13 +106,15 @@ ${merge}
 
 ${outPackage}
 
-    var require = (typeof this.require === &apos;function&apos;) ?
-        this.require  :  function (name) {
+    var require = (typeof module === &apos;object&apos;) ?
+        module.require  :  (
+            this.require  ||  function (name) {
 
-            if (self[name] != null)  return self[name];
+                if (self[name] != null)  return self[name];
 
-            throw ReferenceError(&apos;Can\\&apos;t find &quot;&apos; + name + &apos;&quot; module&apos;);
-        };
+                throw ReferenceError(&apos;Can\\&apos;t find &quot;&apos; + name + &apos;&quot; module&apos;);
+            }
+        );
 
     var _include_ = include.bind(null, &apos;./&apos;);
 
