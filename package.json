@@ -1,6 +1,6 @@
 {
   "name": "amd-bundle",
-  "version": "1.7.3",
+  "version": "1.7.4",
   "description": "A dual-use tool for bundling up AMD modules, which is much easier to use than r.js with Almond or AMDclean",
   "keywords": [
     "javascript",
@@ -58,7 +58,7 @@
     "esdoc": "^1.1.0",
     "esdoc-external-nodejs-plugin": "^1.0.0",
     "esdoc-standard-plugin": "^1.0.0",
-    "eslint": "^5.7.0",
+    "eslint": "^5.8.0",
     "husky": "^1.1.2",
     "koapache": "^1.0.4",
     "mocha": "^5.2.0",

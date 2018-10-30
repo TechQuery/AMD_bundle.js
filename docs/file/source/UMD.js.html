@@ -107,7 +107,10 @@ ${merge}
 ${outPackage}
 
     var require = (typeof module === &apos;object&apos;) ?
-        module.require  :  (
+        function () {
+
+            return  module.require.apply(module, arguments);
+        } : (
             this.require  ||  function (name) {
 
                 if (self[name] != null)  return self[name];
