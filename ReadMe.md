@@ -4,6 +4,7 @@
 which is much easier to use than [`r.js`](https://github.com/requirejs/r.js) with [Almond](https://github.com/requirejs/almond) or [AMDclean](https://github.com/gfranko/amdclean).
 
 [![NPM Dependency](https://david-dm.org/TechQuery/AMD_bundle.js.svg)](https://david-dm.org/TechQuery/AMD_bundle.js)
+[![Build Status](https://travis-ci.com/TechQuery/AMD_bundle.js.svg?branch=master)](https://travis-ci.com/TechQuery/AMD_bundle.js)
 
 [![NPM](https://nodei.co/npm/amd-bundle.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/amd-bundle/)
 
@@ -59,7 +60,7 @@ Key/value of option `moduleMap` is same as [the basic parameters of `String.prot
 
 #### JS Module
 
- - [API](https://techquery.github.io/AMD_bundle.js/class/source/Package.js~Package.html#instance-method-bundle)
+ - [API](https://tech-query.me/AMD_bundle.js/class/source/Package.js~Package.html#instance-method-bundle)
 
  - [Example 1](https://github.com/TechQuery/AMD_bundle.js/blob/master/source/index.js#L48)
 
@@ -84,7 +85,7 @@ Build **standalone release files** (Full source code, Minimized code & Source ma
 
 ## Typical Cases
 
- 1. [iQuery.js](https://techquery.github.io/iQuery.js/) (where the prototype of `amd-bundle` came from)
+ 1. [iQuery.js](https://tech-query.me/iQuery.js/) (where the prototype of `amd-bundle` came from)
 
  2. [WebCell](https://web-cell.tk/) (where `v1.0` rewritten out)
 
