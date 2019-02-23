@@ -1,0 +1,6 @@
+--require @babel/register
+--require @babel/polyfill
+--require should
+--timeout 3000
+--colors
+--inline-diffs

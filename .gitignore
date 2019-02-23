@@ -61,5 +61,6 @@ typings/
 .vscode/
 .idea/
 
-# Runtime
+# Release building
 build/
+docs/

@@ -6,19 +6,21 @@ import { merge, outPackage } from './utility';
 function concatModule(pack, name, modName, varName) {  /* eslint-disable */
 
     return toES_5(`
-    var _module_ = {
+var _module_ = { };
         ${
     Array.from(pack,  item => `
-        '${item.name}':  {
-            base:        '${item.base}',
-            dependency:  ${JSON.stringify( Object.keys( item.dependency.compile ) )},
-            factory:     ${item.source}
-        }`.slice(1)
+_module_['${item.name}'] = {
+    base:        '${item.base}',
+    dependency:  ${JSON.stringify( Object.keys( item.dependency.compile ) )}
+};
+
+_module_['${item.name}'].factory = ${item.source}`
     ).concat(
-        modName.map((name, index)  =>  `'${name}':  {exports: ${varName[index]}}`)
-    ).join(',\n')}
-    };
-`,
+        modName.map((name, index)  =>
+            `_module_['${name}'] = {exports: ${varName[index]}};`
+        )
+    ).join(',\n')
+}`,
         name
     );
 }

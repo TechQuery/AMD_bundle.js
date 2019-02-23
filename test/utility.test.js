@@ -53,7 +53,7 @@ describe('Utility',  () => {
     it(
         'Get entry file path from "package.json" of a module',
         () => getNPMPackage('koapache').should.be.equal(
-            'node_modules/koapache/dist/koapache.js'
+            'node_modules/koapache/dist/WebServer.js'
         )
     );
 });
