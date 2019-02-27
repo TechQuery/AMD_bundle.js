@@ -4,7 +4,7 @@ import Module from './Module';
 
 import {generate} from './UMD';
 
-const Array_iterator = [ ][Symbol.iterator], Array_proto = Array.prototype;
+const Array_iterator = [ ][Symbol.iterator], { unshift } = Array.prototype;
 
 
 /**
@@ -88,12 +88,11 @@ export default  class Package {
      */
     register(modName) {
 
-        const index = this.indexOf( modName );
+        if (this.indexOf( modName )  >  -1)  return;
 
-        if (index > -1)  return;
-
-        Array_proto.unshift.call(
-            this,  new Module(modName, this.base, this.includeAll, this.moduleMap)
+        unshift.call(
+            this,
+            new Module(modName, this.base, this.includeAll, this.moduleMap)
         );
 
         return this[0];
@@ -129,7 +128,7 @@ export default  class Package {
         if ( this.showLog )
             console.info(`√ Module "${modName}" has been bundled`);
 
-        for (let path of module.dependencyPath)  this.parse( path );
+        module.dependencyPath.forEach( this.parse.bind( this ) );
     }
 
     /**
@@ -139,8 +138,8 @@ export default  class Package {
      */
     get outDependency() {
 
-        return  this.includeAll  ?  [ ]  :  Object.assign(
-            ... Array.from(this,  module => module.dependency.outside)
+        return  this.includeAll  ?  [ ]  :  Object.assign.apply(
+            Object,  Array.from(this,  module => module.dependency.outside)
         );
     }
 

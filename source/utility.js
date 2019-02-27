@@ -43,7 +43,12 @@ function fileInNPM(path) {
 
 function findNPMFile(list) {
 
-    for (let path of list)  if (path = fileInNPM( path ))  return path;
+    while ( list[0] ) {
+
+        let path = fileInNPM( list.shift() );
+
+        if ( path )  return path;
+    }
 }
 
 
@@ -80,9 +85,10 @@ export function getNPMPackage(name) {
 
     if (! path)  return;
 
-    const config = JSON.parse( readFileSync( path ) );
+    const config = JSON.parse( readFileSync( path ) ),
+        entry = ['main', 'browser', 'module'];
 
-    for (let key  of  ['main', 'browser'])
-        if (path = fileInNPM( join(name, config[key]) ))
+    while ( entry[0] )
+        if (path = fileInNPM( join(name,  config[ entry.shift() ]) ))
             return  statSync( path ).isFile()  ?  path  :  getNPMIndex( path );
 }

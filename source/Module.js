@@ -114,11 +114,13 @@ export default  class Module extends EventEmitter {
      */
     searchNPM() {
 
-        for (let method  of  ['getNPMFile', 'getNPMPackage', 'getNPMIndex']) {
+        const list = ['getNPMFile', 'getNPMPackage', 'getNPMIndex'];
 
-            let path;
+        while ( list[0] ) {
 
-            if (path = Utility[method]( this.name ))  return path;
+            let path = Utility[ list.shift() ]( this.name );
+
+            if ( path )  return path;
         }
     }
 
@@ -207,10 +209,9 @@ export default  class Module extends EventEmitter {
 
                 (modName || '').replace(
                     /(?:'|")(.+?)(?:'|")/g,
-                    (_, name)  =>  {
-
-                        this.addChild('compile', name, varName[index]),  index++;
-                    }
+                    (_, name)  =>  (
+                        this.addChild('compile', name, varName[index]),  index++
+                    )
                 );
 
                 return  body.replace(/^\n([\s\S]+)\n$/, '$1');

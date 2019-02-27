@@ -73,16 +73,19 @@ _module_['./c'] = {
     base: '.',
     dependency: []
 };
-(_module_['./c'].factory = function(require, exports, module) {
+
+_module_['./c'].factory = function(require, exports, module) {
     require('./libs/b');
 
     module.exports = 'This is C';
-}),
-    (_module_['./libs/b'] = {
-        base: './libs',
-        dependency: []
-    });
-(_module_['./libs/b'].factory = function(require, exports, module) {
+};
+
+_module_['./libs/b'] = {
+    base: './libs',
+    dependency: []
+};
+
+_module_['./libs/b'].factory = function(require, exports, module) {
     Object.defineProperty(exports, '__esModule', {
         value: true
     });
@@ -92,21 +95,25 @@ _module_['./c'] = {
 
     var _default = 'This is B';
     exports.default = _default;
-}),
-    (_module_['./a'] = {
-        base: '.',
-        dependency: []
-    });
-(_module_['./a'].factory = function(require, exports, module) {
+};
+
+_module_['./a'] = {
+    base: '.',
+    dependency: []
+};
+
+_module_['./a'].factory = function(require, exports, module) {
     require('./libs/b');
 
     module.exports = 'This is A';
-}),
-    (_module_['./index'] = {
-        base: '.',
-        dependency: ['./a']
-    });
-(_module_['./index'].factory = function(A, require, exports, module) {
+};
+
+_module_['./index'] = {
+    base: '.',
+    dependency: ['./a']
+};
+
+_module_['./index'].factory = function(A, require, exports, module) {
     /* AMD module */
     var C = require('./c');
 
@@ -115,10 +122,11 @@ _module_['./c'] = {
         c: C,
         test: require('test4sample')
     };
-}),
-    (_module_['test4sample'] = {
-        exports: test4sample
-    });
+};
+
+_module_['test4sample'] = {
+    exports: test4sample
+};
 
     return _include_('./index');
 });

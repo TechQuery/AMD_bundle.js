@@ -19,7 +19,7 @@ _module_['${item.name}'].factory = ${item.source}`
         modName.map((name, index)  =>
             `_module_['${name}'] = {exports: ${varName[index]}};`
         )
-    ).join(',\n')
+    ).join('\n')
 }`,
         name
     );

@@ -10,12 +10,12 @@ import Command from 'commander';
 
 import Package from './Package';
 
-import {
-    packageOf, currentModulePath, configOf, patternOf, uglify
-} from '@tech_query/node-toolkit';
+import { configOf, patternOf, uglify } from '@tech_query/node-toolkit';
 
+import config from '../package.json';
 
-const meta = packageOf( currentModulePath() ).meta;
+const meta = JSON.parse( config );
+
 
 Command
     .version( meta.version )

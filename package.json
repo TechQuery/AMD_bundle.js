@@ -1,6 +1,6 @@
 {
   "name": "amd-bundle",
-  "version": "1.7.5",
+  "version": "1.7.7",
   "description": "A dual-use tool for bundling up AMD modules, which is much easier to use than r.js with Almond or AMDclean",
   "keywords": [
     "javascript",
@@ -27,12 +27,12 @@
   "scripts": {
     "lint": "eslint source/ test/*.js --fix",
     "bundle": "babel source/ -d build/ -s",
-    "test": "mocha --exit",
-    "debug": "mocha --inspect-brk",
+    "set-test": "node -e \"console.log('exports.test = 1;')\" > node_modules/test.js",
+    "test": "npm run set-test  &&  mocha --exit",
+    "debug": "npm run set-test  &&  mocha --inspect-brk",
     "build": "npm run lint  &&  npm run bundle  &&  npm test  &&  esdoc",
     "prepublishOnly": "npm run build",
-    "start": "web-server docs/ -o",
-    "install": "node -e \"console.log('exports.test = 1;')\" > node_modules/test.js"
+    "start": "web-server docs/ -o"
   },
   "husky": {
     "hooks": {
@@ -53,6 +53,7 @@
   "devDependencies": {
     "@babel/cli": "^7.2.3",
     "@babel/plugin-transform-runtime": "^7.2.0",
+    "babel-plugin-inline-import": "^3.0.0",
     "cross-env": "^5.2.0",
     "esdoc": "^1.1.0",
     "esdoc-external-nodejs-plugin": "^1.0.0",
@@ -75,6 +76,14 @@
       ]
     ],
     "plugins": [
+      [
+        "babel-plugin-inline-import",
+        {
+          "extensions": [
+            ".json"
+          ]
+        }
+      ],
       "@babel/plugin-transform-runtime"
     ]
   },
