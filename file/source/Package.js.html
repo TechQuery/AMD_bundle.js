@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../">
+  <title data-ice="title">source/Package.js | amd-bundle</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  <script src="script/manual.js"></script>
+<meta name="description" content="A dual-use tool for bundling up AMD modules, which is much easier to use than r.js with Almond or AMDclean"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="amd-bundle"><meta property="twitter:description" content="A dual-use tool for bundling up AMD modules, which is much easier to use than r.js with Almond or AMDclean"></head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  <a href="test.html" data-ice="testLink">Test</a>
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+<a style="position:relative; top:3px;" href="https://github.com/TechQuery/AMD_bundle.js"><img width="20px" src="./image/github.png"></a></header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/source/Module.js~Module.html">Module</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/source/Package.js~Package.html">Package</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-generate">generate</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getNPMFile">getNPMFile</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getNPMIndex">getNPMIndex</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getNPMPackage">getNPMPackage</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-merge">merge</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-outPackage">outPackage</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-meta">meta</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-DependencyMap">DependencyMap</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-NameMap">NameMap</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">source/Package.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import { meta } from &apos;./utility&apos;;
+
+import { configOf, patternOf } from &apos;@tech_query/node-toolkit&apos;;
+
+import { dirname, basename } from &apos;path&apos;;
+
+import Module from &apos;./Module&apos;;
+
+import {generate} from &apos;./UMD&apos;;
+
+const Array_iterator = [ ][Symbol.iterator], { unshift } = Array.prototype;
+
+
+var config = configOf( meta.name ) || &apos;&apos;;
+
+if ( config.moduleMap )  config.moduleMap = patternOf( config.moduleMap );
+
+
+/**
+ * Package to be bundled
+ */
+export default  class Package {
+    /**
+     * @param {string}   path               - The entry file path of this package
+     *                                       (relative to `process.cwd()`)
+     * @param {boolean}  [includeAll=false] - Include NPM modules in the final bundle
+     * @param {?NameMap} moduleMap          - Map to replace some dependencies to others
+     * @param {boolean}  [noLog=false]      - Disable log output
+     */
+    constructor(path,  includeAll = false,  moduleMap,  noLog = false) {
+        /**
+         * The entry file path of this package
+         *
+         * @type {string}
+         */
+        this.path = path;
+
+        /**
+         * The root path of this package (relative to `process.cwd()`)
+         *
+         * @type {string}
+         */
+        this.base = dirname( path );
+
+        /**
+         * Whether include NPM modules in the final bundle
+         *
+         * @type {boolean}
+         */
+        this.includeAll = includeAll;
+
+        /**
+         * Module count of this package
+         *
+         * @type {number}
+         */
+        this.length = 0;
+
+        /**
+         * @type {NameMap}
+         */
+        this.moduleMap = moduleMap || config.moduleMap;
+
+        /**
+         * Whether show logs during the bundle process
+         *
+         * @type {boolean}
+         */
+        this.showLog = (! noLog);
+    }
+
+    [Symbol.iterator]() {  return  Array_iterator.call( this );  }
+
+    /**
+     * @param {Module|string} module - Instance or name of a module
+     *
+     * @return {number}
+     */
+    indexOf(module) {
+
+        for (let i = 0;  this[i];  i++)
+            if (
+                (module instanceof Module)  ?
+                    (module === this[i])  :  (module === this[i].name)
+            )
+                return i;
+
+        return -1;
+    }
+
+    /**
+     * @protected
+     *
+     * @param {string} modName - Path of a module
+     *
+     * @return {?Module} New module
+     */
+    register(modName) {
+
+        if (this.indexOf( modName )  &gt;  -1)  return;
+
+        unshift.call(
+            this,
+            new Module(modName, this.base, this.includeAll, this.moduleMap)
+        );
+
+        return this[0];
+    }
+
+    /**
+     * Entry module of this package
+     *
+     * @type {Module}
+     */
+    get entry() {  return  this[this.length - 1];  }
+
+    /**
+     * @protected
+     *
+     * @param {string} modName - Path of a module
+     */
+    parse(modName) {
+
+        const module = this.register( modName );
+
+        if (! module)  return;
+
+        if ( this.showLog )
+            module.on(&apos;replace&apos;,  (oldMod, newMod)  =&gt;
+                console.info(
+                    `&#x2192; Module &quot;${oldMod}&quot; will be replaced by &quot;${newMod}&quot;`
+                )
+            );
+
+        module.parse();
+
+        if ( this.showLog )
+            console.info(`&#x221A; Module &quot;${modName}&quot; has been bundled`);
+
+        module.dependencyPath.forEach( this.parse.bind( this ) );
+    }
+
+    /**
+     * Outside dependencies of this package
+     *
+     * @type {DependencyMap}
+     */
+    get outDependency() {
+
+        return  this.includeAll  ?  [ ]  :  Object.assign.apply(
+            Object,  Array.from(this,  module =&gt; module.dependency.outside)
+        );
+    }
+
+    /**
+     * @param {string} [name] - Module name of bundled package
+     *                          (Default: The entry module&apos;s name)
+     * @return {string} Source code of this package
+     */
+    bundle(name) {
+
+        const entry = basename( this.path );
+
+        this.parse(`./${entry}`);
+
+        return generate(
+            this,  name || entry,  this.entry.name,  this.outDependency
+        );
+    }
+}
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(1.1.0)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

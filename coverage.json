@@ -1,0 +1,48 @@
+{
+  "coverage": "78%",
+  "expectCount": 50,
+  "actualCount": 39,
+  "files": {
+    "source/Module.js": {
+      "expectCount": 20,
+      "actualCount": 18,
+      "undocumentLines": [
+        12,
+        134
+      ]
+    },
+    "source/Package.js": {
+      "expectCount": 17,
+      "actualCount": 14,
+      "undocumentLines": [
+        11,
+        14,
+        72
+      ]
+    },
+    "source/UMD.js": {
+      "expectCount": 2,
+      "actualCount": 1,
+      "undocumentLines": [
+        6
+      ]
+    },
+    "source/index.js": {
+      "expectCount": 3,
+      "actualCount": 0,
+      "undocumentLines": [
+        33,
+        38,
+        46
+      ]
+    },
+    "source/utility.js": {
+      "expectCount": 8,
+      "actualCount": 6,
+      "undocumentLines": [
+        45,
+        54
+      ]
+    }
+  }
+}

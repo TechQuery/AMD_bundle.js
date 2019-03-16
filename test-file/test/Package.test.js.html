@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../">
+  <title data-ice="title">test/Package.test.js | amd-bundle</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  <script src="script/manual.js"></script>
+<meta name="description" content="A dual-use tool for bundling up AMD modules, which is much easier to use than r.js with Almond or AMDclean"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="amd-bundle"><meta property="twitter:description" content="A dual-use tool for bundling up AMD modules, which is much easier to use than r.js with Almond or AMDclean"></head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  <a href="test.html" data-ice="testLink">Test</a>
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+<a style="position:relative; top:3px;" href="https://github.com/TechQuery/AMD_bundle.js"><img width="20px" src="./image/github.png"></a></header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/source/Module.js~Module.html">Module</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/source/Package.js~Package.html">Package</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-generate">generate</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getNPMFile">getNPMFile</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getNPMIndex">getNPMIndex</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getNPMPackage">getNPMPackage</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-merge">merge</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-outPackage">outPackage</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-meta">meta</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-DependencyMap">DependencyMap</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-NameMap">NameMap</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">test/Package.test.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import Package from &apos;../source/Package&apos;;
+
+import {execSync} from &apos;child_process&apos;;
+
+import {readFileSync, outputFileSync, removeSync} from &apos;fs-extra&apos;;
+
+
+const bundle_code = (readFileSync(&apos;./test/example/bundle.js&apos;) + &apos;&apos;).trim();
+
+/**
+ * @test {Package}
+ */
+describe(&apos;Package bundler&apos;,  () =&gt; {
+
+    var pack = new Package(&apos;&apos;);
+
+    /**
+     * @test {Package#register}
+     */
+    it(&apos;Register module&apos;,  () =&gt; {
+
+        pack.register(&apos;a&apos;);
+
+        pack.register(&apos;b&apos;);
+
+        pack.register(&apos;c&apos;);
+
+        pack.register(&apos;b&apos;);
+
+        Array.from(pack,  module =&gt; module.name).should.be.eql([&apos;c&apos;, &apos;b&apos;, &apos;a&apos;]);
+    });
+
+    /**
+     * @test {Package#parse}
+     */
+    it(&apos;Parse package&apos;,  () =&gt; {
+
+        pack = new Package(&apos;./test/example/index&apos;, null, null, true);
+
+        pack.parse(&apos;./index&apos;);
+
+        Array.from(pack,  module =&gt; module.name).should.be.eql([
+            &apos;./c&apos;, &apos;./libs/b&apos;, &apos;./a&apos;, &apos;./index&apos;
+        ]);
+    });
+
+
+    function testBundle(all) {
+
+        const bundle_code = (new Package(
+            &apos;./test/example/index&apos;, all, null, true
+        )).bundle();
+
+        try {
+            eval( bundle_code ).should.be.eql({
+                a:     &apos;This is A&apos;,
+                c:     &apos;This is C&apos;,
+                test:  {test: 1}
+            });
+        } catch (error) {
+
+            console.warn( bundle_code );  throw error;
+        }
+    }
+
+    /**
+     * @test {generate}
+     */
+    it(&apos;Bundle all dependencies&apos;,  testBundle.bind(null, true));
+
+    /**
+     * @test {Package#bundle}
+     */
+    it(&apos;Bundle without NPM packages&apos;,  testBundle.bind(null, false));
+});
+
+
+describe(&apos;Command line&apos;,  () =&gt; {
+
+    const entry = &apos;node build/index test/example/&apos;,
+        output = &apos;test/example/build&apos;;
+
+    it(&apos;Output to a file&apos;,  () =&gt; {
+
+        (execSync(`${entry}index ${output}`) + &apos;&apos;).should.be.startWith(`
+&#x221A; Module &quot;./index&quot; has been bundled
+&#x221A; Module &quot;./a&quot; has been bundled
+&#x221A; Module &quot;./libs/b&quot; has been bundled
+&#x221A; Module &quot;./c&quot; has been bundled`.trim()
+        );
+    });
+
+    it(
+        &apos;Write into `stdout` without printing&apos;,
+        ()  =&gt;  (execSync(`${entry}index -s`) + &apos;&apos;).should.be.eql(
+            bundle_code
+                .replace(/build/g, &apos;index&apos;)
+                .replace(/test4sample/g, &apos;test&apos;)
+        )
+    );
+
+
+    it(&apos;Replace a module by the map option&apos;,  () =&gt; {
+
+        (execSync(`cross-env NODE_ENV=test  ${entry}index ${output}`) + &apos;&apos;)
+            .should.be.startWith(`
+&#x2192; Module &quot;test&quot; will be replaced by &quot;test4sample&quot;
+&#x221A; Module &quot;./index&quot; has been bundled
+&#x221A; Module &quot;./a&quot; has been bundled
+&#x221A; Module &quot;./libs/b&quot; has been bundled
+&#x221A; Module &quot;./c&quot; has been bundled`.trim()
+            );
+
+        (readFileSync(`${output}.js`) + &apos;&apos;).should.be.equal( bundle_code );
+    });
+
+
+    it(&apos;Handle &quot;Hash bang&quot; automatically&apos;,  () =&gt; {
+
+        const code = execSync(`${entry}command -s`) + &apos;&apos;;
+
+        code.match( /#! \/usr\/bin\/env node/g ).should.have.length( 1 );
+
+        outputFileSync(`${output}.js`, code);
+
+        JSON.parse( execSync(`node ${output}`) ).should.be.eql({
+            a:     &apos;This is A&apos;,
+            c:     &apos;This is C&apos;,
+            test:  {test: 1}
+        });
+    });
+
+    after(() =&gt; removeSync(&apos;test/example/build.js&apos;));
+});
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(1.1.0)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

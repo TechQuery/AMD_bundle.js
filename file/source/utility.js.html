@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../">
+  <title data-ice="title">source/utility.js | amd-bundle</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  <script src="script/manual.js"></script>
+<meta name="description" content="A dual-use tool for bundling up AMD modules, which is much easier to use than r.js with Almond or AMDclean"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="amd-bundle"><meta property="twitter:description" content="A dual-use tool for bundling up AMD modules, which is much easier to use than r.js with Almond or AMDclean"></head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  <a href="test.html" data-ice="testLink">Test</a>
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+<a style="position:relative; top:3px;" href="https://github.com/TechQuery/AMD_bundle.js"><img width="20px" src="./image/github.png"></a></header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/source/Module.js~Module.html">Module</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/source/Package.js~Package.html">Package</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-generate">generate</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getNPMFile">getNPMFile</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getNPMIndex">getNPMIndex</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getNPMPackage">getNPMPackage</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-merge">merge</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-outPackage">outPackage</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-meta">meta</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-DependencyMap">DependencyMap</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-NameMap">NameMap</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">source/utility.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import {join} from &apos;path&apos;;
+
+import {existsSync, readFileSync, statSync} from &apos;fs&apos;;
+
+import config from &apos;../package.json&apos;;
+
+
+/**
+ * @private
+ *
+ * @type {Object}
+ */
+export const meta = JSON.parse( config );
+
+
+/**
+ * This will be used in the bundled source
+ *
+ * @param {string} base - Root path
+ * @param {string} path - Path relative to `base`
+ *
+ * @return {string} Joined &amp; normalized path
+ */
+export function merge(base, path) {
+
+    return  (base + &apos;/&apos; + path)
+        .replace(/\/\//g, &apos;/&apos;)
+        .replace(/[^/.]+\/\.\.\//g, &apos;&apos;)
+        .replace(/\.\//g,  function (match, index, input) {
+
+            return  (input[index - 1]  ===  &apos;.&apos;)  ?  match  :  &apos;&apos;;
+        });
+}
+
+
+/**
+ * @param {string} name - Name of a module
+ *
+ * @return {boolean} Whether `name` is a dependency out of this package
+ */
+export function outPackage(name) {  return /^[^./]/.test( name );  }
+
+
+
+function fileInNPM(path) {
+
+    path = join(&apos;node_modules&apos;, path);
+
+    if (existsSync( path )  &amp;&amp;  statSync( path ).isFile())
+        return  path.replace(/\\/g, &apos;/&apos;);
+}
+
+
+function findNPMFile(list) {
+
+    while ( list[0] ) {
+
+        let path = fileInNPM( list.shift() );
+
+        if ( path )  return path;
+    }
+}
+
+
+/**
+ * @param {string} name - Name of a module
+ *
+ * @return {?string} Valid `name` in `./node_modules/` is a JS or JSON file
+ */
+export function getNPMFile(name) {
+
+    return  findNPMFile([name, `${name}.js`, `${name}.json`]);
+}
+
+
+/**
+ * @param {string} name - Name of a module
+ *
+ * @return {?string} Valid `name` in `./node_modules/` is `index.js` or `index.json`
+ */
+export function getNPMIndex(name) {
+
+    return  findNPMFile([`${name}/index.js`, `${name}/index.json`]);
+}
+
+
+/**
+ * @param {string} name - Name of a module
+ *
+ * @return {?string} Entry file path of an existing `package.json`
+ */
+export function getNPMPackage(name) {
+
+    var path = fileInNPM(`${name}/package.json`);
+
+    if (! path)  return;
+
+    const config = JSON.parse( readFileSync( path ) ),
+        entry = [&apos;main&apos;, &apos;browser&apos;, &apos;module&apos;];
+
+    while ( entry[0] )
+        if (path = fileInNPM( join(name,  config[ entry.shift() ]) ))
+            return  statSync( path ).isFile()  ?  path  :  getNPMIndex( path );
+}
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(1.1.0)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

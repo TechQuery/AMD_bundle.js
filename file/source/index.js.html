@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../">
+  <title data-ice="title">source/index.js | amd-bundle</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  <script src="script/manual.js"></script>
+<meta name="description" content="A dual-use tool for bundling up AMD modules, which is much easier to use than r.js with Almond or AMDclean"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="amd-bundle"><meta property="twitter:description" content="A dual-use tool for bundling up AMD modules, which is much easier to use than r.js with Almond or AMDclean"></head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  <a href="test.html" data-ice="testLink">Test</a>
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+<a style="position:relative; top:3px;" href="https://github.com/TechQuery/AMD_bundle.js"><img width="20px" src="./image/github.png"></a></header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/source/Module.js~Module.html">Module</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/source/Package.js~Package.html">Package</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-generate">generate</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getNPMFile">getNPMFile</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getNPMIndex">getNPMIndex</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getNPMPackage">getNPMPackage</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-merge">merge</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-outPackage">outPackage</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-meta">meta</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-DependencyMap">DependencyMap</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-NameMap">NameMap</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">source/index.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">#! /usr/bin/env node
+
+import &apos;@babel/polyfill&apos;;
+
+import Command from &apos;commander&apos;;
+
+import { meta } from &apos;./utility&apos;;
+
+import { join, basename } from &apos;path&apos;;
+
+import Package from &apos;./Package&apos;;
+
+import { uglify } from &apos;@tech_query/node-toolkit&apos;;
+
+import { outputFileSync } from &apos;fs-extra&apos;;
+
+
+Command
+    .name( meta.name )
+    .version( meta.version )
+    .description( meta.description )
+    .usage(&apos;[options] &lt;entry file&gt; [bundle file]&apos;)
+    .arguments(&apos;&lt;entry file&gt; [bundle file]&apos;)
+    .option(
+        &apos;-a, --include-all&apos;,
+        &apos;Bundle all dependencies (include those in &quot;./node_modules/&quot;)&apos;
+    )
+    .option(&apos;-m, --minify&apos;,  &apos;Generate minified source code &amp; source map&apos;)
+    .option(&apos;-s, --std-out&apos;,  &apos;Write into &quot;stdout&quot; without logs&apos;)
+    .parse( process.argv );
+
+
+const entry_file = Command.args[0];
+
+if (! entry_file)  Command.outputHelp(), process.exit(1);
+
+
+const bundle_file = (
+        Command.args[1] ||
+        join(entry_file,  &apos;../../&apos;,  basename( entry_file ))
+    ),
+    pack = new Package(entry_file, Command.includeAll, null, Command.stdOut);
+
+if (! Command.stdOut)  console.time(&apos;Package bundle&apos;);
+
+var bundle = pack.bundle( basename( bundle_file ) );
+
+if ( Command.minify ) {
+
+    const {code, map} = uglify(bundle, `${basename( bundle_file )}.js`);
+
+    outputFileSync(`${bundle_file}.min.js`, code);
+
+    outputFileSync(`${bundle_file}.js.map`, map);
+}
+
+if ( pack.entry.CLI )  bundle = `${pack.entry.CLI}\n\n${bundle}`;
+
+if ( Command.stdOut )  process.stdout.write( bundle ), process.exit();
+
+outputFileSync(`${bundle_file}.js`,  bundle);
+
+console.info( &apos;-&apos;.repeat( 30 ) );
+
+console.timeEnd(&apos;Package bundle&apos;);
+
+console.info(`Module count: ${pack.length}`);
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(1.1.0)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>
