@@ -2,22 +2,21 @@
 
 import '@babel/polyfill';
 
-import { join, basename } from 'path';
-
-import { outputFileSync } from 'fs-extra';
-
 import Command from 'commander';
+
+import { meta } from './utility';
+
+import { join, basename } from 'path';
 
 import Package from './Package';
 
-import { configOf, patternOf, uglify } from '@tech_query/node-toolkit';
+import { uglify } from '@tech_query/node-toolkit';
 
-import config from '../package.json';
-
-const meta = JSON.parse( config );
+import { outputFileSync } from 'fs-extra';
 
 
 Command
+    .name( meta.name )
     .version( meta.version )
     .description( meta.description )
     .usage('[options] <entry file> [bundle file]')
@@ -30,27 +29,17 @@ Command
     .option('-s, --std-out',  'Write into "stdout" without logs')
     .parse( process.argv );
 
-if (! (process.argv[2] || '').trim()) {
 
-    Command.outputHelp();
+const entry_file = Command.args[0];
 
-    process.exit(1);
-}
+if (! entry_file)  Command.outputHelp(), process.exit(1);
 
-
-const entry_file = Command.args[0],
-    module_map = (configOf( meta.name ) || '').moduleMap;
 
 const bundle_file = (
         Command.args[1] ||
         join(entry_file,  '../../',  basename( entry_file ))
     ),
-    pack = new Package(
-        entry_file,
-        Command.includeAll,
-        module_map  &&  patternOf(module_map),
-        Command.stdOut
-    );
+    pack = new Package(entry_file, Command.includeAll, null, Command.stdOut);
 
 if (! Command.stdOut)  console.time('Package bundle');
 
@@ -67,14 +56,12 @@ if ( Command.minify ) {
 
 if ( pack.entry.CLI )  bundle = `${pack.entry.CLI}\n\n${bundle}`;
 
-if ( Command.stdOut )
-    process.stdout.write( bundle );
-else {
-    outputFileSync(`${bundle_file}.js`,  bundle);
+if ( Command.stdOut )  process.stdout.write( bundle ), process.exit();
 
-    console.info( '-'.repeat( 30 ) );
+outputFileSync(`${bundle_file}.js`,  bundle);
 
-    console.timeEnd('Package bundle');
+console.info( '-'.repeat( 30 ) );
 
-    console.info(`Module count: ${pack.length}`);
-}
+console.timeEnd('Package bundle');
+
+console.info(`Module count: ${pack.length}`);

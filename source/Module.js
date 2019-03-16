@@ -2,9 +2,9 @@ import {EventEmitter} from 'events';
 
 import {dirname, join} from 'path';
 
-import {readFileSync} from 'fs';
-
 import * as Utility from './utility';
+
+import { readFileSync } from 'fs';
 
 import { toES_5 } from '@tech_query/node-toolkit';
 
@@ -205,13 +205,11 @@ export default  class Module extends EventEmitter {
             /define\((?:\s*\[([\s\S]*?)\]\s*,)?\s*function\s*\(([\s\S]*?)\)\s*\{([\s\S]+)\}\s*\);?/,
             (_, modName, varName, body) => {
 
-                var index = 0;  varName = varName.trim().split( /\s*,\s*/ );
+                varName = varName.trim().split( /\s*,\s*/ );
 
                 (modName || '').replace(
-                    /(?:'|")(.+?)(?:'|")/g,
-                    (_, name)  =>  (
-                        this.addChild('compile', name, varName[index]),  index++
-                    )
+                    /(?:'|")(.+?)(?:'|")/g,  (_, name)  =>
+                        this.addChild('compile', name, varName.shift())
                 );
 
                 return  body.replace(/^\n([\s\S]+)\n$/, '$1');

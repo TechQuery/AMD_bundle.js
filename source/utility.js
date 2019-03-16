@@ -2,6 +2,16 @@ import {join} from 'path';
 
 import {existsSync, readFileSync, statSync} from 'fs';
 
+import config from '../package.json';
+
+
+/**
+ * @private
+ *
+ * @type {Object}
+ */
+export const meta = JSON.parse( config );
+
 
 /**
  * This will be used in the bundled source

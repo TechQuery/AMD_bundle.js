@@ -1,7 +1,7 @@
 # AMD bundle
 
-**A multiple-use tool for bundling up [AMD](https://github.com/amdjs/amdjs-api/blob/master/AMD.md), [CJS](http://wiki.commonjs.org/wiki/Modules) & ES 6 modules**,
-which is much easier to use than [`r.js`](https://github.com/requirejs/r.js) with [Almond](https://github.com/requirejs/almond) or [AMDclean](https://github.com/gfranko/amdclean).
+**A multiple-use tool for bundling up [AMD][1], [CJS][2] & ES 6 modules**,
+which is much easier to use than [`r.js`][3] with [Almond][4] or [AMDclean][5].
 
 [![NPM Dependency](https://david-dm.org/TechQuery/AMD_bundle.js.svg)](https://david-dm.org/TechQuery/AMD_bundle.js)
 [![Build Status](https://travis-ci.com/TechQuery/AMD_bundle.js.svg?branch=master)](https://travis-ci.com/TechQuery/AMD_bundle.js)
@@ -29,7 +29,7 @@ amd-bundle -a -m \
 
  1. start bundling from the entry point `path/to/project/source/entry.js`
 
- 2. write into `path/to/project/bundle/file.js` with only one `define('file', [ ])` and `global.file` definition, just like [UMD](https://github.com/umdjs/umd) style
+ 2. write into `path/to/project/bundle/file.js` with only one `define('file', [ ])` and `global.file` definition, just like [UMD][6] style
 
  3. treat `${process.cwd()}/node_modules/${module_full_name}` as a user's module to pack in
 
@@ -54,17 +54,17 @@ amd-bundle -a -m \
 
 #### Configuration
 
-[Example](https://github.com/TechQuery/AMD_bundle.js/blob/master/package.json#L75)
+[Example](https://github.com/TechQuery/AMD_bundle.js/blob/master/package.json#L67)
 
-Key/value of option `moduleMap` is same as [the basic parameters of `String.prototype.replace()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/replace#Parameters).
+Key/value of option `moduleMap` is same as [the basic parameters of `String.prototype.replace()`][7].
 
 #### JS Module
 
  - [API](https://tech-query.me/AMD_bundle.js/class/source/Package.js~Package.html#instance-method-bundle)
 
- - [Example 1](https://github.com/TechQuery/AMD_bundle.js/blob/master/source/index.js#L48)
+ - [Example 1](https://github.com/TechQuery/AMD_bundle.js/blob/master/source/index.js#L42)
 
- - [Example 2](https://github.com/EasyWebApp/DevCLI/blob/master/source/Component.js#L124)
+ - [Example 2](https://github.com/EasyWebApp/DevCLI/blob/master/source/Component.js#L112)
 
 
 ### Advanced
@@ -79,7 +79,7 @@ Build **standalone release files** (Full source code, Minimized code & Source ma
 
  - Development dependency: [Babel](https://babeljs.io/)
 
- - **NPM-scripts** reference: [WebCell](https://github.com/EasyWebApp/WebCell/blob/master/package.json#L32)
+ - **NPM-scripts** reference: [WebCell](https://github.com/EasyWebApp/WebCell/blob/master/package.json#L34)
 
 
 
@@ -89,6 +89,16 @@ Build **standalone release files** (Full source code, Minimized code & Source ma
 
  2. [WebCell](https://web-cell.tk/) (where `v1.0` rewritten out)
 
- 3. [WebCell DevCLI](https://easywebapp.github.io/DevCLI/) (where `v1.3+` came out)
+ 3. [WebCell DevCLI](https://web-cell.tk/DevCLI/) (where `v1.3+` came out)
 
 [More use case](https://github.com/TechQuery/AMD_bundle.js/network/dependents)
+
+
+
+  [1]: https://github.com/amdjs/amdjs-api/blob/master/AMD.md
+  [2]: http://wiki.commonjs.org/wiki/Modules
+  [3]: https://github.com/requirejs/r.js
+  [4]: https://github.com/requirejs/almond
+  [5]: https://github.com/gfranko/amdclean
+  [6]: https://github.com/umdjs/umd
+  [7]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/replace#Parameters

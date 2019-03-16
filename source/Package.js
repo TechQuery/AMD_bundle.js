@@ -1,10 +1,19 @@
-import {basename, dirname} from 'path';
+import { meta } from './utility';
+
+import { configOf, patternOf } from '@tech_query/node-toolkit';
+
+import { dirname, basename } from 'path';
 
 import Module from './Module';
 
 import {generate} from './UMD';
 
 const Array_iterator = [ ][Symbol.iterator], { unshift } = Array.prototype;
+
+
+var config = configOf( meta.name ) || '';
+
+if ( config.moduleMap )  config.moduleMap = patternOf( config.moduleMap );
 
 
 /**
@@ -50,7 +59,7 @@ export default  class Package {
         /**
          * @type {NameMap}
          */
-        this.moduleMap = moduleMap;
+        this.moduleMap = moduleMap || config.moduleMap;
 
         /**
          * Whether show logs during the bundle process
